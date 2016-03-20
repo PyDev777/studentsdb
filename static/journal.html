@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" value="Система обліку студентів Навчального Закладу">
+    <title>Сервіс обліку студентів</title>
+
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <!-- Start container -->
+    <div class="container">
+
+        <!-- Start header -->
+        <div class="row" id="header">
+            <div class="col-xs-12">
+                <!-- Logo -->
+                <div class="col-xs-8">
+                    <h1>Сервіс Обліку Студентів</h1>
+                </div>
+                <!-- Groups Selector -->
+                <div class="col-xs-4" id="group-selector">
+                    <strong>Група:</strong>
+                    <select>
+                        <option value="">Усі Студенти</option>
+                        <option value="">МтМ - 21, Подоба Віталій (№ 254)</option>
+                        <option value="">МтМ - 22, Корост Андрій (№ 2123)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- End header -->
+
+        <!-- Start sub-header -->
+        <div class="row" id="sub-header">
+            <div class="col-xs-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation">
+                        <a href="#">Студенти</a>
+                    </li>
+                    <li role="presentation" class="active">
+                        <a href="#">Відвідування</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">Групи</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End sub-header -->
+
+        <!-- Start Main Page Content -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Облік відвідування</h2>
+                <div class="table-caption">
+                    <a href="#">&larr;</a>
+                    <a href="#">Березень 2016</a>
+                    <a href="#">&rarr;</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="content-columns">
+            <div class="col-xs-12">
+                <div class="table-responsive" id="content-column">
+                    <!-- Start Day Listing -->
+                    <table class="table table-hover table-striped table-bordered table-condensed">
+                        <thead id="th-center">
+                        <tr>
+                            <th><a href="#">#</a></th>
+                            <th><a href="#">Студент</a></th>
+                            <th><a href="#">Вт<br>1</a></th>
+                            <th><a href="#">Ср<br>2</a></th>
+                            <th><a href="#">Чт<br>3</a></th>
+                            <th><a href="#">Пт<br>4</a></th>
+                            <th><a href="#">Сб<br>5</a></th>
+                            <th><a href="#">Нд<br>6</a></th>
+                            <th><a href="#">Пн<br>7</a></th>
+                            <th><a href="#">Вт<br>8</a></th>
+                            <th><a href="#">Ср<br>9</a></th>
+                            <th><a href="#">Чт<br>10</a></th>
+                            <th><a href="#">Пт<br>11</a></th>
+                            <th><a href="#">Сб<br>12</a></th>
+                            <th><a href="#">Нд<br>13</a></th>
+                            <th><a href="#">Пн<br>14</a></th>
+                            <th><a href="#">Вт<br>15</a></th>
+                            <th><a href="#">Ср<br>16</a></th>
+                            <th><a href="#">Чт<br>17</a></th>
+                            <th><a href="#">Пт<br>18</a></th>
+                            <th><a href="#">Сб<br>19</a></th>
+                            <th><a href="#">Нд<br>20</a></th>
+                            <th><a href="#">Пн<br>21</a></th>
+                            <th><a href="#">Вт<br>22</a></th>
+                            <th><a href="#">Ср<br>23</a></th>
+                            <th><a href="#">Чт<br>24</a></th>
+                            <th><a href="#">Пт<br>25</a></th>
+                            <th><a href="#">Сб<br>26</a></th>
+                            <th><a href="#">Нд<br>27</a></th>
+                            <th><a href="#">Пн<br>28</a></th>
+                            <th><a href="#">Вт<br>29</a></th>
+                            <th><a href="#">Ср<br>30</a></th>
+                            <th><a href="#">Чт<br>31</a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><a title="Редагувати" href="#">Подоба Віталій</a></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a title="Редагувати" href="#">Корост Андрій</a></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><a title="Редагувати" href="#">Притула Тарас</a></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" checked></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End Day Listing -->
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page Content -->
+
+        <!-- Start footer -->
+        <div class="row" id="footer">
+            <div class="col-xs-12">
+                &copy 2016, Сервіс Обліку Студентів
+            </div>
+        </div>
+        <!-- End footer -->
+
+    </div>
+    <!-- End container -->
+
+    <!-- jQuery -->
+    <!-- <script src="./js/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <!-- <script src="./js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>

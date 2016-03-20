@@ -1,0 +1,51 @@
+/* Global Styles */
+
+/*[class*="col-"] {
+  border: 1px solid red;
+}*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+.alert {
+    /* Ми додали відстань лише зверху елемента: -top */
+    margin: 10px 0 5px 0;
+}
+/* знайшли елемент футера по його унікальному ідентифікатору */
+#footer {
+    /* задаємо верхню межу елемента: ширина лінії, тип лінії, колір лінії */
+    border-top: 1px solid #dddddd;
+    /* задаємо внутрішню відстань елемента до верхнього краю */
+    padding-top: 10px;
+}
+/* Groups Selector */
+#group-selector {
+    margin-top: 30px;
+}
+#group-selector select {
+    margin: 0;
+    width: 80%;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    height: 30px;
+    line-height: 30px;
+    color: #555555;
+}
+
+.inlined {
+  display: inline-block;
+}
+
+#th-center th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-caption {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+#input_file {
+  margin-top: 15px;
+}
