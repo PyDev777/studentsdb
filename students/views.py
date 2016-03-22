@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
@@ -5,27 +7,27 @@ from django.template import RequestContext, loader
 
 # Create your views here.
 
-def students_list1(request):
-    return HttpResponse('<h1>Hello World!</h1>')
-
-def students_list2(request, sid):
-    try:
-        sid = int(sid)
-    except ValueError:
-        raise Http404
-    else:
-        return HttpResponse('<h1>Hello World!</h1>')
-
-def students_list3(request):
-    template = loader.get_template('demo.html')
-    context = RequestContext(request, {})
-    return HttpResponse(template.render(context))
-
-
 # Views for Students
 
 def students_list(request):
-    return render(request, 'students/students_list.html', {})
+    students = (
+        {'id': 1,
+         'first_name': u'Андрій',
+         'last_name': u'Корост',
+         'ticket': 2123,
+         'image': 'img/podoba3.jpg'},
+        {'id': 2,
+         'first_name': u'Віталій',
+         'last_name': u'Подоба',
+         'ticket': 254,
+         'image': 'img/me.jpeg'},
+        {'id': 3,
+         'first_name': u'Тарас',
+         'last_name': u'Притула',
+         'ticket': 5332,
+         'image': 'img/piv.png'}
+    )
+    return render(request, 'students/students_list.html', {'students': students})
 
 def students_add(request):
     return HttpResponse('<h1>Student Add Form</h1>')
