@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -18,7 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
 </head>
 
 <body>
@@ -80,7 +82,7 @@
                     <tbody>
                     <tr>
                         <td>1</td>
-                        <td><img src="./img/podoba3.jpg" height="30" width="30" class="img-circle"></td>
+                        <td><img src="{% static "img/podoba3.jpg" %}" height="30" width="30" class="img-circle"></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 1 %}">Корост</a></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 1 %}">Андрій</a></td>
                         <td>2123</td>
@@ -100,7 +102,7 @@
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td><img src="./img/me.jpeg" height="30" width="30" class="img-circle"></td>
+                        <td><img src="{% static "img/me.jpeg" %}" height="30" width="30" class="img-circle"></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 2 %}">Подоба</a></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 2 %}">Віталій</a></td>
                         <td>254</td>
@@ -120,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td><img src="./img/piv.png" height="30" width="30" class="img-circle"></td>
+                        <td><img src="{% static "img/piv.png" %}" height="30" width="30" class="img-circle"></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 3 %}">Притула</a></td>
                         <td><a title="Редагувати" href="{% url "students_edit" 3 %}">Тарас</a></td>
                         <td>5332</td>

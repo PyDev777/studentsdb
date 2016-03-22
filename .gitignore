@@ -61,7 +61,7 @@ target/
 
 local_settings.py
 .idea/
-/static/js/jquery.min.js
-/static/js/bootstrap.min.js
-/static/css/bootstrap.min.css
+jquery.min.js
+bootstrap.min.js
+bootstrap.min.css
 
