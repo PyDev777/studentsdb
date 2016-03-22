@@ -4,7 +4,7 @@
 
 {% block meta_title %}Групи{% endblock meta_title %}
 
-{% block title %}Список груп {% endblock title %}
+{% block title %}Список груп{% endblock title %}
 
 
 {% block content %}
@@ -17,7 +17,7 @@
     <thead>
     <tr>
         <th><a href="#">#</a></th>
-        <th><a href="#">Назва &uarr;</a></th>
+        <th><a href="#">Назва&uarr;</a></th>
         <th><a href="#">Староста</a></th>
         <th>Дії</th>
     </tr>
@@ -27,8 +27,8 @@
     {% for group in groups %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a title="Редагувати" href="#">{{ group.group_name }}</a></td>
-        <td><a title="Редагувати" href="#">{{ group.group_leader }}</a></td>
+        <td><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.name }}</a></td>
+        <td><a title="Редагувати" href="{% url "students_edit" group.leader.id %}">{{ group.leader.name }}</a></td>
         <td>
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,7 +36,6 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="{% url "groups_edit" group.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ group.id }}">Відвідування</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url "groups_delete" group.id %}">Видалити</a></li>
                 </ul>

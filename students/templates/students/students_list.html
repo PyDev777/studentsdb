@@ -40,7 +40,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="{% url "students_edit" student.id %}">Редагувати</a></li>
-                    <li><a href="/journal/{{ student.id }}">Відвідування</a></li>
+                    <li><a href="{% url "journal" %}">Відвідування</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url "students_delete" student.id %}">Видалити</a></li>
                 </ul>

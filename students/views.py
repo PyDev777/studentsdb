@@ -33,7 +33,7 @@ def students_add(request):
     return HttpResponse('<h1>Student Add Form</h1>')
 
 def students_edit(request, sid):
-    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
+    return render(request, 'students/students_edit.html', {})
 
 def students_delete(request, sid):
     return HttpResponse('<h1>Delete Student %s</h1>' % sid)
@@ -44,14 +44,14 @@ def students_delete(request, sid):
 def groups_list(request):
     groups = (
         {"id": 1,
-         "group_name": 'МтМ-21',
-         "group_leader": 'Ячменев Олег'},
+         "name": u'МтМ-21',
+         "leader": {"id": 1, "name": u'Ячменев Олег'}},
         {"id": 2,
-         "group_name": 'МтМ-22',
-         "group_leader": 'Подоба Віталій'},
+         "name": u'МтМ-22',
+         "leader": {"id": 2, "name": u'Подоба Віталій'}},
         {"id": 3,
-         "group_name": 'МтМ-23',
-         "group_leader": 'Іванов Андрій'}
+         "name": u'МтМ-23',
+         "leader": {"id": 3, "name": u'Іванов Андрій'}}
     )
     return render(request, 'students/groups_list.html', {'groups': groups})
 
@@ -64,4 +64,9 @@ def groups_edit(request, gid):
 def groups_delete(request, gid):
     return HttpResponse('<h1>Delete Group %s</h1>' % gid)
 
+
+# Views for Journal
+
+def journal(request):
+    return render(request, 'students/journal.html', {})
 
