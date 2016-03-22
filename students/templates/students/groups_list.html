@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -18,7 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
 </head>
 
 <body>
@@ -47,15 +49,9 @@
         <div class="row" id="sub-header">
             <div class="col-xs-12">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation">
-                        <a href="#">Студенти</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#">Відвідування</a>
-                    </li>
-                    <li role="presentation" class="active">
-                        <a href="#">Групи</a>
-                    </li>
+                    <li role="presentation"><a href="{% url "home" %}">Студенти</a></li>
+                    <li role="presentation"><a href="/journal">Відвідування</a></li>
+                    <li role="presentation" class="active"><a href="{% url "groups" %}">Групи</a></li>
                 </ul>
             </div>
         </div>
@@ -68,7 +64,7 @@
                 <h2>Групи</h2>
 
                 <!-- Add Group Button -->
-                <a class="btn btn-primary" href="#">Додати групу</a>
+                <a class="btn btn-primary" href="{% url "groups_add" %}">Додати групу</a>
 
                 <!-- Start Groups Listing -->
                 <table class="table table-hover table-striped">
@@ -81,60 +77,28 @@
                     </tr>
                     </thead>
                     <tbody>
+
+                    {% for group in groups %}
                     <tr>
-                        <td>1</td>
-                        <td><a title="Редагувати" href="#">МтМ-21</a></td>
-                        <td><a title="Редагувати" href="#">Ячменев Олег</a></td>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a title="Редагувати" href="#">{{ group.group_name }}</a></td>
+                        <td><a title="Редагувати" href="#">{{ group.group_leader }}</a></td>
                         <td>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Дія <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Редагувати</a></li>
-                                  <li><a href="#">Відвідування</a></li>
-                                  <li role="separator" class="divider"></li>
-                                  <li><a href="#">Видалити</a></li>
-                              </ul>
-                          </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Дія <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url "groups_edit" group.id %}">Редагувати</a></li>
+                                    <li><a href="/journal/{{ group.id }}">Відвідування</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{% url "groups_delete" group.id %}">Видалити</a></li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a title="Редагувати" href="#">МтМ-22</a></td>
-                        <td><a title="Редагувати" href="#">Віталій Подоба</a></td>
-                        <td>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Дія <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Редагувати</a></li>
-                                  <li><a href="#">Відвідування</a></li>
-                                  <li role="separator" class="divider"></li>
-                                  <li><a href="#">Видалити</a></li>
-                              </ul>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><a title="Редагувати" href="#">МтМ-23</a></td>
-                        <td><a title="Редагувати" href="#">Іванов Андрій</a></td>
-                        <td>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Дія <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#">Редагувати</a></li>
-                                  <li><a href="#">Відвідування</a></li>
-                                  <li role="separator" class="divider"></li>
-                                  <li><a href="#">Видалити</a></li>
-                              </ul>
-                          </div>
-                        </td>
-                    </tr>
+                    {% endfor %}
+
                     </tbody>
                 </table>
                 <nav>
