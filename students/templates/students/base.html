@@ -20,7 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="{% static "css/main.css" %}">
+    <link rel="stylesheet" href="{{ PORTAL_URL }}{% static "css/main.css" %}">
     {% block extra_css %}{% endblock extra_css %}
 
 </head>
@@ -54,10 +54,10 @@
                     <li role="presentation" {% if students_url == request.path %} class="active" {% endif %}>
                         <a href="{% url "home" %}">Студенти</a>
                     </li>
-                    <li role="presentation" {% if journal_url == request.path %} class="active" {% endif %}>
+                    <li role="presentation" {% if journal_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "journal" %}">Відвідування</a>
                     </li>
-                    <li role="presentation" {% if groups_url == request.path %} class="active" {% endif %}>
+                    <li role="presentation" {% if groups_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "groups" %}">Групи</a>
                     </li>
                 </ul>
