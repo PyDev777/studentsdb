@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
-
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 
@@ -27,7 +27,7 @@ def students_list(request):
          'ticket': 5332,
          'image': 'img/piv.png'}
     )
-    return render(request, 'students/students_list.html', {'students': students})
+    return render(request, 'students/students_list.html', {'students': students, 'students_url': reverse('home')})
 
 def students_add(request):
     return HttpResponse('<h1>Student Add Form</h1>')
@@ -53,7 +53,7 @@ def groups_list(request):
          "name": u'МтМ-23',
          "leader": {"id": 3, "name": u'Іванов Андрій'}}
     )
-    return render(request, 'students/groups_list.html', {'groups': groups})
+    return render(request, 'students/groups_list.html', {'groups': groups, 'groups_url': reverse('groups')})
 
 def groups_add(request):
     return HttpResponse('<h1>Group Add Form</h1>')
@@ -68,5 +68,5 @@ def groups_delete(request, gid):
 # Views for Journal
 
 def journal(request):
-    return render(request, 'students/journal.html', {})
+    return render(request, 'students/journal.html', {'journal_url': reverse('journal')})
 
