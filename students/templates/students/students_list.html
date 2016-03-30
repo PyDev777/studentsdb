@@ -14,7 +14,6 @@
 
 <!-- Start Students Listing -->
 <table class="table table-hover table-striped table-condensed">
-    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
     <thead>
     <tr>
         <th>
@@ -53,7 +52,6 @@
         <th>Дії</th>
     </tr>
     </thead>
-    {% endwith %}
     <tbody>
 
     {% for student in students %}
