@@ -14,16 +14,39 @@
 
 <!-- Start Students Listing -->
 <table class="table table-hover table-striped table-condensed">
+    {% with order_by=request.GET.order_by  reverse=request.GET.reverse %}
     <thead>
     <tr>
         <th><a href="#">#</a></th>
         <th>Фото</th>
-        <th><a href="#">Прізвище&uarr;</a></th>
-        <th><a href="#">Ім'я</a></th>
-        <th><a href="#">№ білета</a></th>
+        <th>
+            <a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Прізвище
+                {% if order_by == 'last_name' and reverse != '1' %}&uarr;
+                {% elif order_by == 'last_name' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "home" %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Ім'я
+                {% if order_by == 'first_name' and reverse != '1' %}&uarr;
+                {% elif order_by == 'first_name' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "home" %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                № білета
+                {% if order_by == 'ticket' and reverse != '1' %}&uarr;
+                {% elif order_by == 'ticket' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
         <th>Дії</th>
     </tr>
     </thead>
+    {% endwith %}
     <tbody>
 
     {% for student in students %}
