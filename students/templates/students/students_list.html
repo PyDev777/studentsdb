@@ -89,7 +89,29 @@
 <!-- End Students Listing -->
 
 <!-- Start Pagination -->
-{% include "students/pagination.html" %}
+{% if students.has_other_pages %}
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a href="{% url "home" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                    &laquo;
+                </a>
+            </li>
+            {% for p in students.paginator.page_range %}
+                <li {% if students.number == p %}class="active"{% endif %}>
+                    <a href="{% url "home" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                        {{ p }}
+                    </a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="{% url "home" %}?page={{ students.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endif%}
 <!-- End Pagination -->
 
 {% endblock content %}

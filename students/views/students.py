@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..models import Student
 
 
@@ -22,8 +22,20 @@ def students_list(request):
     if reverse_by == '1':
         students = students.reverse()
 
-    return render(request, 'students/students_list.html', {'students': students, 'order_by': order_by, 'reverse': reverse_by})
+    # paginate students
+    # PageNotAnInteger: if page is not an integer, deliver first page
+    # if page is out of range (e.g. 9999), deliver last page of results
+    paginator = Paginator(students, 3)
+    page = request.GET.get('page')
 
+    try:
+        students = paginator.page(page)
+    except PageNotAnInteger:
+        students = paginator.page(1)
+    except EmptyPage:
+        students = paginator.page(paginator.num_pages)
+
+    return render(request, 'students/students_list.html', {'students': students, 'order_by': order_by, 'reverse': reverse_by})
 
 
 def students_add(request):
