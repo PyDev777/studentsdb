@@ -16,9 +16,30 @@
 <table class="table table-hover table-striped">
     <thead>
     <tr>
-        <th><a href="#">#</a></th>
-        <th><a href="#">Назва&uarr;</a></th>
-        <th><a href="#">Староста</a></th>
+        <th>
+            <a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                #
+                {% if order_by == 'id' and reverse != '1' %}&uarr;
+                {% elif order_by == 'id' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Назва
+                {% if order_by == 'title' and reverse != '1' %}&uarr;
+                {% elif order_by == 'title' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Староста
+                {% if order_by == 'leader' and reverse != '1' %}&uarr;
+                {% elif order_by == 'leader' and reverse == '1' %}&darr;
+                {% endif %}
+            </a>
+        </th>
         <th>Дії</th>
     </tr>
     </thead>
@@ -27,8 +48,8 @@
     {% for group in groups %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.name }}</a></td>
-        <td><a title="Редагувати" href="{% url "students_edit" group.leader.id %}">{{ group.leader.name }}</a></td>
+        <td><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
+        <td>{{ group.leader }}</td>
         <td>
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,6 +68,31 @@
     </tbody>
 </table>
 <!-- End Groups Listing -->
-{% include "students/pagination.html" %}
+
+<!-- Start Pagination -->
+{% if groups.has_other_pages %}
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a href="{% url "groups" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                    &laquo;
+                </a>
+            </li>
+            {% for p in groups.paginator.page_range %}
+                <li {% if groups.number == p %}class="active"{% endif %}>
+                    <a href="{% url "groups" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                        {{ p }}
+                    </a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="{% url "groups" %}?page={{ groups.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endif%}
+<!-- End Pagination -->
 
 {% endblock content %}

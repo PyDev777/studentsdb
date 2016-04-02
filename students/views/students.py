@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..models import Student
 
@@ -35,7 +36,12 @@ def students_list(request):
     except EmptyPage:
         students = paginator.page(paginator.num_pages)
 
-    return render(request, 'students/students_list.html', {'students': students, 'order_by': order_by, 'reverse': reverse_by})
+    return render(request, 'students/students_list.html',
+                  {'students': students,
+                   'order_by': order_by,
+                   'reverse': reverse_by,
+                   'students_url': reverse('home')
+                   })
 
 
 def students_add(request):
