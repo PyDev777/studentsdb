@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ..models.students import Student
+from ..models import Student
 
 
 # Views for Students
@@ -13,7 +13,6 @@ def students_list(request):
     students = Student.objects.all()
 
     # try to order students list
-
     order_by = request.GET.get('order_by', '')
     if order_by not in ('id', 'first_name', 'ticket'):
         order_by = 'last_name'
@@ -24,16 +23,15 @@ def students_list(request):
         students = students.reverse()
 
     # paginate students
-    # PageNotAnInteger: if page is not an integer, deliver first page
-    # if page is out of range (e.g. 9999), deliver last page of results
     paginator = Paginator(students, 3)
     page = request.GET.get('page')
-
     try:
         students = paginator.page(page)
     except PageNotAnInteger:
+        # if page is not an integer, deliver first page
         students = paginator.page(1)
     except EmptyPage:
+        # if page is out of range (e.g. 9999), deliver last page of results
         students = paginator.page(paginator.num_pages)
 
     return render(request, 'students/students_list.html',

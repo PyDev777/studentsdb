@@ -13,60 +13,64 @@
 <a class="btn btn-primary" href="{% url "groups_add" %}">Додати групу</a>
 
 <!-- Start Groups Listing -->
-<table class="table table-hover table-striped">
-    <thead>
-    <tr>
-        <th>
-            <a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
-                #
-                {% if order_by == 'id' and reverse != '1' %}&uarr;
-                {% elif order_by == 'id' and reverse == '1' %}&darr;
-                {% endif %}
-            </a>
-        </th>
-        <th>
-            <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
-                Назва
-                {% if order_by == 'title' and reverse != '1' %}&uarr;
-                {% elif order_by == 'title' and reverse == '1' %}&darr;
-                {% endif %}
-            </a>
-        </th>
-        <th>
-            <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}">
-                Староста
-                {% if order_by == 'leader' and reverse != '1' %}&uarr;
-                {% elif order_by == 'leader' and reverse == '1' %}&darr;
-                {% endif %}
-            </a>
-        </th>
-        <th>Дії</th>
-    </tr>
-    </thead>
-    <tbody>
+{% if groups %}
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>
+                <a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    #
+                    {% if order_by == 'id' and reverse != '1' %}&uarr;
+                    {% elif order_by == 'id' and reverse == '1' %}&darr;
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    Назва
+                    {% if order_by == 'title' and reverse != '1' %}&uarr;
+                    {% elif order_by == 'title' and reverse == '1' %}&darr;
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    Староста
+                    {% if order_by == 'leader' and reverse != '1' %}&uarr;
+                    {% elif order_by == 'leader' and reverse == '1' %}&darr;
+                    {% endif %}
+                </a>
+            </th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
 
-    {% for group in groups %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
-        <td>{{ group.leader }}</td>
-        <td>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Дія <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="{% url "groups_edit" group.id %}">Редагувати</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="{% url "groups_delete" group.id %}">Видалити</a></li>
-                </ul>
-            </div>
-        </td>
-    </tr>
-    {% endfor %}
+        {% for group in groups %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
+            <td>{{ group.leader }}</td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Дія <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="{% url "groups_edit" group.id %}">Редагувати</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "groups_delete" group.id %}">Видалити</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+{% else %}
+    <p>Групи відсутні</p>
+{% endif %}
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
