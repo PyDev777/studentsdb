@@ -1,0 +1,65 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Додати студента{% endblock meta_title %}
+
+{% block title %}Додати студента{% endblock title %}
+
+
+{% block content %}
+
+    <form action="{% url 'students_add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="first_name">Ім'я</label>
+            <input type="text" value="" name="first_name" id="first_name" placeholder="Введіть Ваше ім'я">
+        </div>
+
+        <div>
+            <label for="last_name">Прізвище</label>
+            <input type="text" value="" name="last_name" id="last_name" placeholder="Введіть Ваше прізвище">
+        </div>
+
+        <div>
+            <label for="middle_name">По батькові</label>
+            <input type="text" value="" name="middle_name" id="middle_name" placeholder="Введіть Ваше по батькові">
+        </div>
+
+        <div>
+            <label for="birthday">Дата народження</label>
+            <input type="text" value="" name="birthday" id="birthday" placeholder="Наприклад: 1984-12-30">
+        </div>
+
+        <div>
+            <label for="photo">Фото</label>
+            <input type="text" value="" name="photo" id="photo">
+        </div>
+
+        <div>
+            <label for="ticket">Білет</label>
+            <input type="text" value="" name="ticket" id="ticket">
+        </div>
+
+        <div>
+            <label for="student_group">Група</label>
+            <select name="student_group" id="student_group">
+                <option value="">Виберіть групу</option>
+                {% for group in groups %}
+                    <option value="{{ group.id }}">{{ group.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="notes">Додаткові нотатки</label>
+            <textarea name="notes" id="notes" class="form-control"></textarea>
+        </div>
+
+        <div>
+            <button type="submit" name="add_button">Додати</button>
+            <button type="submit" name="cancel_button">Скасувати</button>
+        </div>
+    </form>
+
+{% endblock content %}
