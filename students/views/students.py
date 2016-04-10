@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import datetime
 from ..models import Student, Group
 
 
@@ -72,7 +73,12 @@ def students_add(request):
             if not birthday:
                 errors['birthday'] = u"Дата народження є обов'язковою"
             else:
-                data['birthday'] = birthday
+                try:
+                    datetime.strptime(birthday, '%Y-%m-%d')
+                except Exception:
+                    errors['birthday'] = u"Введіть корректний формат дати (напр. 1984-12-30)"
+                else:
+                    data['birthday'] = birthday
 
             ticket = request.POST.get('ticket', '').strip()
             if not ticket:
@@ -84,7 +90,11 @@ def students_add(request):
             if not student_group:
                 errors['student_group'] = u"Оберіть групу для студента"
             else:
-                data['student_group'] = Group.objects.get(pk=student_group)
+                groups = Group.objects.filter(pk=student_group)
+                if len(groups) != 1:
+                    errors['student_group'] = u"Оберіть корректну групу"
+                else:
+                    data['student_group'] = groups[0]
 
             photo = request.FILES.get('photo')
             if photo:
@@ -99,7 +109,8 @@ def students_add(request):
             else:
                 # render form with errors and previous user input
                 return render(request, 'students/students_add.html',
-                              {'groups': Group.objects.all().order_by('title'), 'errors': errors})
+                              {'groups': Group.objects.all().order_by('title'),
+                               'errors': errors})
 
         elif request.POST.get('cancel_button') is not None:
             # redirect to home page on cancel button
