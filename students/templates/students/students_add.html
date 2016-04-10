@@ -6,6 +6,13 @@
 
 {% block title %}Додати студента{% endblock title %}
 
+<!-- Status Message -->
+{% block status_message %}
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">Будь-ласка, виправте наступні помилки:</div>
+    {% endif %}
+{% endblock %}
+
 
 {% block content %}
 
