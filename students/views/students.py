@@ -122,7 +122,7 @@ def students_add(request):
 
 
 def students_edit(request, sid):
-    return render(request, 'students/students_edit.html', {})
+    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
 
 
 def students_delete(request, sid):

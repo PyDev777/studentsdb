@@ -32,10 +32,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #555555;
 }
 
-.inlined {
-  display: inline-block;
-}
-
 #th-center th {
   text-align: center;
   vertical-align: middle;
@@ -44,8 +40,4 @@ h1, h2, h3, h4, h5, h6 {
 .table-caption {
   text-align: center;
   padding-bottom: 10px;
-}
-
-#input_file {
-  margin-top: 15px;
 }
