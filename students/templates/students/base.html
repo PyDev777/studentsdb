@@ -74,9 +74,11 @@
             <div class="col-xs-12" id="content-column">
 
                 <!-- Status Message -->
-                {% comment "Not used alert so far" %}
-                    <div class="alert alert-warning">Зміни скасовано</div>
-                {% endcomment %}
+                {% block status_message %}
+                    {% if request.GET.status_message %}
+                        <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+                    {% endif %}
+                {% endblock %}
 
                 <!-- Tittle -->
                 <h2>{% block title %}{% endblock title %}</h2>
