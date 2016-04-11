@@ -1,6 +1,7 @@
 {% extends "students/base.html" %}
 
 {% load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block meta_title %}Зв'язок з Адміністратором{% endblock meta_title %}
 
@@ -14,9 +15,6 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url "contact_admin" %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Надіслати" name="send_button">
-    </form>
+    {% crispy form %}
+    <br>
 {% endblock content %}
