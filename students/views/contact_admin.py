@@ -10,7 +10,6 @@ from crispy_forms.layout import Submit
 
 
 class ContactForm(forms.Form):
-
     def __init__(self, *args, **kwargs):
         # call original initializator
         super(ContactForm, self).__init__(*args, **kwargs)
@@ -59,7 +58,7 @@ def contact_admin(request):
             try:
                 send_mail(subject, message, from_email, [ADMIN_EMAIL])
             except Exception:
-                message = u'Під час відправки листа виникла непередбачувана помилка.' \
+                message = u'Під час відправки листа виникла непередбачувана помилка. ' \
                           u'Спробуйте скористатись даною формою пізніше.'
             else:
                 message = u'Повідомлення успішно надіслане!'

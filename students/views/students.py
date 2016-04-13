@@ -5,10 +5,24 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
+from django.views.generic import UpdateView
 from ..models import Student, Group
 
 
 # Views for Students
+class StudentUpdateView(UpdateView):
+    model = Student
+    template_name = 'students/students_edit.html'
+
+    def get_success_url(self):
+        return u'%s?status_message=Студента успішно збережено!' % reverse('home')
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(u'%s?status_message=Редагування студента успішно відмінено!' % reverse('home'))
+        else:
+            return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
 
 def students_list(request):
     students = Student.objects.all()
@@ -105,7 +119,9 @@ def students_add(request):
                 student = Student(**data)
                 student.save()
                 # redirect user to students list
-                return HttpResponseRedirect(u"%s?status_message=Студента %s %s успішно додано!" % (reverse('home'), data['first_name'], data['last_name']))
+                return HttpResponseRedirect(u"%s?status_message=Студента %s %s успішно додано!" % (reverse('home'),
+                                                                                                   data['first_name'],
+                                                                                                   data['last_name']))
             else:
                 # render form with errors and previous user input
                 return render(request, 'students/students_add.html',
@@ -119,10 +135,6 @@ def students_add(request):
         # initial form render
         return render(request, 'students/students_add.html',
                       {'groups': Group.objects.all().order_by('title')})
-
-
-def students_edit(request, sid):
-    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
 
 
 def students_delete(request, sid):
