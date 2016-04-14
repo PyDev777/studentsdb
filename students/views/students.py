@@ -5,28 +5,30 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
-
 from django.forms import ModelForm
 from django.views.generic import UpdateView
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from crispy_forms.bootstrap import FormActions
-
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+# from crispy_forms.bootstrap import FormActions
 from ..models import Student, Group
 
 
 # Views for Students
-
 class StudentUpdateForm(ModelForm):
     class Meta:
         model = Student
+        fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes']
 
     def __init__(self, *args, **kwargs):
-        # call original initializator
-        super(StudentUpdateForm, self).__init__(*args, **kwargs)
 
         # this helper object allows us to customize form
-        self.helper = FormHelper(self)
+        self.helper = FormHelper()
+
+        self.helper.layout = Layout(
+            Fieldset('', 'first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes'),
+            ButtonHolder(
+                Submit('add_button', u'Зберегти', css_class='btn btn-primary'),
+                Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -35,14 +37,12 @@ class StudentUpdateForm(ModelForm):
 
         # twitter bootstrap styles
         self.helper.help_text_inline = True
-        self.helper.html5_required = True
+        # self.helper.html5_required = True
         self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-10'
+        self.helper.field_class = 'col-sm-5'
 
-        # form buttons
-        self.helper.layout[-1] = FormActions(
-            Submit('add_button', u'Зберегти', css_class='btn btn-primary'),
-            Submit('cancel_button', u'Скасувати', css_class='btn btn-link'))
+        # call original initialization
+        super(StudentUpdateForm, self).__init__(*args, **kwargs)
 
 
 class StudentUpdateView(UpdateView):
