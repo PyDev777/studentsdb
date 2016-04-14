@@ -66,7 +66,7 @@ class StudentDeleteView(DeleteView):
     template_name = 'students/students_confirm_delete.html'
 
     def get_success_url(self):
-            return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
