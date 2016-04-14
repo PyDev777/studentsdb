@@ -21,6 +21,9 @@ class StudentUpdateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
 
+        # call original initialization
+        super(StudentUpdateForm, self).__init__(*args, **kwargs)
+
         # this helper object allows us to customize form
         self.helper = FormHelper()
 
@@ -41,8 +44,6 @@ class StudentUpdateForm(ModelForm):
         self.helper.label_class = 'col-sm-2 control-label'
         self.helper.field_class = 'col-sm-5'
 
-        # call original initialization
-        super(StudentUpdateForm, self).__init__(*args, **kwargs)
 
 
 class StudentUpdateView(UpdateView):
