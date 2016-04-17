@@ -4,11 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.forms import ModelForm
 from django.views.generic import CreateView, UpdateView, DeleteView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
-from ..models import Student
+from django.forms import ModelForm, ValidationError
+from ..models import Student, Group
 
 
 # Views for Students
@@ -35,6 +35,15 @@ class StudentUpdateForm(ModelForm):
         self.helper.help_text_inline = True
         self.helper.label_class = 'col-sm-2 control-label'
         self.helper.field_class = 'col-sm-5'
+
+    def clean_student_group(self):
+        """ Check if student is leader in any group
+        If yes, then ensure it's the same as selected group. """
+        # get group where current student is a leader
+        groups = Group.objects.filter(leader=self.instance)
+        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
+            raise ValidationError(u'Студент є старостою іншої групи', code='invalid')
+        return self.cleaned_data['student_group']
 
 
 class StudentUpdateView(UpdateView):

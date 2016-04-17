@@ -4,11 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from django.views.generic import CreateView, UpdateView, DeleteView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
-from ..models import Group
+from ..models import Student, Group
 
 
 # Views for Groups
@@ -32,6 +32,15 @@ class GroupUpdateForm(ModelForm):
         self.helper.help_text_inline = True
         self.helper.label_class = 'col-sm-2 control-label'
         self.helper.field_class = 'col-sm-5'
+
+    def clean_leader(self):
+        """ Check if (student not in this group) and (student is not None)
+        If yes, then ensure it's the same as selected group. """
+        # get students in current group
+        students = Student.objects.filter(student_group=self.instance)
+        if (self.cleaned_data['leader'] not in students) and self.cleaned_data['leader']:
+            raise ValidationError(u'Студент не належить цій групі', code='invalid')
+        return self.cleaned_data['leader']
 
 
 class GroupUpdateView(UpdateView):
@@ -97,7 +106,6 @@ class GroupDeleteView(DeleteView):
             return HttpResponseRedirect(u'%s?status_message=Видалення групи відмінено!' % reverse('groups'))
         else:
             return super(GroupDeleteView, self).post(request, *args, **kwargs)
-
 
 
 def groups_list(request):
