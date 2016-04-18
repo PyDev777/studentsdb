@@ -139,6 +139,5 @@ def students_list(request):
     return render(request, 'students/students_list.html',
                   {'students': students,
                    'order_by': order_by,
-                   'reverse': reverse_by,
-                   'students_url': reverse('home')
+                   'reverse': reverse_by
                    })
