@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView
+from students.views.journal import JournalView
 from .settings import MEDIA_ROOT, DEBUG
 
 urlpatterns = patterns('',
@@ -22,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^groups/(?P<pk>\d+)/delete/$', GroupDeleteView.as_view(), name='groups_delete'),
 
     # Journal
-    url(r'^journal/$', 'students.views.journal.journal', name='journal'),
+    url(r'^journal/$', JournalView.as_view(), name='journal'),
 
     # Contact Admin Form
     url(r'^contact-admin/$', 'students.views.contact_admin.contact_admin', name='contact_admin'),
