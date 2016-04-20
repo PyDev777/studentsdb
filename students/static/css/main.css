@@ -32,12 +32,20 @@ h1, h2, h3, h4, h5, h6 {
     color: #555555;
 }
 
-#th-center th {
-  text-align: center;
-  vertical-align: middle;
-}
+/*#th-center th {*/
+  /*text-align: center;*/
+  /*vertical-align: middle;*/
+/*}*/
 
 .table-caption {
   text-align: center;
   padding-bottom: 10px;
+}
+
+/* Journal Table Styles */
+td.day-box,
+th.day-header {
+    /*padding: 4px !important;*/
+    vertical-align: middle !important;
+    text-align: center;
 }

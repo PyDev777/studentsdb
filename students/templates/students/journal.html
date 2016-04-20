@@ -23,8 +23,8 @@
         <table class="table table-hover table-striped table-bordered table-condensed" id="students-journal">
             <thead>
                 <tr class="header">
-                    <th class="num">#</th>
-                    <th class="name">Студент</th>
+                    <th class="num day-header">#</th>
+                    <th class="name day-header">Студент</th>
                     {% for day in month_header %}
                         <th class="day-header">
                             <!-- TODO: translate day name -->
@@ -40,7 +40,7 @@
                 {% csrf_token %}
                 {% for student in students %}
                     <tr>
-                        <td>
+                        <td class="day-box">
                             {% if is_paginated %}
                                 {{ page_obj.start_index|add:forloop.counter|add:"-1" }}
                             {% else %}
