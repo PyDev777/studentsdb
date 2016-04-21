@@ -45,8 +45,13 @@ class GroupUpdateForm(ModelForm):
 
 class GroupUpdateView(UpdateView):
     model = Group
-    template_name = 'students/groups_edit.html'
+    template_name = 'students/groups_add_edit.html'
     form_class = GroupUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupUpdateView, self).get_context_data(**kwargs)
+        context['title'] = u'Редагування групи'
+        return context
 
     def get_success_url(self):
         return u'%s?status_message=Групу успішно збережено!' % reverse('groups')
@@ -81,8 +86,13 @@ class GroupAddForm(ModelForm):
 
 class GroupAddView(CreateView):
     model = Group
-    template_name = 'students/groups_add.html'
+    template_name = 'students/groups_add_edit.html'
     form_class = GroupAddForm
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupAddView, self).get_context_data(**kwargs)
+        context['title'] = u'Додавання групи'
+        return context
 
     def get_success_url(self):
         return u'%s?status_message=Групу успішно збережено!' % reverse('groups')

@@ -3,9 +3,9 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block meta_title %}Редагування студента{% endblock meta_title %}
+{% block meta_title %}{{ title }}{% endblock meta_title %}
 
-{% block title %}Редагування студента{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 
 {% block status_message %}
     {% if form.errors %}

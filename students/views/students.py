@@ -48,8 +48,13 @@ class StudentUpdateForm(ModelForm):
 
 class StudentUpdateView(UpdateView):
     model = Student
-    template_name = 'students/students_edit.html'
+    template_name = 'students/students_add_edit.html'
     form_class = StudentUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentUpdateView, self).get_context_data(**kwargs)
+        context['title'] = u'Редагування студента'
+        return context
 
     def get_success_url(self):
         return u'%s?status_message=Студента успішно збережено!' % reverse('home')
@@ -84,8 +89,13 @@ class StudentAddForm(ModelForm):
 
 class StudentAddView(CreateView):
     model = Student
-    template_name = 'students/students_add.html'
+    template_name = 'students/students_add_edit.html'
     form_class = StudentAddForm
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentAddView, self).get_context_data(**kwargs)
+        context['title'] = u'Додавання студента'
+        return context
 
     def get_success_url(self):
         return u'%s?status_message=Студента успішно збережено!' % reverse('home')
