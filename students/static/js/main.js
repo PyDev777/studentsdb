@@ -1,4 +1,5 @@
 function initJournal(){
+    var err_mess = $('#ajax-error');
     var indicator = $('#ajax-progress-indicator');
 
     $('.day-box input[type="checkbox"]').click(function(event){
@@ -16,11 +17,13 @@ function initJournal(){
                     'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                 },
                 'beforeSend': function (xhr, settings) {
+                    err_mess.hide();
                     indicator.show();
                 },
                 'error': function(xhr, status, error) {
-                    alert(error);
                     indicator.hide();
+                    err_mess[0].innerHTML = 'Виникла помилка збереження: ' + xhr.responseText.split('\n')[1];
+                    err_mess.show();
                 },
                 'success': function(data, status, xhr) {
                     indicator.hide();

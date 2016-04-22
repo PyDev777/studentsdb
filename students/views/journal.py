@@ -100,10 +100,10 @@ class JournalView(TemplateView):
 
         # set new presence on journal for given student and save result
         setattr(journal, 'present_day%d' % current_date.day, present)
-        journal.save()
 
-        # return success status
-        return JsonResponse({'status': 'success'})
+        journal.save()
+        # raise Exception('Database error!')
+        return JsonResponse({})
 
 
 

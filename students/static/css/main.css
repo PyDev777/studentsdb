@@ -48,3 +48,8 @@ th.day-header {
 #ajax-progress-indicator {
     display: none;
 }
+
+#ajax-error {
+    display: none;
+    color: red;
+}
