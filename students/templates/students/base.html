@@ -58,7 +58,7 @@
                         <a href="{% url "home" %}">Студенти</a>
                     </li>
                     <li role="presentation" {% if journal_url in request.path %} class="active" {% endif %}>
-                        <a href="{% url "journal" %}">Відвідування</a>
+                        <a href="{% url "journal" student.id %}">Відвідування</a>
                     </li>
                     <li role="presentation" {% if groups_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "groups" %}">Групи</a>
