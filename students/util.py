@@ -61,7 +61,6 @@ def get_groups(request):
 
     groups = []
     for group in Group.objects.all().order_by('title'):
-        print 'group =', group
         groups.append({
             'id': group.id,
             'title': group.title,
