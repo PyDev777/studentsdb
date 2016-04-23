@@ -3,13 +3,12 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import CreateView, UpdateView, DeleteView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django.forms import ModelForm, ValidationError
 from ..models import Student, Group
-
+from ..util import paginate, get_current_group
 
 # Views for Students
 class StudentUpdateForm(ModelForm):
@@ -122,7 +121,14 @@ class StudentDeleteView(DeleteView):
 
 
 def students_list(request):
-    students = Student.objects.all()
+
+    # check if we need to show only one group of students
+    current_group = get_current_group(request)
+    if current_group:
+        students = Student.objects.filter(student_group=current_group)
+    else:
+        # otherwise show all students
+        students = Student.objects.all()
 
     # try to order students list
     order_by = request.GET.get('order_by', '')
@@ -134,21 +140,8 @@ def students_list(request):
     if reverse_by == '1':
         students = students.reverse()
 
-    # paginate students
-    paginator = Paginator(students, 3)
-    page = request.GET.get('page')
-    try:
-        students = paginator.page(page)
-    except PageNotAnInteger:
-        # if page is not an integer, deliver first page
-        students = paginator.page(1)
-    except EmptyPage:
-        # if page is out of range (e.g. 9999), deliver last page of results
-        students = paginator.page(paginator.num_pages)
+    # apply pagination, 3 students per page
+    context = paginate(students, 3, request, {}, var_name='students')
+    context.update({'order_by': order_by, 'reverse': reverse_by, 'students_url': reverse('home')})
 
-    return render(request, 'students/students_list.html',
-                  {'students': students,
-                   'order_by': order_by,
-                   'reverse': reverse_by,
-                   'students_url': reverse('home')
-                   })
+    return render(request, 'students/students_list.html', context)
