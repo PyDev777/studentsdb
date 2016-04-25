@@ -56,15 +56,16 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-/to_sqlite_data.json
 # PyBuilder
 target/
-
+/students/static/js/bootstrap-datetimepicker.min.js
+/students/static/js/jquery.min.js
+/students/static/js/bootstrap.min.js
+/students/static/js/jquery.cookie.js
+/students/static/js/moment.min.js
+/students/static/css/bootstrap.min.css
 local_settings.py
 .idea/
 /demo_data.json
 /pg_data.json
-/students/static/js/jquery.min.js
-/students/static/js/bootstrap.min.js
-/students/static/css/bootstrap.min.css
-
+/to_sqlite_data.json

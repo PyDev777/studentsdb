@@ -45,6 +45,11 @@ th.day-header {
     text-align: center;
 }
 
+td.student-box,
+td.group-box {
+    vertical-align: middle !important;
+}
+
 #ajax-progress-indicator {
     display: none;
 }
