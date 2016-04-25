@@ -1,3 +1,11 @@
+function initDateFields() {
+    $('input.dateinput').datetimepicker({
+        'format': 'YYYY-MM-DD'
+    }).on('dp.hide', function(event) {
+        $(this).blur();
+    });
+}
+
 function initGroupSelector() {
     // look up select element with groups and attach our even handler
     // on field "change" event
@@ -57,4 +65,5 @@ function initJournal(){
 $(document).ready(function () {
     initJournal();
     initGroupSelector();
+    initDateFields();
 });
