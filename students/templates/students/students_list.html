@@ -63,7 +63,7 @@
                 {% if student.photo %}
                     <img src="{{ student.photo.url }}" height="30" width="30" class="img-circle">
                 {% else %}
-                    <img src="{% static "img/default_user.png" %}" height="30" width="30" class="img-circle">
+                    <img src="{{ PORTAL_URL }}{% static "img/default_user.png" %}" height="30" width="30" class="img-circle">
                 {% endif %}
             </td>
             <td class="student-box"><a title="Редагувати" href="{% url "students_edit" student.id %}">{{ student.last_name }}</a></td>
