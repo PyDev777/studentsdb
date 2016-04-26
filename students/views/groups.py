@@ -20,7 +20,7 @@ class GroupUpdateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(GroupUpdateForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(
@@ -70,7 +70,7 @@ class GroupAddForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(GroupAddForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(

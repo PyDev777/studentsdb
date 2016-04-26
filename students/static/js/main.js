@@ -30,7 +30,6 @@ function initGroupSelector() {
 function initJournal(){
     var err_mess = $('#ajax-error');
     var indicator = $('#ajax-progress-indicator');
-
     $('.day-box input[type="checkbox"]').click(function(event){
         var box = $(this);
         $.ajax(

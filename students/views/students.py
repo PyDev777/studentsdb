@@ -20,7 +20,7 @@ class StudentUpdateForm(ModelForm):
         # call original initialization
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
         # this helper object allows us to customize form
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset('', 'first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
@@ -72,7 +72,7 @@ class StudentAddForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(StudentAddForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset('', 'first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
