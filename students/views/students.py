@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView
 from crispy_forms.helper import FormHelper
+from crispy_forms.bootstrap import AppendedText
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django.forms import ModelForm, ValidationError
 from ..models import Student, Group
@@ -22,7 +23,9 @@ class StudentUpdateForm(ModelForm):
         # this helper object allows us to customize form
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Fieldset('', 'first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes'),
+            Fieldset('', 'first_name', 'last_name', 'middle_name',
+                     AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
+                     'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
                 Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
@@ -74,7 +77,9 @@ class StudentAddForm(ModelForm):
         super(StudentAddForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Fieldset('', 'first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes'),
+            Fieldset('', 'first_name', 'last_name', 'middle_name',
+                     AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
+                     'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
                 Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
