@@ -66,8 +66,16 @@
                     <img src="{{ PORTAL_URL }}{% static "img/default_user.png" %}" height="30" width="30" class="img-circle">
                 {% endif %}
             </td>
-            <td class="student-box"><a title="Редагувати" href="{% url "students_edit" student.id %}">{{ student.last_name }}</a></td>
-            <td class="student-box"><a title="Редагувати" href="{% url "students_edit" student.id %}">{{ student.first_name }}</a></td>
+                <td class="student-box">
+                    <a title="Редагувати" class="student-edit-form-link" href="{% url "students_edit" student.id %}">
+                        {{ student.last_name }}
+                    </a>
+                </td>
+                <td class="student-box">
+                    <a title="Редагувати" class="student-edit-form-link" href="{% url "students_edit" student.id %}">
+                        {{ student.first_name }}
+                    </a>
+                </td>
             <td class="student-box">{{ student.ticket }}</td>
             <td>
                 <div class="btn-group">
@@ -75,10 +83,22 @@
                         Дія <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{% url "students_edit" student.id %}">Редагувати</a></li>
-                        <li><a href="{% url "journal" student.id %}">Відвідування</a></li>
+                        <li>
+                            <a class="student-edit-form-link" href="{% url "students_edit" student.id %}">
+                                Редагувати
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url "journal" student.id %}">
+                                Відвідування
+                            </a>
+                        </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "students_delete" student.id %}">Видалити</a></li>
+                        <li>
+                            <a href="{% url "students_delete" student.id %}">
+                                Видалити
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </td>
