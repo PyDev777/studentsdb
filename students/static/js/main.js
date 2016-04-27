@@ -1,7 +1,76 @@
+function initEditStudentForm(form, modal) {
+    // attach datepicker
+    initDateFields();
+
+    // close modal window on Cancel button click
+    form.find('input[name="cancel_button"]').click(function (event) {
+        modal.modal('hide');
+        return false;
+    });
+
+    // make form work in AJAX mode
+    form.ajaxForm({
+        'dataType': 'html',
+        'error': function() {
+            alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            return false;
+        },
+        'success': function(data, status, xhr) {
+            var html = $(data),
+                netform = html.find('#content-column form');
+
+            // copy alert to modal window
+            modal.find('.modal-body').html(html.find('.alert'));
+
+            // copy form to modal if we found it in server response
+            if (netform.length > 0) {
+                modal.find('.modal-body').append(netform);
+
+                // initialize form fields and buttons
+                initEditStudentForm(netform, modal);
+            } else {
+                // if no form, it means success and we need to reload page
+                // to get updated students list;
+                // reload after 2 seconds, so that user can read
+                // success message
+                setTimeout(function(){location.reload(true);}, 500);
+            }
+
+        }
+    });
+}
+
 function initEditStudentPage() {
     $('a.student-edit-form-link').click(function(event) {
-        var modal = $('#myModal');
-        modal.modal('show');
+        var link = $(this);
+        $.ajax({
+            'url': link.attr('href'),
+            'dataType': 'html',
+            'type': 'get',
+            'success': function(data, status, xhr) {
+                // check if we got successfull response from the server
+                if (status != 'success') {
+                    alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+                    return false;
+                }
+                // update modal window with arrived content from the server
+                var modal = $('#myModal'),
+                    html = $(data),
+                    form = html.find('#content-column form');
+                modal.find('.modal-title').html(html.find('#content-column h2').text());
+                modal.find('.modal-body').html(form);
+
+                // init our edit form
+                initEditStudentForm(form, modal);
+
+                // setup and show modal window finally
+                modal.modal('show');
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+                return false;
+            }
+        });
         return false;
     });
 }
@@ -36,8 +105,8 @@ function initGroupSelector() {
 }
 
 function initJournal(){
-    var err_mess = $('#ajax-error');
-    var indicator = $('#ajax-progress-indicator');
+    var err_mess = $('#ajax-error'),
+        indicator = $('#ajax-progress-indicator');
     $('.day-box input[type="checkbox"]').click(function(event){
         var box = $(this);
         $.ajax(

@@ -35,8 +35,8 @@ class StudentUpdateForm(ModelForm):
         self.helper.form_action = reverse('students_edit', kwargs={'pk': kwargs['instance'].id})
         # twitter bootstrap styles
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-5'
+        self.helper.label_class = 'col-sm-4 control-label'
+        self.helper.field_class = 'col-sm-7'
 
     def clean_student_group(self):
         """ Check if student is leader in any group
