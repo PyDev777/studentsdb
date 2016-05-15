@@ -9,11 +9,8 @@
 
 {% block content %}
 
-<!-- Add spinner -->
-<img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="ajax-loader" class="unvisible">
-
 <!-- Add Student Button -->
-<a class="btn btn-primary student-add-edit-form-link" href="{% url "students_add" %}">Додати Студента</a>
+<a class="btn btn-primary student-group-add-edit-form-link" href="{% url "students_add" %}">Додати Студента</a>
 
 <!-- Start Students Listing -->
 {% if students %}
@@ -70,12 +67,12 @@
                 {% endif %}
             </td>
                 <td class="student-box">
-                    <a title="Редагувати" class="student-add-edit-form-link" href="{% url "students_edit" student.id %}">
+                    <a title="Редагувати" class="student-group-add-edit-form-link" href="{% url "students_edit" student.id %}">
                         {{ student.last_name }}
                     </a>
                 </td>
                 <td class="student-box">
-                    <a title="Редагувати" class="student-add-edit-form-link" href="{% url "students_edit" student.id %}">
+                    <a title="Редагувати" class="student-group-add-edit-form-link" href="{% url "students_edit" student.id %}">
                         {{ student.first_name }}
                     </a>
                 </td>
@@ -87,7 +84,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a class="student-add-edit-form-link" href="{% url "students_edit" student.id %}">
+                            <a class="student-group-add-edit-form-link" href="{% url "students_edit" student.id %}">
                                 Редагувати
                             </a>
                         </li>

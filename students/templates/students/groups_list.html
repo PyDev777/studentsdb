@@ -10,7 +10,7 @@
 {% block content %}
 
 <!-- Add Group Button -->
-<a class="btn btn-primary" href="{% url "groups_add" %}">Додати групу</a>
+<a class="btn btn-primary student-group-add-edit-form-link" href="{% url "groups_add" %}">Додати групу</a>
 
 <!-- Start Groups Listing -->
 {% if groups %}
@@ -49,7 +49,7 @@
         {% for group in groups %}
         <tr>
             <td class="group-box">{{ forloop.counter }}</td>
-            <td class="group-box"><a title="Редагувати" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
+            <td class="group-box"><a title="Редагувати" class="student-group-add-edit-form-link" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
             <td class="group-box">{{ group.leader }}</td>
             <td>
                 <div class="btn-group">
@@ -57,7 +57,7 @@
                         Дія <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{% url "groups_edit" group.id %}">Редагувати</a></li>
+                        <li><a class="student-group-add-edit-form-link" href="{% url "groups_edit" group.id %}">Редагувати</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{% url "groups_delete" group.id %}">Видалити</a></li>
                     </ul>

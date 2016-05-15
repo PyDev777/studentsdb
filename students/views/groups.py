@@ -30,8 +30,8 @@ class GroupUpdateForm(ModelForm):
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_edit', kwargs={'pk': kwargs['instance'].id})
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-5'
+        self.helper.label_class = 'col-sm-4 control-label'
+        self.helper.field_class = 'col-sm-7'
 
     def clean_leader(self):
         """ Check if (student not in this group) and (student is not None)
@@ -80,8 +80,8 @@ class GroupAddForm(ModelForm):
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_add')
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-5'
+        self.helper.label_class = 'col-sm-4 control-label'
+        self.helper.field_class = 'col-sm-7'
 
 
 class GroupAddView(CreateView):

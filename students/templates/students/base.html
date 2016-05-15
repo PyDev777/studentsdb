@@ -92,6 +92,9 @@
                 <!-- Tittle -->
                 <h2>{% block title %}{% endblock title %}</h2>
 
+                <!-- Add spinner -->
+                <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="ajax-loader" class="unvisible">
+
                 <!-- Content -->
                 {% block content %}{% endblock content %}
 

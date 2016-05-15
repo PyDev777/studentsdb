@@ -1,4 +1,4 @@
-function initAddEditStudentForm(form, modal) {
+function initAddEditStudentGroupForm(form, modal) {
     // attach datepicker
     initDateFields();
 
@@ -41,7 +41,7 @@ function initAddEditStudentForm(form, modal) {
                 modal.find('.modal-body').append(netform);
 
                 // initialize form fields and buttons
-                initAddEditStudentForm(netform, modal);
+                initAddEditStudentGroupForm(netform, modal);
             } else {
                 // if no form, it means success and we need to reload page
                 // to get updated students list;
@@ -60,8 +60,8 @@ function initAddEditStudentForm(form, modal) {
     });
 }
 
-function initAddEditStudentPage() {
-    $('a.student-add-edit-form-link').click(function(event) {
+function initAddEditStudentGroupPage() {
+    $('a.student-group-add-edit-form-link').click(function(event) {
         var link = $(this),
             spinner = $('#ajax-loader');
         if (spinner.hasClass('unvisible')) {
@@ -86,7 +86,7 @@ function initAddEditStudentPage() {
                     modal.find('.modal-body').html(form);
 
                     // init our edit form
-                    initAddEditStudentForm(form, modal);
+                    initAddEditStudentGroupForm(form, modal);
 
                     // setup and show modal window finally
                     modal.modal({
@@ -175,5 +175,5 @@ $(document).ready(function () {
     initJournal();
     initGroupSelector();
     initDateFields();
-    initAddEditStudentPage();
+    initAddEditStudentGroupPage();
 });
