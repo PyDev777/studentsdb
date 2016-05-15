@@ -41,7 +41,7 @@ function initAddEditStudentForm(form, modal) {
                 modal.find('.modal-body').append(netform);
 
                 // initialize form fields and buttons
-                initEditStudentForm(netform, modal);
+                initAddEditStudentForm(netform, modal);
             } else {
                 // if no form, it means success and we need to reload page
                 // to get updated students list;
