@@ -2,15 +2,29 @@ function initEditStudentForm(form, modal) {
     // attach datepicker
     initDateFields();
 
+    var cancel_btn = form.find('input[name="cancel_button"]'),
+        save_btn = form.find('input[name="save_button"]'),
+        field_set = form.find('fieldset'),
+        close_btn = $('#myModal button'),
+        spinner = $('#ajax-loader');
+
     // close modal window on Cancel button click
-    form.find('input[name="cancel_button"]').click(function (event) {
+    cancel_btn.click(function (event) {
         modal.modal('hide');
         return false;
     });
 
     // make form work in AJAX mode
+
     form.ajaxForm({
         'dataType': 'html',
+        'beforeSend': function() {
+            spinner.removeClass('unvisible');
+            field_set.prop("disabled", true);
+            save_btn.prop("disabled", true);
+            cancel_btn.prop("disabled", true);
+            close_btn.attr('disabled', 'disabled');
+        },
         'error': function() {
             alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             return false;
@@ -35,7 +49,13 @@ function initEditStudentForm(form, modal) {
                 // success message
                 setTimeout(function(){location.reload(true);}, 500);
             }
-
+        },
+        'complete': function () {
+            spinner.addClass('unvisible');
+            field_set.prop("disabled", false);
+            save_btn.prop("disabled", false);
+            cancel_btn.prop("disabled", false);
+            close_btn.removeAttr('disabled');
         }
     });
 }
