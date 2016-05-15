@@ -135,7 +135,6 @@ def students_list(request):
         # otherwise show all students
         students = Student.objects.all()
 
-    # try to order students list
     order_by = request.GET.get('order_by', '')
     if order_by not in ('id', 'first_name', 'ticket'):
         order_by = 'last_name'

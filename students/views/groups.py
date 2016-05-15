@@ -3,12 +3,12 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms import ModelForm, ValidationError
 from django.views.generic import CreateView, UpdateView, DeleteView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from ..models import Student, Group
+from ..util import paginate
 
 
 # Views for Groups
@@ -119,32 +119,20 @@ class GroupDeleteView(DeleteView):
 
 
 def groups_list(request):
+
     groups = Group.objects.all()
 
-    # try to order groups list
     order_by = request.GET.get('order_by', '')
     if order_by not in ('id', 'leader'):
         order_by = 'title'
     groups = groups.order_by(order_by)
+
     reverse_by = request.GET.get('reverse', '')
     if reverse_by == '1':
         groups = groups.reverse()
 
-    # paginate groups
-    paginator = Paginator(groups, 1)
-    page = request.GET.get('page')
-    try:
-        groups = paginator.page(page)
-    except PageNotAnInteger:
-        # if page is not an integer, deliver first page
-        groups = paginator.page(1)
-    except EmptyPage:
-        # if page is out of range (e.g. 9999), deliver last page of results
-        groups = paginator.page(paginator.num_pages)
+    # apply pagination, 2 groups per page
+    context = paginate(groups, 2, request, {}, var_name='groups')
+    context.update({'order_by': order_by, 'reverse': reverse_by, 'groups_url': reverse('groups')})
 
-    return render(request, 'students/groups_list.html',
-                  {'groups': groups,
-                   'order_by': order_by,
-                   'reverse': reverse_by,
-                   'groups_url': reverse('groups')
-                   })
+    return render(request, 'students/groups_list.html', context)

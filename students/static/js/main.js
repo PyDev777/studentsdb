@@ -61,7 +61,7 @@ function initAddEditStudentGroupForm(form, modal) {
 }
 
 function initAddEditStudentGroupPage() {
-    $('a.student-group-add-edit-form-link').click(function(event) {
+    $('a.form-link').click(function(event) {
         var link = $(this),
             spinner = $('#ajax-loader');
         if (spinner.hasClass('unvisible')) {
