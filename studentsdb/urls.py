@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView
-from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView
+from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
+from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.journal import JournalView
 from .settings import MEDIA_ROOT, DEBUG
 
@@ -11,13 +11,13 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     # Students urls
-    url(r'^$', 'students.views.students.students_list', name='home'),
+    url(r'^$', StudentListView.as_view(), name='home'),
     url(r'^students/add/$', StudentAddView.as_view(), name='students_add'),
     url(r'^students/(?P<pk>\d+)/edit/$', StudentUpdateView.as_view(), name='students_edit'),
     url(r'^students/(?P<pk>\d+)/delete/$', StudentDeleteView.as_view(), name='students_delete'),
 
     # Groups urls
-    url(r'^groups/$', 'students.views.groups.groups_list', name='groups'),
+    url(r'^groups/$', GroupListView.as_view(), name='groups'),
     url(r'^groups/add/$', GroupAddView.as_view(), name='groups_add'),
     url(r'^groups/(?P<pk>\d+)/edit/$', GroupUpdateView.as_view(), name='groups_edit'),
     url(r'^groups/(?P<pk>\d+)/delete/$', GroupDeleteView.as_view(), name='groups_delete'),

@@ -1,9 +1,8 @@
 # coding: utf-8
 
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
@@ -11,7 +10,7 @@ from django.forms import ModelForm, ValidationError
 from ..models import Student, Group
 from ..util import paginate, get_current_group
 
-# Views for Students
+
 class StudentUpdateForm(ModelForm):
     class Meta:
         model = Student
@@ -125,27 +124,32 @@ class StudentDeleteView(DeleteView):
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
 
 
-def students_list(request):
+class StudentListView(TemplateView):
+    template_name = 'students/students_list.html'
 
-    # check if we need to show only one group of students
-    current_group = get_current_group(request)
-    if current_group:
-        students = Student.objects.filter(student_group=current_group)
-    else:
-        # otherwise show all students
-        students = Student.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        context['students_url'] = reverse('home')
 
-    order_by = request.GET.get('order_by', '')
-    if order_by not in ('id', 'first_name', 'ticket'):
-        order_by = 'last_name'
-    students = students.order_by(order_by)
+        current_group = get_current_group(self.request)
+        if current_group:
+            students = Student.objects.filter(student_group=current_group)
+        else:
+            # otherwise show all students
+            students = Student.objects.all()
 
-    reverse_by = request.GET.get('reverse', '')
-    if reverse_by == '1':
-        students = students.reverse()
+        order_by = self.request.GET.get('order_by', '')
+        if order_by not in ('id', 'first_name', 'ticket'):
+            order_by = 'last_name'
+        students = students.order_by(order_by)
+        context['order_by'] = order_by
 
-    # apply pagination, 3 students per page
-    context = paginate(students, 3, request, {}, var_name='students')
-    context.update({'order_by': order_by, 'reverse': reverse_by, 'students_url': reverse('home')})
+        reverse_by = self.request.GET.get('reverse', '')
+        if reverse_by == '1':
+            students = students.reverse()
+        context['reverse'] = reverse_by
 
-    return render(request, 'students/students_list.html', context)
+        # apply pagination, 3 students per page
+        context.update(paginate(students, 3, self.request, {}, var_name='students'))
+
+        return context

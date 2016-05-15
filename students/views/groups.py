@@ -1,17 +1,14 @@
 # coding: utf-8
 
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm, ValidationError
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from ..models import Student, Group
 from ..util import paginate
 
-
-# Views for Groups
 
 class GroupUpdateForm(ModelForm):
     class Meta:
@@ -118,21 +115,26 @@ class GroupDeleteView(DeleteView):
             return super(GroupDeleteView, self).post(request, *args, **kwargs)
 
 
-def groups_list(request):
+class GroupListView(TemplateView):
+    template_name = 'students/groups_list.html'
 
-    groups = Group.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(GroupListView, self).get_context_data(**kwargs)
+        context['groups_url'] = reverse('groups')
 
-    order_by = request.GET.get('order_by', '')
-    if order_by not in ('id', 'leader'):
-        order_by = 'title'
-    groups = groups.order_by(order_by)
+        groups = Group.objects.all()
+        order_by = self.request.GET.get('order_by', '')
+        if order_by not in ('id', 'leader'):
+            order_by = 'title'
+        groups = groups.order_by(order_by)
+        context['order_by'] = order_by
 
-    reverse_by = request.GET.get('reverse', '')
-    if reverse_by == '1':
-        groups = groups.reverse()
+        reverse_by = self.request.GET.get('reverse', '')
+        if reverse_by == '1':
+            groups = groups.reverse()
+        context['reverse'] = reverse_by
 
-    # apply pagination, 2 groups per page
-    context = paginate(groups, 2, request, {}, var_name='groups')
-    context.update({'order_by': order_by, 'reverse': reverse_by, 'groups_url': reverse('groups')})
+        # apply pagination, 2 groups per page
+        context.update(paginate(groups, 2, self.request, {}, var_name='groups'))
 
-    return render(request, 'students/groups_list.html', context)
+        return context
