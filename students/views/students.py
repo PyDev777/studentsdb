@@ -87,8 +87,8 @@ class StudentAddForm(ModelForm):
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('students_add')
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-5'
+        self.helper.label_class = 'col-sm-4 control-label'
+        self.helper.field_class = 'col-sm-7'
 
 
 class StudentAddView(CreateView):

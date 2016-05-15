@@ -1,4 +1,4 @@
-function initEditStudentForm(form, modal) {
+function initAddEditStudentForm(form, modal) {
     // attach datepicker
     initDateFields();
 
@@ -60,8 +60,8 @@ function initEditStudentForm(form, modal) {
     });
 }
 
-function initEditStudentPage() {
-    $('a.student-edit-form-link').click(function(event) {
+function initAddEditStudentPage() {
+    $('a.student-add-edit-form-link').click(function(event) {
         var link = $(this),
             spinner = $('#ajax-loader');
         if (spinner.hasClass('unvisible')) {
@@ -86,7 +86,7 @@ function initEditStudentPage() {
                     modal.find('.modal-body').html(form);
 
                     // init our edit form
-                    initEditStudentForm(form, modal);
+                    initAddEditStudentForm(form, modal);
 
                     // setup and show modal window finally
                     modal.modal({
@@ -175,5 +175,5 @@ $(document).ready(function () {
     initJournal();
     initGroupSelector();
     initDateFields();
-    initEditStudentPage();
+    initAddEditStudentPage();
 });
