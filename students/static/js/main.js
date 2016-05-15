@@ -42,39 +42,48 @@ function initEditStudentForm(form, modal) {
 
 function initEditStudentPage() {
     $('a.student-edit-form-link').click(function(event) {
-        var link = $(this);
-        $.ajax({
-            'url': link.attr('href'),
-            'dataType': 'html',
-            'type': 'get',
-            'success': function(data, status, xhr) {
-                // check if we got successfull response from the server
-                if (status != 'success') {
+        var link = $(this),
+            spinner = $('#ajax-loader');
+        if (spinner.hasClass('unvisible')) {
+            $.ajax({
+                'url': link.attr('href'),
+                'dataType': 'html',
+                'type': 'get',
+                'beforeSend': function() {
+                    spinner.removeClass('unvisible');
+                },
+                'success': function(data, status, xhr) {
+                    // check if we got successfull response from the server
+                    if (status != 'success') {
+                        alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+                        return false;
+                    }
+                    // update modal window with arrived content from the server
+                    var modal = $('#myModal'),
+                        html = $(data),
+                        form = html.find('#content-column form');
+                    modal.find('.modal-title').html(html.find('#content-column h2').text());
+                    modal.find('.modal-body').html(form);
+
+                    // init our edit form
+                    initEditStudentForm(form, modal);
+
+                    // setup and show modal window finally
+                    modal.modal({
+                        'keyboard': false,
+                        'backdrop': false,
+                        'show': true
+                    });
+                },
+                'error': function () {
                     alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
                     return false;
+                },
+                'complete': function () {
+                    spinner.addClass('unvisible');
                 }
-                // update modal window with arrived content from the server
-                var modal = $('#myModal'),
-                    html = $(data),
-                    form = html.find('#content-column form');
-                modal.find('.modal-title').html(html.find('#content-column h2').text());
-                modal.find('.modal-body').html(form);
-
-                // init our edit form
-                initEditStudentForm(form, modal);
-
-                // setup and show modal window finally
-                modal.modal({
-                    'keyboard': false,
-                    'backdrop': false,
-                    'show': true
-                });
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-                return false;
-            }
-        });
+            });
+        }
         return false;
     });
 }

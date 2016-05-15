@@ -9,6 +9,9 @@
 
 {% block content %}
 
+<!-- Add spinner -->
+<img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="ajax-loader" class="unvisible">
+
 <!-- Add Student Button -->
 <a class="btn btn-primary" href="{% url "students_add" %}">Додати Студента</a>
 

@@ -58,3 +58,15 @@ td.group-box {
     display: none;
     color: red;
 }
+
+#ajax-loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 150px;
+    width: 150px;
+}
+
+.unvisible {
+    display: none;
+}
