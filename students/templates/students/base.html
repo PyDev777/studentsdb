@@ -92,9 +92,6 @@
                 <!-- Tittle -->
                 <h2>{% block title %}{% endblock title %}</h2>
 
-                <!-- Add spinner -->
-                <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="ajax-loader" class="unvisible">
-
                 <!-- Content -->
                 {% block content %}{% endblock content %}
 
@@ -114,6 +111,9 @@
     </div>
     <!-- End container -->
 
+    <!-- Add spinner -->
+    <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="modal-loader" class="unvisible">
+
     <!-- Start Modal student add/edit -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -125,6 +125,8 @@
                     <h4 class="modal-title" id="MyModalLabel"></h4>
                 </div>
                 <div class="modal-body"></div>
+                <!-- Add spinner -->
+                <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}" id="send-loader" class="unvisible">
                 <div class="modal-footer"></div>
             </div>
         </div>

@@ -58,10 +58,14 @@ td.group-box {
     color: red;
 }
 
-#ajax-loader {
+#send-loader,
+#modal-loader {
     position: fixed;
     left: 0;
+    right: 0;
     top: 0;
+    bottom: 0;
+    margin: auto auto;
     height: 150px;
     width: 150px;
 }

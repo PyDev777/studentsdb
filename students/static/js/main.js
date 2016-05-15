@@ -6,7 +6,7 @@ function initAddEditStudentGroupForm(form, modal) {
         save_btn = form.find('input[name="save_button"]'),
         field_set = form.find('fieldset'),
         close_btn = $('#myModal button'),
-        spinner = $('#ajax-loader');
+        send_spinner = $('#send-loader');
 
     // close modal window on Cancel button click
     cancel_btn.click(function (event) {
@@ -19,7 +19,7 @@ function initAddEditStudentGroupForm(form, modal) {
     form.ajaxForm({
         'dataType': 'html',
         'beforeSend': function() {
-            spinner.removeClass('unvisible');
+            send_spinner.removeClass('unvisible');
             field_set.prop("disabled", true);
             save_btn.prop("disabled", true);
             cancel_btn.prop("disabled", true);
@@ -41,7 +41,7 @@ function initAddEditStudentGroupForm(form, modal) {
                 modal.find('.modal-body').append(netform);
 
                 // initialize form fields and buttons
-                initAddEditStudentGroupForm(netform, modal);
+                initAddEditStudentGroupForm(netform, modal, spinner);
             } else {
                 // if no form, it means success and we need to reload page
                 // to get updated students list;
@@ -51,7 +51,7 @@ function initAddEditStudentGroupForm(form, modal) {
             }
         },
         'complete': function () {
-            spinner.addClass('unvisible');
+            send_spinner.addClass('unvisible');
             field_set.prop("disabled", false);
             save_btn.prop("disabled", false);
             cancel_btn.prop("disabled", false);
@@ -63,14 +63,14 @@ function initAddEditStudentGroupForm(form, modal) {
 function initAddEditStudentGroupPage() {
     $('a.form-link').click(function(event) {
         var link = $(this),
-            spinner = $('#ajax-loader');
-        if (spinner.hasClass('unvisible')) {
+            modal_spinner = $('#modal-loader');
+        if (modal_spinner.hasClass('unvisible')) {
             $.ajax({
                 'url': link.attr('href'),
                 'dataType': 'html',
                 'type': 'get',
                 'beforeSend': function() {
-                    spinner.removeClass('unvisible');
+                    modal_spinner.removeClass('unvisible');
                 },
                 'success': function(data, status, xhr) {
                     // check if we got successfull response from the server
@@ -100,7 +100,7 @@ function initAddEditStudentGroupPage() {
                     return false;
                 },
                 'complete': function () {
-                    spinner.addClass('unvisible');
+                    modal_spinner.addClass('unvisible');
                 }
             });
         }
