@@ -74,29 +74,9 @@
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
-{% if groups.has_other_pages %}
-    <nav>
-        <ul class="pagination">
-            <li>
-                <a href="{% url "groups" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
-                    &laquo;
-                </a>
-            </li>
-            {% for p in groups.paginator.page_range %}
-                <li {% if groups.number == p %}class="active"{% endif %}>
-                    <a href="{% url "groups" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
-                        {{ p }}
-                    </a>
-                </li>
-            {% endfor %}
-            <li>
-                <a href="{% url "groups" %}?page={{ groups.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">
-                    &raquo;
-                </a>
-            </li>
-        </ul>
-    </nav>
-{% endif%}
+{% with object_list=groups %}
+  {% include "students/pagination.html" %}
+{% endwith %}
 <!-- End Pagination -->
 
 {% endblock content %}
