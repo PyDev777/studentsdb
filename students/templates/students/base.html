@@ -61,16 +61,16 @@
             <div class="col-xs-12">
                 <ul class="nav nav-tabs">
                     <li role="presentation" {% if students_url == request.path %} class="active" {% endif %}>
-                        <a href="{% url "home" %}">Студенти</a>
+                        <a class="tab-link" href="{% url "home" %}">Студенти</a>
                     </li>
                     <li role="presentation" {% if journal_url in request.path %} class="active" {% endif %}>
-                        <a href="{% url "journal" student.id %}">Відвідування</a>
+                        <a class="tab-link" href="{% url "journal" student.id %}">Відвідування</a>
                     </li>
                     <li role="presentation" {% if groups_url in request.path %} class="active" {% endif %}>
-                        <a href="{% url "groups" %}">Групи</a>
+                        <a class="tab-link" href="{% url "groups" %}">Групи</a>
                     </li>
                     <li role="presentation" {% if contact_admin in request.path %} class="active" {% endif %}>
-                        <a href="{% url "contact_admin" %}">Контакт</a>
+                        <a class="tab-link" href="{% url "contact_admin" %}">Контакт</a>
                     </li>
                 </ul>
             </div>

@@ -87,8 +87,8 @@ class JournalView(TemplateView):
                 'update_url': update_url
             })
 
-        # apply pagination, 10 students per page
-        context = paginate(students, 10, self.request, context, var_name='students')
+        # apply pagination, 5 students per page
+        context = paginate(students, 5, self.request, context, var_name='students')
 
         # finally return updated context with paginated students
         return context

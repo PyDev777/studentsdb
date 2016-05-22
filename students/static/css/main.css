@@ -48,6 +48,12 @@ td.group-box {
     vertical-align: middle !important;
 }
 
+textarea,
+select,
+input {
+    max-width: 300px;
+}
+
 #ajax-progress-indicator,
 .unvisible {
     display: none;

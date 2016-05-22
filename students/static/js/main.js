@@ -15,7 +15,6 @@ function initAddEditStudentGroupForm(form, modal) {
     });
 
     // make form work in AJAX mode
-
     form.ajaxForm({
         'dataType': 'html',
         'beforeSend': function() {
@@ -27,21 +26,20 @@ function initAddEditStudentGroupForm(form, modal) {
         },
         'error': function() {
             alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            return false;
         },
         'success': function(data, status, xhr) {
             var html = $(data),
-                netform = html.find('#content-column form');
+                newform = html.find('#content-column form');
 
             // copy alert to modal window
             modal.find('.modal-body').html(html.find('.alert'));
 
             // copy form to modal if we found it in server response
-            if (netform.length > 0) {
-                modal.find('.modal-body').append(netform);
+            if (newform.length > 0) {
+                modal.find('.modal-body').append(newform);
 
                 // initialize form fields and buttons
-                initAddEditStudentGroupForm(netform, modal, spinner);
+                initAddEditStudentGroupForm(newform, modal);
             } else {
                 // if no form, it means success and we need to reload page
                 // to get updated students list;
@@ -51,13 +49,14 @@ function initAddEditStudentGroupForm(form, modal) {
             }
         },
         'complete': function () {
-            send_spinner.addClass('unvisible');
             field_set.prop("disabled", false);
             save_btn.prop("disabled", false);
             cancel_btn.prop("disabled", false);
             close_btn.removeAttr('disabled');
+            send_spinner.addClass('unvisible');
         }
     });
+    return false;
 }
 
 function initAddEditStudentGroupPage() {
@@ -73,11 +72,6 @@ function initAddEditStudentGroupPage() {
                     modal_spinner.removeClass('unvisible');
                 },
                 'success': function(data, status, xhr) {
-                    // check if we got successfull response from the server
-                    if (status != 'success') {
-                        alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-                        return false;
-                    }
                     // update modal window with arrived content from the server
                     var modal = $('#myModal'),
                         html = $(data),
@@ -97,7 +91,6 @@ function initAddEditStudentGroupPage() {
                 },
                 'error': function () {
                     alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-                    return false;
                 },
                 'complete': function () {
                     modal_spinner.addClass('unvisible');
@@ -159,21 +152,53 @@ function initJournal(){
                     indicator.show();
                 },
                 'error': function(xhr, status, error) {
-                    indicator.hide();
                     err_mess[0].innerHTML = 'Виникла помилка збереження: ' + xhr.responseText.split('\n')[1];
                     err_mess.show();
                 },
-                'success': function(data, status, xhr) {
+                'complete': function() {
                     indicator.hide();
                 }
             }
         );
+        //return false;
     });
 }
 
-$(document).ready(function () {
+function initTabPage() {
+    $('a.tab-link').click(function(event) {
+        var link = $(this),
+            modal_spinner = $('#modal-loader');
+        $.ajax({
+            'url': link.attr('href'),
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                modal_spinner.removeClass('unvisible');
+            },
+            'success': function(data, status, xhr) {
+                var html = $(data);
+                $('#sub-header').html(html.find('#sub-header').children());
+                $('#content-columns').html(html.find('#content-columns').children());
+                initAll();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'complete': function() {
+                modal_spinner.addClass('unvisible');
+            }
+        });
+        return false;
+    })
+}
+
+function initAll() {
     initJournal();
     initGroupSelector();
-    initDateFields();
+    initTabPage();
     initAddEditStudentGroupPage();
+}
+
+$(document).ready(function () {
+    initAll();
 });
