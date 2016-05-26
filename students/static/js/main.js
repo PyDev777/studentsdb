@@ -252,7 +252,7 @@ function initTabs() {
 function initGroupSelector() {
     // look up select element with groups and attach our even handler
     // on field "change" event
-    $(document).on('change', '#group-selector select', function(e) {
+    $('#header').on('change', '#group-selector select', function(e) {
 
         // get value of currently selected group option
         var group = $(this).val();
