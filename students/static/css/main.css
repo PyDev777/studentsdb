@@ -64,8 +64,13 @@ input {
     color: red;
 }
 
-#send-loader,
-#modal-loader {
+.ajax-loader,
+.ajax-loader-modal {
+    display: none;
+}
+
+.ajax-loader img,
+.ajax-loader-modal img {
     position: fixed;
     left: 0;
     right: 0;

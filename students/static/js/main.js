@@ -1,4 +1,86 @@
+function initContactAdminForm(form) {
+    var save_btn = form.find('input[name="save_button"]');
+
+    // make form work in AJAX mode
+    form.ajaxForm({
+        'dataType': 'html',
+        'beforeSend': function() {
+            save_btn.prop("disabled", true);
+        },
+        'complete': function () {
+            save_btn.prop("disabled", false);
+        },
+        'error': function() {
+            alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+        },
+        'success': function(data, status, xhr) {
+            var html = $(data),
+                newform = html.find('#content-column form');
+
+            // copy alert to modal window
+            modal.find('.modal-body').html(html.find('.alert'));
+
+            // copy form to modal if we found it in server response
+            if (newform.length > 0) {
+                modal.find('.modal-body').append(newform);
+
+                // initialize form fields and buttons
+                initContactAdminForm(newform);
+            } else {
+                setTimeout(function(){location.reload(true);}, 500);
+            }
+        }
+    });
+    return false;
+}
+
+function initContactAdminPage() {
+    $(document).on('click', 'a.contact-link', function(e) {
+        var link = $(this),
+            spinner = $('.ajax-loader');
+        $.ajax({
+            'url': link.attr('href'),
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                spinner.show();
+            },
+            'complete': function () {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success': function(data, status, xhr) {
+                // update modal window with arrived content from the server
+                var html = $(data),
+                    form = html.find('#content-column form');
+
+                // init our edit form
+                initContactAdminForm(form);
+
+                // setup and show modal window finally
+                modal.modal({
+                    'keyboard': false,
+                    'backdrop': false,
+                    'show': true
+                });
+            }
+        });
+        return false;
+    });
+}
+
+function initDateFields() {
+    $('input.dateinput').datetimepicker({
+        'format': 'YYYY-MM-DD'
+    }).on('dp.hide', function() {
+        $(this).blur();
+    });
+}
+
 function initAddEditStudentGroupForm(form, modal) {
+
     // attach datepicker
     initDateFields();
 
@@ -6,10 +88,10 @@ function initAddEditStudentGroupForm(form, modal) {
         save_btn = form.find('input[name="save_button"]'),
         field_set = form.find('fieldset'),
         close_btn = $('#myModal button'),
-        send_spinner = $('#send-loader');
+        modal_spinner = $('.ajax-loader-modal');
 
     // close modal window on Cancel button click
-    cancel_btn.click(function (event) {
+    cancel_btn.on('click', function () {
         modal.modal('hide');
         return false;
     });
@@ -18,11 +100,16 @@ function initAddEditStudentGroupForm(form, modal) {
     form.ajaxForm({
         'dataType': 'html',
         'beforeSend': function() {
-            send_spinner.removeClass('unvisible');
-            field_set.prop("disabled", true);
-            save_btn.prop("disabled", true);
-            cancel_btn.prop("disabled", true);
-            close_btn.attr('disabled', 'disabled');
+            modal_spinner.show();
+            $([field_set, save_btn, cancel_btn, close_btn]).each(function() {
+                this.prop("disabled", true);
+            });
+        },
+        'complete': function () {
+            $([field_set, save_btn, cancel_btn, close_btn]).each(function() {
+                this.prop("disabled", false);
+            });
+            modal_spinner.hide();
         },
         'error': function() {
             alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
@@ -45,95 +132,59 @@ function initAddEditStudentGroupForm(form, modal) {
                 // to get updated students list;
                 // reload after 2 seconds, so that user can read
                 // success message
-                setTimeout(function(){location.reload(true);}, 500);
+                setTimeout(function() { location.reload(true); }, 500);
             }
-        },
-        'complete': function () {
-            field_set.prop("disabled", false);
-            save_btn.prop("disabled", false);
-            cancel_btn.prop("disabled", false);
-            close_btn.removeAttr('disabled');
-            send_spinner.addClass('unvisible');
         }
     });
     return false;
 }
 
 function initAddEditStudentGroupPage() {
-    $('a.form-link').click(function(event) {
+    $(document).on('click', 'a.form-link', function() {
         var link = $(this),
-            modal_spinner = $('#modal-loader');
-        if (modal_spinner.hasClass('unvisible')) {
-            $.ajax({
-                'url': link.attr('href'),
-                'dataType': 'html',
-                'type': 'get',
-                'beforeSend': function() {
-                    modal_spinner.removeClass('unvisible');
-                },
-                'success': function(data, status, xhr) {
-                    // update modal window with arrived content from the server
-                    var modal = $('#myModal'),
-                        html = $(data),
-                        form = html.find('#content-column form');
-                    modal.find('.modal-title').html(html.find('#content-column h2').text());
-                    modal.find('.modal-body').html(form);
+            spinner = $('.ajax-loader');
+        $.ajax({
+            'url': link.attr('href'),
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                spinner.show();
+            },
+            'complete': function () {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success': function(data, status, xhr) {
+                var modal = $('#myModal'),
+                    html = $(data),
+                    form = html.find('#content-column form');
 
-                    // init our edit form
-                    initAddEditStudentGroupForm(form, modal);
+                // update modal window with arrived content from the server
+                modal.find('.modal-title').html(html.find('#content-column h2').text());
+                modal.find('.modal-body').html(form);
 
-                    // setup and show modal window finally
-                    modal.modal({
-                        'keyboard': false,
-                        'backdrop': false,
-                        'show': true
-                    });
-                },
-                'error': function () {
-                    alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-                },
-                'complete': function () {
-                    modal_spinner.addClass('unvisible');
-                }
-            });
-        }
+                // init our edit form
+                initAddEditStudentGroupForm(form, modal);
+
+                // setup and show modal window finally
+                modal.modal({
+                    'keyboard': false,
+                    'backdrop': false,
+                    'show': true
+                });
+            }
+        });
         return false;
     });
 }
 
-function initDateFields() {
-    $('input.dateinput').datetimepicker({
-        'format': 'YYYY-MM-DD'
-    }).on('dp.hide', function(event) {
-        $(this).blur();
-    });
-}
-
-function initGroupSelector() {
-    // look up select element with groups and attach our even handler
-    // on field "change" event
-    $('#group-selector select').change(function(event) {
-        // get value of currently selected group option
-        var group = $(this).val();
-
-        if (group) {
-            // set cookie with expiration date 1 year since now;
-            // cookie creation function takes period in days
-            $.cookie('current_group', group, {'path': '/', 'expires': 365});
-        } else {
-            // otherwise we delete the cookie
-            $.removeCookie('current_group', {'path': '/'});
-        }
-        // and reload a page
-        location.reload(true);
-        return true;
-    });
-}
-
-function initJournal(){
+function initJournal() {
     var err_mess = $('#ajax-error'),
         indicator = $('#ajax-progress-indicator');
-    $('.day-box input[type="checkbox"]').click(function(event){
+
+    $(document).on('click', '.day-box input[type="checkbox"]', function(e) {
         var box = $(this);
         $.ajax(
             box.data('url'),
@@ -151,54 +202,83 @@ function initJournal(){
                     err_mess.hide();
                     indicator.show();
                 },
-                'error': function(xhr, status, error) {
-                    err_mess[0].innerHTML = 'Виникла помилка збереження: ' + xhr.responseText.split('\n')[1];
-                    err_mess.show();
-                },
                 'complete': function() {
                     indicator.hide();
+                },
+                'error': function(xhr, status, error) {
+                    err_mess.text = 'Виникла помилка збереження: ' + xhr.responseText.split('\n')[1];
+                    err_mess.show();
                 }
             }
         );
-        //return false;
     });
 }
 
-function initTabPage() {
-    $('a.tab-link').click(function(event) {
-        var link = $(this),
-            modal_spinner = $('#modal-loader');
+function initTabs() {
+    var tabs = $('.nav-tabs a');
+    $(document).on('click', '.nav-tabs a', function() {
+        var url = this.href,
+            spinner = $('.ajax-loader');
         $.ajax({
-            'url': link.attr('href'),
+            'url': url,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function() {
-                modal_spinner.removeClass('unvisible');
+                spinner.show();
             },
-            'success': function(data, status, xhr) {
-                var html = $(data);
-                $('#sub-header').html(html.find('#sub-header').children());
-                $('#content-columns').html(html.find('#content-columns').children());
-                initAll();
+            'complete': function() {
+                spinner.hide();
             },
             'error': function () {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
-            'complete': function() {
-                modal_spinner.addClass('unvisible');
+            'success': function(data, status, xhr) {
+                var html = $(data),
+                    title = $('title');
+                tabs.each(function(k, v) {
+                    if (v.href === url) {
+                        $(v).parent().addClass('active');
+                        $('#content-columns').html(html.find('#content-column'));
+                        title.text(title.text().split('-')[0] + '- ' + v.text);
+                    } else {
+                        $(v).parent().removeClass('active');
+                    }
+                });
+                // history
             }
         });
         return false;
-    })
+    });
 }
 
-function initAll() {
-    initJournal();
+function initGroupSelector() {
+    // look up select element with groups and attach our even handler
+    // on field "change" event
+    $(document).on('change', '#group-selector select', function(e) {
+
+        // get value of currently selected group option
+        var group = $(this).val();
+        if (group) {
+            // set cookie with expiration date 1 year since now;
+            // cookie creation function takes period in days
+            $.cookie('current_group', group, {'path': '/', 'expires': 365});
+        } else {
+
+            // otherwise we delete the cookie
+            $.removeCookie('current_group', {'path': '/'});
+        }
+
+        // and reload a page
+        location.reload(true);
+        return true;
+    });
+}
+
+
+$(function() {
     initGroupSelector();
-    initTabPage();
     initAddEditStudentGroupPage();
-}
-
-$(document).ready(function () {
-    initAll();
+    initJournal();
+    initContactAdminPage();
+    initTabs();
 });

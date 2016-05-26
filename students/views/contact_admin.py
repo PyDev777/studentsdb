@@ -11,12 +11,13 @@ from crispy_forms.layout import Submit
 
 
 class ContactForm(forms.Form):
+
     def __init__(self, *args, **kwargs):
         # call original initializator
         super(ContactForm, self).__init__(*args, **kwargs)
 
         # this helper object allows us to customize form
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -25,11 +26,11 @@ class ContactForm(forms.Form):
 
         # twitter bootstrap styles
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-2 control-label'
-        self.helper.field_class = 'col-sm-10'
+        self.helper.label_class = 'col-sm-4 control-label'
+        self.helper.field_class = 'col-sm-7'
 
         # form buttons
-        self.helper.add_input(Submit('send_button', u'Надіслати'))
+        self.helper.add_input(Submit('save_button', u'Надіслати', css_class="contact-link"))
 
     from_email = forms.EmailField(
         label=u"Ваша Емейл Адреса")
