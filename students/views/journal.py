@@ -8,6 +8,8 @@ from django.views.generic.base import TemplateView
 from ..models import MonthJournal, Student
 from ..util import paginate, get_current_group
 from django.http import JsonResponse
+# import random
+# from django.db import DatabaseError
 
 # Views for Journal
 
@@ -110,9 +112,11 @@ class JournalView(TemplateView):
         setattr(journal, 'present_day%d' % current_date.day, present)
 
         journal.save()
-        # raise Exception('Database error!')
-        return JsonResponse({})
 
+        # if random.random() > 0.5:
+        #     raise DatabaseError
+
+        return JsonResponse({})
 
 
 

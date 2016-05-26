@@ -55,12 +55,11 @@ input {
 }
 
 #ajax-progress-indicator,
-.unvisible {
+#ajax-error {
     display: none;
 }
 
 #ajax-error {
-    display: none;
     color: red;
 }
 

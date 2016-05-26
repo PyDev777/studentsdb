@@ -13,7 +13,7 @@ function initContactAdminForm(form) {
         'error': function() {
             alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
         },
-        'success': function(data, status, xhr) {
+        'success': function(data) {
             var html = $(data),
                 newform = html.find('#content-column form');
 
@@ -35,7 +35,7 @@ function initContactAdminForm(form) {
 }
 
 function initContactAdminPage() {
-    $(document).on('click', 'a.contact-link', function(e) {
+    $('#content-columns').on('click', 'a.contact-link', function(e) {
         var link = $(this),
             spinner = $('.ajax-loader');
         $.ajax({
@@ -51,7 +51,7 @@ function initContactAdminPage() {
             'error': function () {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
-            'success': function(data, status, xhr) {
+            'success': function(data) {
                 // update modal window with arrived content from the server
                 var html = $(data),
                     form = html.find('#content-column form');
@@ -114,7 +114,7 @@ function initAddEditStudentGroupForm(form, modal) {
         'error': function() {
             alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
         },
-        'success': function(data, status, xhr) {
+        'success': function(data) {
             var html = $(data),
                 newform = html.find('#content-column form');
 
@@ -140,7 +140,7 @@ function initAddEditStudentGroupForm(form, modal) {
 }
 
 function initAddEditStudentGroupPage() {
-    $(document).on('click', 'a.form-link', function() {
+    $('#content-columns').on('click', 'a.form-link', function() {
         var link = $(this),
             spinner = $('.ajax-loader');
         $.ajax({
@@ -156,7 +156,7 @@ function initAddEditStudentGroupPage() {
             'error': function () {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
-            'success': function(data, status, xhr) {
+            'success': function(data) {
                 var modal = $('#myModal'),
                     html = $(data),
                     form = html.find('#content-column form');
@@ -181,11 +181,10 @@ function initAddEditStudentGroupPage() {
 }
 
 function initJournal() {
-    var err_mess = $('#ajax-error'),
-        indicator = $('#ajax-progress-indicator');
-
-    $(document).on('click', '.day-box input[type="checkbox"]', function(e) {
-        var box = $(this);
+    $('#content-columns').on('click', '.day-box input[type="checkbox"]', function(e) {
+        var box = $(this),
+            err_mess = $('#ajax-error'),
+            indicator = $('#ajax-progress-indicator');
         $.ajax(
             box.data('url'),
             {
@@ -198,15 +197,14 @@ function initJournal() {
                     'present': box.is(':checked') ? '1': '',
                     'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                 },
-                'beforeSend': function (xhr, settings) {
+                'beforeSend': function () {
                     err_mess.hide();
                     indicator.show();
                 },
                 'complete': function() {
                     indicator.hide();
                 },
-                'error': function(xhr, status, error) {
-                    err_mess.text = 'Виникла помилка збереження: ' + xhr.responseText.split('\n')[1];
+                'error': function() {
                     err_mess.show();
                 }
             }
@@ -216,7 +214,7 @@ function initJournal() {
 
 function initTabs() {
     var tabs = $('.nav-tabs a');
-    $(document).on('click', '.nav-tabs a', function() {
+    $('#sub-header').on('click', '.nav-tabs a', function() {
         var url = this.href,
             spinner = $('.ajax-loader');
         $.ajax({
@@ -232,7 +230,7 @@ function initTabs() {
             'error': function () {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
-            'success': function(data, status, xhr) {
+            'success': function(data) {
                 var html = $(data),
                     title = $('title');
                 tabs.each(function(k, v) {
