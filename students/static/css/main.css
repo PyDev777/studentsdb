@@ -54,8 +54,27 @@ input {
     max-width: 300px;
 }
 
+#ajax-loader,
+#ajax-loader-modal {
+    display: none;
+}
+
+#ajax-loader > img,
+#ajax-loader-modal > img {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto auto;
+    height: 50px;
+    width: 50px;
+}
+
 #ajax-progress-indicator,
-#ajax-error {
+#ajax-error,
+#ajax-loader,
+#ajax-loader-modal {
     display: none;
 }
 
@@ -63,19 +82,3 @@ input {
     color: red;
 }
 
-.ajax-loader,
-.ajax-loader-modal {
-    display: none;
-}
-
-.ajax-loader img,
-.ajax-loader-modal img {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto auto;
-    height: 150px;
-    width: 150px;
-}

@@ -107,15 +107,13 @@
             </div>
         </div>
         <!-- End footer -->
-
     </div>
     <!-- End container -->
 
     <!-- Add spinner -->
-    <div class="ajax-loader">
+    <div id="ajax-loader">
         <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}">
     </div>
-
 
     <!-- Start Modal student add/edit -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -129,7 +127,7 @@
                 </div>
                 <!-- Add spinner -->
                 <div class="modal-body"></div>
-                <div class="ajax-loader-modal">
+                <div id="ajax-loader-modal">
                     <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}">
                 </div>
                 <div class="modal-footer"></div>

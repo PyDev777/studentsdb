@@ -71,7 +71,7 @@
         </table>
     {% endif %}
 
-    {% with object_list=students %}
+    {% with object_list=students baseUrl=journal_url %}
         {% include "students/pagination.html" %}
     {% endwith %}
 

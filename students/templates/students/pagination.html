@@ -4,19 +4,19 @@
         <nav>
             <ul class="pagination">
                 <li>
-                    <a href="?page=1{%if order_by %}&amp;order_by={{ order_by }}{%endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}">
+                    <a href="{{ baseUrl }}?page=1{%if order_by %}&amp;order_by={{ order_by }}{%endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" data-parent="">
                         &laquo;
                     </a>
                 </li>
                 {% for p in paginator.page_range %}
                     <li {% if object_list.number == p %}class="active"{% endif %}>
-                        <a href="?page={{ p }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}">
+                        <a href="{{ baseUrl }}?page={{ p }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}">
                             {{ p }}
                         </a>
                     </li>
                 {% endfor %}
                 <li>
-                    <a href="?page={{ paginator.num_pages }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}">
+                    <a href="{{ baseUrl }}?page={{ paginator.num_pages }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}">
                         &raquo;
                     </a>
                 </li>

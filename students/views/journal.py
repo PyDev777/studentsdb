@@ -4,10 +4,12 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from calendar import monthrange, weekday, day_abbr
 from django.core.urlresolvers import reverse
-from django.views.generic.base import TemplateView
+from django.views.generic import TemplateView
 from ..models import MonthJournal, Student
 from ..util import paginate, get_current_group
 from django.http import JsonResponse
+
+
 # import random
 # from django.db import DatabaseError
 
@@ -38,14 +40,15 @@ class JournalView(TemplateView):
         context['next_month'] = next_month.strftime('%Y-%m-%d')
         context['year'] = month.year
         context['month_verbose'] = month.strftime('%B')
-        
+
         # we'll use this variable in students pagination
         context['cur_month'] = month.strftime('%Y-%m-%d')
 
         # prepare variable for template to generate journal table header elements
         myear, mmonth = month.year, month.month
         number_of_days = monthrange(myear, mmonth)[1]
-        context['month_header'] = [{'day': d, 'verbose': day_abbr[weekday(myear, mmonth, d)][:2]} for d in range(1, number_of_days+1)]
+        context['month_header'] = [{'day': d, 'verbose': day_abbr[weekday(myear, mmonth, d)][:2]} for d in
+                                   range(1, number_of_days + 1)]
 
         # get all students from database
         # or just one if we need to display journal for one student
@@ -74,7 +77,7 @@ class JournalView(TemplateView):
 
             # fill in days presence list for current student
             days = []
-            for day in range(1, number_of_days+1):
+            for day in range(1, number_of_days + 1):
                 days.append({
                     'day': day,
                     'present': journal and getattr(journal, 'present_day%d' % day, False) or False,
@@ -96,7 +99,7 @@ class JournalView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        data =request.POST
+        data = request.POST
 
         # prepare student, dates and presence data
         current_date = datetime.strptime(data['date'], '%Y-%m-%d').date()
@@ -117,9 +120,3 @@ class JournalView(TemplateView):
         #     raise DatabaseError
 
         return JsonResponse({})
-
-
-
-
-
-

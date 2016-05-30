@@ -74,8 +74,8 @@
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
-{% with object_list=groups %}
-  {% include "students/pagination.html" %}
+{% with object_list=groups baseUrl=groups_url %}
+    {% include "students/pagination.html" %}
 {% endwith %}
 <!-- End Pagination -->
 

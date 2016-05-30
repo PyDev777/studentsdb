@@ -36,10 +36,9 @@ function initContactAdminForm(form) {
 
 function initContactAdminPage() {
     $('#content-columns').on('click', 'a.contact-link', function(e) {
-        var link = $(this),
-            spinner = $('.ajax-loader');
+        var spinner = $('#ajax-loader');
         $.ajax({
-            'url': link.attr('href'),
+            'url': this.href,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function() {
@@ -84,11 +83,11 @@ function initAddEditStudentGroupForm(form, modal) {
     // attach datepicker
     initDateFields();
 
-    var cancel_btn = form.find('input[name="cancel_button"]'),
+    var field_set = form.find('fieldset'),
         save_btn = form.find('input[name="save_button"]'),
-        field_set = form.find('fieldset'),
-        close_btn = $('#myModal button'),
-        modal_spinner = $('.ajax-loader-modal');
+        cancel_btn = form.find('input[name="cancel_button"]'),
+        close_btn = $('#myModal .modal-header button'),
+        modal_spinner = $('#ajax-loader-modal');
 
     // close modal window on Cancel button click
     cancel_btn.on('click', function () {
@@ -101,13 +100,13 @@ function initAddEditStudentGroupForm(form, modal) {
         'dataType': 'html',
         'beforeSend': function() {
             modal_spinner.show();
-            $([field_set, save_btn, cancel_btn, close_btn]).each(function() {
-                this.prop("disabled", true);
+            $.each([field_set, save_btn, cancel_btn, close_btn], function() {
+                this.prop("disabled", true)
             });
         },
         'complete': function () {
-            $([field_set, save_btn, cancel_btn, close_btn]).each(function() {
-                this.prop("disabled", false);
+            $.each([field_set, save_btn, cancel_btn, close_btn], function() {
+                this.prop("disabled", false)
             });
             modal_spinner.hide();
         },
@@ -141,10 +140,9 @@ function initAddEditStudentGroupForm(form, modal) {
 
 function initAddEditStudentGroupPage() {
     $('#content-columns').on('click', 'a.form-link', function() {
-        var link = $(this),
-            spinner = $('.ajax-loader');
+        var spinner = $('#ajax-loader');
         $.ajax({
-            'url': link.attr('href'),
+            'url': this.href,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function() {
@@ -213,10 +211,9 @@ function initJournal() {
 }
 
 function initTabs() {
-    var tabs = $('.nav-tabs a');
-    $('#sub-header').on('click', '.nav-tabs a', function() {
+    $('#sub-header ul.nav-tabs').on('click', 'a', function() {
         var url = this.href,
-            spinner = $('.ajax-loader');
+            spinner = $('#ajax-loader');
         $.ajax({
             'url': url,
             'dataType': 'html',
@@ -231,18 +228,45 @@ function initTabs() {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
             'success': function(data) {
-                var html = $(data),
-                    title = $('title');
-                tabs.each(function(k, v) {
+                var title = $('title');
+                $('#sub-header ul.nav-tabs a').each(function(k, v) {
                     if (v.href === url) {
-                        $(v).parent().addClass('active');
-                        $('#content-columns').html(html.find('#content-column'));
                         title.text(title.text().split('-')[0] + '- ' + v.text);
+                        $(v).parent().addClass('active');
+                        $('#content-columns').html($(data).find('#content-column'));
+                        initPagination();
                     } else {
                         $(v).parent().removeClass('active');
                     }
                 });
                 // history
+            }
+        });
+        return false;
+    });
+}
+
+function initPagination() {
+    $('ul.pagination > li > a').click(function() {
+        var li_a = $(this).parent(),
+            spinner = $('#ajax-loader');
+        $.ajax({
+            'url': this.href,
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                spinner.show();
+            },
+            'complete': function() {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success' : function(data) {
+                $('table > tbody').html($(data).find('table > tbody').html());
+                li_a.siblings().removeClass('active');
+                li_a.addClass('active');
             }
         });
         return false;
@@ -279,4 +303,5 @@ $(function() {
     initJournal();
     initContactAdminPage();
     initTabs();
+    initPagination();
 });
