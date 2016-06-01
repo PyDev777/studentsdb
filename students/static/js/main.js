@@ -101,12 +101,12 @@ function initAddEditStudentGroupForm(form, modal) {
         'beforeSend': function() {
             modal_spinner.show();
             $.each([field_set, save_btn, cancel_btn, close_btn], function() {
-                this.prop("disabled", true)
+                this.prop("disabled", true);
             });
         },
         'complete': function () {
             $.each([field_set, save_btn, cancel_btn, close_btn], function() {
-                this.prop("disabled", false)
+                this.prop("disabled", false);
             });
             modal_spinner.hide();
         },
@@ -210,6 +210,32 @@ function initJournal() {
     });
 }
 
+function initJournalNav() {
+    $('#journal-nav a').on('click', function(e) {
+        var spinner = $('#ajax-loader');
+        $.ajax({
+            'url': this.href,
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                spinner.show();
+            },
+            'complete': function() {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success' : function(data) {
+                $('#content-column').html($(data).find('#content-column').html());
+                initJournalNav();
+                initPagination();
+            }
+        });
+        return false;
+    });
+}
+
 function initTabs() {
     $('#sub-header ul.nav-tabs').on('click', 'a', function() {
         var url = this.href,
@@ -234,6 +260,8 @@ function initTabs() {
                         title.text(title.text().split('-')[0] + '- ' + v.text);
                         $(v).parent().addClass('active');
                         $('#content-columns').html($(data).find('#content-column'));
+                        initJournalNav();
+                        initSorting();
                         initPagination();
                     } else {
                         $(v).parent().removeClass('active');
@@ -246,8 +274,34 @@ function initTabs() {
     });
 }
 
+function initSorting() {
+    $('#content-column > table > thead > tr > th > a').click(function() {
+        var spinner = $('#ajax-loader');
+        $.ajax({
+            'url': this.href,
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {
+                spinner.show();
+            },
+            'complete': function() {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success' : function(data) {
+                $('#content-column').html($(data).find('#content-column').html());
+                initSorting();
+                initPagination();
+            }
+        });
+        return false;
+    });
+}
+
 function initPagination() {
-    $('ul.pagination > li > a').click(function() {
+    $('#content-column > nav > ul.pagination > li > a').click(function() {
         var li_a = $(this).parent(),
             spinner = $('#ajax-loader');
         $.ajax({
@@ -264,7 +318,7 @@ function initPagination() {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
             'success' : function(data) {
-                $('table > tbody').html($(data).find('table > tbody').html());
+                $('#content-column table > tbody').html($(data).find('#content-column table > tbody').html());
                 li_a.siblings().removeClass('active');
                 li_a.addClass('active');
             }
@@ -301,7 +355,9 @@ $(function() {
     initGroupSelector();
     initAddEditStudentGroupPage();
     initJournal();
+    initJournalNav();
     initContactAdminPage();
     initTabs();
+    initSorting();
     initPagination();
 });
