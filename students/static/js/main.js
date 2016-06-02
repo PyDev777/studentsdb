@@ -71,15 +71,16 @@ function initContactAdminPage() {
 }
 
 function initDateFields() {
-    $('input.dateinput').datetimepicker({
-        'format': 'YYYY-MM-DD'
-    }).on('dp.hide', function() {
-        $(this).blur();
-    });
+    $('input.dateinput')
+        .datetimepicker({
+            'format': 'YYYY-MM-DD'
+        })
+        .on('dp.hide', function() {
+            $(this).blur();
+        });
 }
 
-function initAddEditStudentGroupForm(form, modal) {
-
+function initStudentGroupForm(form, modal) {
     // attach datepicker
     initDateFields();
 
@@ -125,7 +126,7 @@ function initAddEditStudentGroupForm(form, modal) {
                 modal.find('.modal-body').append(newform);
 
                 // initialize form fields and buttons
-                initAddEditStudentGroupForm(newform, modal);
+                initStudentGroupForm(newform, modal);
             } else {
                 // if no form, it means success and we need to reload page
                 // to get updated students list;
@@ -138,110 +139,110 @@ function initAddEditStudentGroupForm(form, modal) {
     return false;
 }
 
-function initAddEditStudentGroupPage() {
-    $('#content-columns').on('click', 'a.form-link', function() {
-        var spinner = $('#ajax-loader');
-        $.ajax({
-            'url': this.href,
-            'dataType': 'html',
-            'type': 'get',
-            'beforeSend': function() {
-                spinner.show();
-            },
-            'complete': function () {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
-            'success': function(data) {
-                var modal = $('#myModal'),
-                    html = $(data),
-                    form = html.find('#content-column form');
-
-                // update modal window with arrived content from the server
-                modal.find('.modal-title').html(html.find('#content-column h2').text());
-                modal.find('.modal-body').html(form);
-
-                // init our edit form
-                initAddEditStudentGroupForm(form, modal);
-
-                // setup and show modal window finally
-                modal.modal({
-                    'keyboard': false,
-                    'backdrop': false,
-                    'show': true
-                });
-            }
-        });
-        return false;
+function handlerNav(e) {
+    var spinner = $('#ajax-loader');
+    $.ajax({
+        'url': e.target.href,
+        'dataType': 'html',
+        'type': 'get',
+        'beforeSend': function() {
+            spinner.show();
+        },
+        'complete': function() {
+            spinner.hide();
+        },
+        'error': function () {
+            alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+        },
+        'success' : function(data) {
+            $('#content-column').html($(data).find('#content-column').html());
+        }
     });
+    return false;
+}
+
+function initStudentGroup() {
+    $('#content-columns')
+        .on('click', 'ul.pagination a, table th > a', handlerNav)
+        .on('click', 'a.form-link', function() {
+            var spinner = $('#ajax-loader');
+            $.ajax({
+                'url': this.href,
+                'dataType': 'html',
+                'type': 'get',
+                'beforeSend': function() {
+                    spinner.show();
+                },
+                'complete': function () {
+                    spinner.hide();
+                },
+                'error': function () {
+                    alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+                },
+                'success': function(data) {
+                    var html = $(data),
+                        form = html.find('#content-column form'),
+                        modal = $('#myModal');
+
+                    // update modal window with arrived content from the server
+                    modal.find('.modal-title').html(html.find('#content-column h2').text());
+                    modal.find('.modal-body').html(form);
+
+                    // init our edit form
+                    initStudentGroupForm(form, modal);
+
+                    // setup and show modal window finally
+                    modal.modal({
+                        'keyboard': false,
+                        'backdrop': false,
+                        'show': true
+                    });
+                }
+            });
+            return false;
+        });
 }
 
 function initJournal() {
-    $('#content-columns').on('click', '.day-box input[type="checkbox"]', function(e) {
-        var box = $(this),
-            err_mess = $('#ajax-error'),
-            indicator = $('#ajax-progress-indicator');
-        $.ajax(
-            box.data('url'),
-            {
-                'type': 'POST',
-                'async': true,
-                'dataType': 'json',
-                'data': {
-                    'pk': box.data('student-id'),
-                    'date': box.data('date'),
-                    'present': box.is(':checked') ? '1': '',
-                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
-                },
-                'beforeSend': function () {
-                    err_mess.hide();
-                    indicator.show();
-                },
-                'complete': function() {
-                    indicator.hide();
-                },
-                'error': function() {
-                    err_mess.show();
+    $('#content-columns')
+        .on('click', '#journal-nav a', handlerNav)
+        .on('click', '.day-box input[type="checkbox"]', function() {
+            var box = $(this),
+                err_mess = $('#ajax-error'),
+                spinner = $('#ajax-loader');
+            $.ajax(
+                box.data('url'),
+                {
+                    'type': 'POST',
+                    'async': true,
+                    'dataType': 'json',
+                    'data': {
+                        'pk': box.data('student-id'),
+                        'date': box.data('date'),
+                        'present': box.is(':checked') ? '1': '',
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+                    },
+                    'beforeSend': function () {
+                        err_mess.hide();
+                        spinner.show();
+                    },
+                    'complete': function() {
+                        spinner.hide();
+                    },
+                    'error': function() {
+                        err_mess.show();
+                    }
                 }
-            }
-        );
-    });
-}
+            );
 
-function initJournalNav() {
-    $('#journal-nav a').on('click', function(e) {
-        var spinner = $('#ajax-loader');
-        $.ajax({
-            'url': this.href,
-            'dataType': 'html',
-            'type': 'get',
-            'beforeSend': function() {
-                spinner.show();
-            },
-            'complete': function() {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
-            'success' : function(data) {
-                $('#content-column').html($(data).find('#content-column').html());
-                initJournalNav();
-                initPagination();
-            }
         });
-        return false;
-    });
 }
 
 function initTabs() {
-    $('#sub-header ul.nav-tabs').on('click', 'a', function() {
-        var url = this.href,
-            spinner = $('#ajax-loader');
+    $('#sub-header').on('click', 'ul.nav-tabs a', function() {
+        var spinner = $('#ajax-loader');
         $.ajax({
-            'url': url,
+            'url': this.href,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function() {
@@ -254,73 +255,13 @@ function initTabs() {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
             'success': function(data) {
-                var title = $('title');
-                $('#sub-header ul.nav-tabs a').each(function(k, v) {
-                    if (v.href === url) {
-                        title.text(title.text().split('-')[0] + '- ' + v.text);
-                        $(v).parent().addClass('active');
-                        $('#content-columns').html($(data).find('#content-column'));
-                        initJournalNav();
-                        initSorting();
-                        initPagination();
-                    } else {
-                        $(v).parent().removeClass('active');
-                    }
-                });
+                var html = $(data),
+                    title = $('title'),
+                    addText = html.find('#sub-header li.active > a').text();
+                title.text(title.text().split('-')[0] + '- ' + addText);
+                $('#sub-header').html(html.find('#sub-header').html());
+                $('#content-column').html(html.find('#content-column').html());
                 // history
-            }
-        });
-        return false;
-    });
-}
-
-function initSorting() {
-    $('#content-column > table > thead > tr > th > a').click(function() {
-        var spinner = $('#ajax-loader');
-        $.ajax({
-            'url': this.href,
-            'dataType': 'html',
-            'type': 'get',
-            'beforeSend': function() {
-                spinner.show();
-            },
-            'complete': function() {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
-            'success' : function(data) {
-                $('#content-column').html($(data).find('#content-column').html());
-                initSorting();
-                initPagination();
-            }
-        });
-        return false;
-    });
-}
-
-function initPagination() {
-    $('#content-column > nav > ul.pagination > li > a').click(function() {
-        var li_a = $(this).parent(),
-            spinner = $('#ajax-loader');
-        $.ajax({
-            'url': this.href,
-            'dataType': 'html',
-            'type': 'get',
-            'beforeSend': function() {
-                spinner.show();
-            },
-            'complete': function() {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
-            'success' : function(data) {
-                $('#content-column table > tbody').html($(data).find('#content-column table > tbody').html());
-                li_a.siblings().removeClass('active');
-                li_a.addClass('active');
             }
         });
         return false;
@@ -353,11 +294,8 @@ function initGroupSelector() {
 
 $(function() {
     initGroupSelector();
-    initAddEditStudentGroupPage();
-    initJournal();
-    initJournalNav();
-    initContactAdminPage();
     initTabs();
-    initSorting();
-    initPagination();
+    initStudentGroup();
+    initJournal();
+    initContactAdminPage();
 });
