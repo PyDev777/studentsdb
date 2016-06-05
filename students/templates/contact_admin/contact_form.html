@@ -3,15 +3,14 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block meta_title %}Зв'язок з Адміністратором{% endblock meta_title %}
+{% block meta_title %}{{ title }}{% endblock meta_title %}
 
-{% block title %}Зв'язок з Адміністратором{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 
 {% block status_message %}
     {% if form.errors %}
         <div class="alert alert-danger" role="alert">Будь-ласка, виправте наступні помилки:</div>
     {% endif %}
-    {{ block.super }}
 {% endblock %}
 
 {% block content %}

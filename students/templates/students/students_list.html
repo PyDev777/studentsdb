@@ -88,10 +88,10 @@
                         Дія <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{% url "students_edit" student.id %}" class="form-link">Редагувати</a></li>
-                        <li><a href="{% url "journal" student.id %}">Відвідування</a></li>
+                        <li><a class="form-link" href="{% url "students_edit" student.id %}">Редагувати</a></li>
+                        <li><a id="journal-one-man" href="{% url "journal" student.id %}">Відвідування</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "students_delete" student.id %}">Видалити</a></li>
+                        <li><a class="form-link" href="{% url "students_delete" student.id %}">Видалити</a></li>
                     </ul>
                 </div>
             </td>

@@ -13,9 +13,8 @@
             Студенти відсутні. Будь-ласка, <a class="form-link" href="{% url "students_add" %}">додайте</a> першого.
         </div>
     {% else %}
-        <div class="alert alert-warning" id="ajax-success">
+        <div class="alert alert-warning">
             Зміни в журнал зберігаються автоматично при кожному кліку в клітинці таблиці.
-            <span id="ajax-progress-indicator">Йде збереження...</span>
             <span id="ajax-error">Виникла помилка, дані не збереженно!</span>
         </div>
 

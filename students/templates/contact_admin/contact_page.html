@@ -1,0 +1,23 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Зв'язок з Адміністратором{% endblock meta_title %}
+
+{% block title %}Зв'язок з Адміністратором{% endblock title %}
+
+{% block status_message %}
+    {% if request.GET.message_error %}
+        <div class="alert alert-danger" role="alert">{{ request.GET.status_message }}</div>
+    {% else %}
+        {% if request.GET.status_message %}
+            <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <a class="btn btn-primary form-link" href="{% url "contact_letter" %}">
+        Написати листа Адміністратору
+    </a>
+{% endblock content %}

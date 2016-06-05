@@ -19,6 +19,7 @@ class StudentUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         # call original initialization
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
+
         # this helper object allows us to customize form
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
@@ -28,10 +29,12 @@ class StudentUpdateForm(ModelForm):
             ButtonHolder(
                 Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
                 Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
+
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('students_edit', kwargs={'pk': kwargs['instance'].id})
+
         # twitter bootstrap styles
         self.helper.help_text_inline = True
         self.helper.label_class = 'col-sm-4 control-label'
@@ -75,16 +78,21 @@ class StudentAddForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentAddForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+
         self.helper.layout = Layout(
             Fieldset('', 'first_name', 'last_name', 'middle_name',
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
-                Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
+                Submit('save_button', u'Зберегти'),
+                Submit('cancel_button', u'Скасувати')))
+
+        # form tag attributes
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('students_add')
+
+        # twitter bootstrap styles
         self.helper.help_text_inline = True
         self.helper.label_class = 'col-sm-4 control-label'
         self.helper.field_class = 'col-sm-7'

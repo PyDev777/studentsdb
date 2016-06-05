@@ -47,7 +47,9 @@
                     {% block group_menu %}
                     <option value="">Усі Студенти</option>
                     {% for group in GROUPS %}
-                        <option value="{{ group.id }}" {% if group.selected %} selected="1" {% endif %}>{{ group.title }}{% if group.leader %}, {{ group.leader }}{% endif %}</option>
+                        <option value="{{ group.id }}" {% if group.selected %} selected="1" {% endif %}>
+                            {{ group.title }} {% if group.leader %}, {{ group.leader }}{% endif %}
+                        </option>
                     {% endfor %}
                     {% endblock group_menu %}
                 </select>
@@ -69,7 +71,7 @@
                     <li role="presentation" {% if groups_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "groups" %}">Групи</a>
                     </li>
-                    <li role="presentation" {% if contact_admin in request.path %} class="active" {% endif %}>
+                    <li role="presentation" {% if contact_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "contact_admin" %}">Контакт</a>
                     </li>
                 </ul>
