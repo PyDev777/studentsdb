@@ -101,7 +101,9 @@
         </tbody>
     </table>
 {% else %}
-    <p>Студенти відсутні</p>
+    <div class="alert alert-warning">
+        Студенти відсутні. Будь-ласка, <a class="form-link" href="{% url "students_add" %}">додайте</a> першого.
+    </div>
 {% endif %}
 <!-- End Students Listing -->
 

@@ -54,17 +54,14 @@ class JournalView(TemplateView):
         # or just one if we need to display journal for one student
         if kwargs.get('pk'):
             queryset = [Student.objects.get(pk=kwargs['pk'])]
+            context['journal_url'] = reverse('journal') + kwargs['pk'] + '/'
         else:
             current_group = get_current_group(self.request)
             if current_group:
                 queryset = Student.objects.filter(student_group=current_group)
             else:
                 queryset = Student.objects.all().order_by('last_name')
-
-        # url to update student presence, for form post
-        update_url = reverse('journal')
-
-        context['journal_url'] = reverse('journal')
+            context['journal_url'] = reverse('journal')
 
         # go over all students and collect data about presence during selected month
         students = []
@@ -89,7 +86,7 @@ class JournalView(TemplateView):
                 'fullname': u'%s %s' % (student.last_name, student.first_name),
                 'days': days,
                 'id': student.id,
-                'update_url': update_url
+                'update_url': reverse('journal')
             })
 
         # apply pagination, 5 students per page

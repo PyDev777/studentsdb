@@ -179,7 +179,6 @@ function initTabs() {
                 $('title').text(html.filter('title').text());
                 $('#sub-header').html(html.find('#sub-header').html());
                 $('#content-column').html(html.find('#content-column').html());
-                // history
             }
         });
         return false;
