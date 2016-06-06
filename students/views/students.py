@@ -27,8 +27,8 @@ class StudentUpdateForm(ModelForm):
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
-                Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
+                Submit('save_button', u'Зберегти'),
+                Submit('cancel_button', u'Скасувати')))
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -40,11 +40,17 @@ class StudentUpdateForm(ModelForm):
         self.helper.label_class = 'col-sm-4 control-label'
         self.helper.field_class = 'col-sm-7'
 
+    def clean_photo(self):
+        if len(self.cleaned_data['photo']) > 500000:
+            raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
+        return self.cleaned_data['photo']
+
     def clean_student_group(self):
         """ Check if student is leader in any group
         If yes, then ensure it's the same as selected group. """
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
+        print 'clean_student_group is worked!'
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
             raise ValidationError(u'Студент є старостою іншої групи', code='invalid')
         return self.cleaned_data['student_group']
@@ -96,6 +102,11 @@ class StudentAddForm(ModelForm):
         self.helper.help_text_inline = True
         self.helper.label_class = 'col-sm-4 control-label'
         self.helper.field_class = 'col-sm-7'
+
+    def clean_photo(self):
+        if len(self.cleaned_data['photo']) > 500000:
+            raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
+        return self.cleaned_data['photo']
 
 
 class StudentAddView(CreateView):
