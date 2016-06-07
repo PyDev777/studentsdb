@@ -6,12 +6,28 @@ from django.views.generic import CreateView, UpdateView, DeleteView, TemplateVie
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from django import forms
 from django.forms import ModelForm, ValidationError
+from django.utils.safestring import mark_safe
+from django.forms import ClearableFileInput
 from ..models import Student, Group
 from ..util import paginate, get_current_group
 
 
+class ImageViewFileInput(ClearableFileInput):
+    template_with_clear = ''
+
+    def render(self, name, value, attrs=None):
+        html = super(ImageViewFileInput, self).render(name, value, attrs)
+        if value and hasattr(value, 'url'):
+            img_html = mark_safe('<img src="%s" class="img-circle" height="30" width="30"><br>' % value.url)
+            html = img_html + html
+        return html
+
+
 class StudentUpdateForm(ModelForm):
+    photo = forms.ImageField(widget=ImageViewFileInput(), required=False, label=u"Фото")
+
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes']
@@ -19,7 +35,6 @@ class StudentUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         # call original initialization
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
-
         # this helper object allows us to customize form
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
