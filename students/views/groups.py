@@ -21,8 +21,8 @@ class GroupUpdateForm(ModelForm):
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
-                Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
+                Submit('save_button', u'Зберегти'),
+                Submit('cancel_button', u'Скасувати')))
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_edit', kwargs={'pk': kwargs['instance'].id})
@@ -71,8 +71,8 @@ class GroupAddForm(ModelForm):
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти', css_class='btn btn-primary'),
-                Submit('cancel_button', u'Скасувати', css_class='btn btn-default')))
+                Submit('save_button', u'Зберегти'),
+                Submit('cancel_button', u'Скасувати')))
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_add')
