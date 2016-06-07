@@ -48,11 +48,11 @@ td.group-box {
     vertical-align: middle !important;
 }
 
-textarea,
-select,
-input {
-    max-width: 300px;
-}
+/*textarea,*/
+/*select,*/
+/*input {*/
+    /*max-width: 300px;*/
+/*}*/
 
 #ajax-loader,
 #ajax-loader-modal {

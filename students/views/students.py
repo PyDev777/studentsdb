@@ -43,7 +43,9 @@ class StudentUpdateForm(ModelForm):
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', u'Зберегти'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('cancel_button', u'Скасувати')
+            )
+        )
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -52,8 +54,8 @@ class StudentUpdateForm(ModelForm):
 
         # twitter bootstrap styles
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-4 control-label'
-        self.helper.field_class = 'col-sm-7'
+        self.helper.label_class = 'col-sm-5 control-label'
+        self.helper.field_class = 'col-sm-6'
 
     def clean_photo(self):
         if len(self.cleaned_data['photo']) > 500000:
@@ -115,8 +117,8 @@ class StudentAddForm(ModelForm):
 
         # twitter bootstrap styles
         self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-4 control-label'
-        self.helper.field_class = 'col-sm-7'
+        self.helper.label_class = 'col-sm-5 control-label'
+        self.helper.field_class = 'col-sm-6'
 
     def clean_photo(self):
         if len(self.cleaned_data['photo']) > 500000:
