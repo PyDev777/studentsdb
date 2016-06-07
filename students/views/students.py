@@ -15,7 +15,6 @@ from ..util import paginate, get_current_group
 
 
 class ImageViewFileInput(ClearableFileInput):
-    template_with_clear = ''
 
     def render(self, name, value, attrs=None):
         html = super(ImageViewFileInput, self).render(name, value, attrs)
@@ -56,9 +55,10 @@ class StudentUpdateForm(ModelForm):
         self.helper.field_class = 'col-sm-7'
 
     def clean_photo(self):
-        if len(self.cleaned_data['photo']) > 500000:
+        photo = self.cleaned_data['photo']
+        if photo and (len(photo) > 500000):
             raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
-        return self.cleaned_data['photo']
+        return photo
 
     def clean_student_group(self):
         """ Check if student is leader in any group
@@ -119,9 +119,10 @@ class StudentAddForm(ModelForm):
         self.helper.field_class = 'col-sm-7'
 
     def clean_photo(self):
-        if len(self.cleaned_data['photo']) > 500000:
+        photo = self.cleaned_data['photo']
+        if photo and (len(photo) > 500000):
             raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
-        return self.cleaned_data['photo']
+        return photo
 
 
 class StudentAddView(CreateView):
