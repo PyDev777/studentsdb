@@ -1,27 +1,16 @@
 function initDateFields() {
     $('input.dateinput')
-        .datetimepicker({
-            'format': 'YYYY-MM-DD'
-        })
-        .on('dp.hide', function() {
-            $(this).blur();
-        });
+        .datetimepicker({'format': 'YYYY-MM-DD'})
+        .on('dp.hide', function() {$(this).blur()});
 }
 
 function createForm(form, modal) {
     var modal_spinner = $('#ajax-loader-modal');
-
-    // attach datepicker
     initDateFields();
-
-    // close modal window on Cancel button click
-    form.find('input[name="cancel_button"]')
-        .on('click', function () {
-            modal.modal('hide');
-            return false;
-        });
-
-    // make form work in AJAX mode
+    form.find('input[name="cancel_button"]').on('click', function() {
+        modal.modal('hide');
+        return false;
+    });
     form.ajaxForm({
         'dataType': 'html',
         'beforeSend': function() {
@@ -32,28 +21,19 @@ function createForm(form, modal) {
             $('button, fieldset, input').prop("disabled", false);
             modal_spinner.hide();
         },
-        'error': function() {
-            alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-        },
+        'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
         'success': function(data) {
             var html = $(data),
                 newform = html.find('#content-column form'),
                 msg = html.find('.alert');
-
-            // copy alert to modal window
             modal.find('.modal-body').html(msg);
-
-            // copy form to modal if we found it in server response
             if (newform.length > 0) {
                 modal.find('.modal-body').append(newform);
-
-                // initialize form fields and buttons
                 createForm(newform, modal);
             } else {
                 if (msg.hasClass('alert-warning')) {
-                    setTimeout(function() { modal.find('button.close').trigger('click') }, 500);
+                    setTimeout(function() {modal.find('button.close').trigger('click')}, 500);
                 }
-                $('#sub-header ul.nav-tabs > li.active > a').trigger('click');
             }
         }
     });
@@ -64,12 +44,9 @@ function createModal(data) {
     var html = $(data),
         form = html.find('#content-column form'),
         modal = $('#myModal');
-    // update modal window with arrived content from the server
     modal.find('.modal-title').html(html.find('#content-column h2').text());
     modal.find('.modal-body').html(form);
-    // init our edit form
     createForm(form, modal);
-    // setup and show modal window finally
     modal.modal({
         'keyboard': false,
         'backdrop': false,
@@ -87,15 +64,9 @@ function initPage() {
                 'url': url,
                 'dataType': 'html',
                 'type': 'get',
-                'beforeSend': function() {
-                    spinner.show();
-                },
-                'complete': function () {
-                    spinner.hide();
-                },
-                'error': function () {
-                    alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-                },
+                'beforeSend': function() {spinner.show()},
+                'complete': function() {spinner.hide()},
+                'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
                 'success': function(data) {
                     createModal(data);
                     history.pushState({'modal': true}, document.title, url);
@@ -112,30 +83,23 @@ function initJournal() {
             var box = $(this),
                 err_mess = $('#ajax-error'),
                 spinner = $('#ajax-loader');
-            $.ajax(
-                box.data('url'),
-                {
-                    'type': 'POST',
-                    'async': true,
-                    'dataType': 'json',
-                    'data': {
-                        'pk': box.data('student-id'),
-                        'date': box.data('date'),
-                        'present': box.is(':checked') ? '1': '',
-                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
-                    },
-                    'beforeSend': function () {
-                        err_mess.hide();
-                        spinner.show();
-                    },
-                    'complete': function() {
-                        spinner.hide();
-                    },
-                    'error': function() {
-                        err_mess.show();
-                    }
-                }
-            );
+            $.ajax(box.data('url'), {
+                'type': 'POST',
+                'async': true,
+                'dataType': 'json',
+                'data': {
+                    'pk': box.data('student-id'),
+                    'date': box.data('date'),
+                    'present': box.is(':checked') ? '1': '',
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+                },
+                'beforeSend': function() {
+                    err_mess.hide();
+                    spinner.show();
+                },
+                'complete': function() {spinner.hide()},
+                'error': function() {err_mess.show()}
+            });
         });
 }
 
@@ -146,16 +110,10 @@ function handlerNav(e) {
         'url': url,
         'dataType': 'html',
         'type': 'get',
-        'beforeSend': function() {
-            spinner.show();
-        },
-        'complete': function() {
-            spinner.hide();
-        },
-        'error': function () {
-            alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-        },
-        'success' : function(data) {
+        'beforeSend': function() {spinner.show()},
+        'complete': function() {spinner.hide()},
+        'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
+        'success': function(data) {
             $('#content-column').html($(data).find('#content-column').html());
             history.pushState({'modal': false}, document.title, url);
         }
@@ -178,15 +136,9 @@ function initTabs() {
             'url': url,
             'dataType': 'html',
             'type': 'get',
-            'beforeSend': function() {
-                spinner.show();
-            },
-            'complete': function() {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
+            'beforeSend': function() {spinner.show()},
+            'complete': function() {spinner.hide()},
+            'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
             'success': function(data) {
                 updateTabs(data);
                 history.pushState({'modal': false}, document.title, url);
@@ -203,23 +155,14 @@ function initHistory() {
             'url': e.target.document.URL,
             'dataType': 'html',
             'type': 'get',
-            'beforeSend': function () {
-                spinner.show();
-            },
-            'complete': function () {
-                spinner.hide();
-            },
-            'error': function () {
-                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
-            },
+            'beforeSend': function() {spinner.show()},
+            'complete': function() {spinner.hide()},
+            'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
             'success': function (data) {
-                if (e.state['modal']) {
-                    createModal(data);
-                } else {
+                if (e.state['modal']) {createModal(data)}
+                else {
                     var modal = $('#myModal');
-                    if (modal.hasClass('in')) {
-                        modal.find('button.close').trigger('click');
-                    }
+                    if (modal.hasClass('in')) {modal.find('button.close').trigger('click')}
                     updateTabs(data);
                 }
             }
@@ -229,21 +172,20 @@ function initHistory() {
 }
 
 function initGroupSelector() {
-    // look up select element with groups and attach our even handler
-    // on field "change" event
-    $('#header').on('change', '#group-selector select', function(e) {
-        // get value of currently selected group option
-        var group = $(this).val();
-        if (group) {
-            // set cookie with expiration date 1 year since now;
-            // cookie creation function takes period in days
-            $.cookie('current_group', group, {'path': '/', 'expires': 365});
-        } else {
-            // otherwise we delete the cookie
-            $.removeCookie('current_group', {'path': '/'});
-        }
-        // and reload a page
-        $('#sub-header ul.nav-tabs > li.active > a').trigger('click');
+    $('#header').on('change', '#group-selector select', function() {
+        var group = $(this).val(),
+            spinner = $('#ajax-loader');
+        if (group) {$.cookie('current_group', group, {'path': '/', 'expires': 365})}
+        else {$.removeCookie('current_group', {'path': '/'})}
+        $.ajax({
+            'url': location,
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function() {spinner.show()},
+            'complete': function() {spinner.hide()},
+            'error': function() {alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.')},
+            'success': function(data) {updateTabs(data)}
+        });
         return false;
     });
 }
