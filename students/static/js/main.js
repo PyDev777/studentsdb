@@ -60,6 +60,23 @@ function initForm(form, modal) {
     return false;
 }
 
+function updatePage(data) {
+    var html = $(data),
+        form = html.find('#content-column form'),
+        modal = $('#myModal');
+    // update modal window with arrived content from the server
+    modal.find('.modal-title').html(html.find('#content-column h2').text());
+    modal.find('.modal-body').html(form);
+    // init our edit form
+    initForm(form, modal);
+    // setup and show modal window finally
+    modal.modal({
+        'keyboard': false,
+        'backdrop': false,
+        'show': true
+    });
+}
+
 function initPage() {
     $('#content-columns')
         .on('click', 'ul.pagination a, table th > a', handlerNav)
@@ -80,23 +97,7 @@ function initPage() {
                     alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
                 },
                 'success': function(data) {
-                    var html = $(data),
-                        form = html.find('#content-column form'),
-                        modal = $('#myModal');
-
-                    // update modal window with arrived content from the server
-                    modal.find('.modal-title').html(html.find('#content-column h2').text());
-                    modal.find('.modal-body').html(form);
-
-                    // init our edit form
-                    initForm(form, modal);
-
-                    // setup and show modal window finally
-                    modal.modal({
-                        'keyboard': false,
-                        'backdrop': false,
-                        'show': true
-                    });
+                    updatePage(data);
                     history.pushState({'modal': true}, document.title, url);
                 }
             });
@@ -162,6 +163,13 @@ function handlerNav(e) {
     return false;
 }
 
+function updateTabs(data) {
+    var html = $(data);
+    $('title').text(html.filter('title').text());
+    $('#sub-header').html(html.find('#sub-header').html());
+    $('#content-column').html(html.find('#content-column').html());
+}
+
 function initTabs() {
     $('#sub-header').on('click', 'ul.nav-tabs a, a#journal-one-man', function() {
         var spinner = $('#ajax-loader'),
@@ -180,10 +188,7 @@ function initTabs() {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
             'success': function(data) {
-                var html = $(data);
-                $('title').text(html.filter('title').text());
-                $('#sub-header').html(html.find('#sub-header').html());
-                $('#content-column').html(html.find('#content-column').html());
+                updateTabs(data);
                 history.pushState({'modal': false}, document.title, url);
             }
         });
@@ -209,25 +214,14 @@ function initHistory() {
                 alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
             },
             'success': function (data) {
-                var html = $(data),
-                    modal = $('#myModal');
                 if (e.state['modal']) {
-                    var form = html.find('#content-column form');
-                    modal.find('.modal-title').html(html.find('#content-column h2').text());
-                    modal.find('.modal-body').html(form);
-                    initForm(form, modal);
-                    modal.modal({
-                        'keyboard': false,
-                        'backdrop': false,
-                        'show': true
-                    });
+                    updatePage(data);
                 } else {
+                    var modal = $('#myModal');
                     if (modal.hasClass('in')) {
                         modal.find('button').trigger('click');
                     }
-                    $('title').text(html.filter('title').text());
-                    $('#sub-header').html(html.find('#sub-header').html());
-                    $('#content-column').html(html.find('#content-column').html());
+                    updateTabs(data);
                 }
             }
         });
