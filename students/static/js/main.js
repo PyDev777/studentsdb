@@ -198,10 +198,9 @@ function initTabs() {
 
 function initHistory() {
     window.onpopstate = function(e) {
-        var spinner = $('#ajax-loader'),
-            url = e.target.document.URL;
+        var spinner = $('#ajax-loader');
         $.ajax({
-            'url': url,
+            'url': e.target.document.URL,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function () {
