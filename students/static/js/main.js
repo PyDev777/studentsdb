@@ -8,7 +8,7 @@ function initDateFields() {
         });
 }
 
-function initForm(form, modal) {
+function createForm(form, modal) {
     var modal_spinner = $('#ajax-loader-modal');
 
     // attach datepicker
@@ -48,10 +48,10 @@ function initForm(form, modal) {
                 modal.find('.modal-body').append(newform);
 
                 // initialize form fields and buttons
-                initForm(newform, modal);
+                createForm(newform, modal);
             } else {
                 if (msg.hasClass('alert-warning')) {
-                    setTimeout(function() { modal.find('button').trigger('click') }, 500);
+                    setTimeout(function() { modal.find('button.close').trigger('click') }, 500);
                 }
                 $('#sub-header ul.nav-tabs > li.active > a').trigger('click');
             }
@@ -60,7 +60,7 @@ function initForm(form, modal) {
     return false;
 }
 
-function initModal(data) {
+function createModal(data) {
     var html = $(data),
         form = html.find('#content-column form'),
         modal = $('#myModal');
@@ -68,7 +68,7 @@ function initModal(data) {
     modal.find('.modal-title').html(html.find('#content-column h2').text());
     modal.find('.modal-body').html(form);
     // init our edit form
-    initForm(form, modal);
+    createForm(form, modal);
     // setup and show modal window finally
     modal.modal({
         'keyboard': false,
@@ -97,7 +97,7 @@ function initPage() {
                     alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
                 },
                 'success': function(data) {
-                    initModal(data);
+                    createModal(data);
                     history.pushState({'modal': true}, document.title, url);
                 }
             });
@@ -214,11 +214,11 @@ function initHistory() {
             },
             'success': function (data) {
                 if (e.state['modal']) {
-                    initModal(data);
+                    createModal(data);
                 } else {
                     var modal = $('#myModal');
                     if (modal.hasClass('in')) {
-                        modal.find('button').trigger('click');
+                        modal.find('button.close').trigger('click');
                     }
                     updateTabs(data);
                 }
