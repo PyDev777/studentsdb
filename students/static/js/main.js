@@ -196,5 +196,5 @@ $(function() {
     initPage();
     initJournal();
     initHistory();
-    history.replaceState({'modal': false}, document.title, window.location.href);
+    history.replaceState({'modal': false}, document.title, location);
 });
