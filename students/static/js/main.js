@@ -60,7 +60,7 @@ function initForm(form, modal) {
     return false;
 }
 
-function updatePage(data) {
+function initModal(data) {
     var html = $(data),
         form = html.find('#content-column form'),
         modal = $('#myModal');
@@ -97,7 +97,7 @@ function initPage() {
                     alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
                 },
                 'success': function(data) {
-                    updatePage(data);
+                    initModal(data);
                     history.pushState({'modal': true}, document.title, url);
                 }
             });
@@ -215,7 +215,7 @@ function initHistory() {
             },
             'success': function (data) {
                 if (e.state['modal']) {
-                    updatePage(data);
+                    initModal(data);
                 } else {
                     var modal = $('#myModal');
                     if (modal.hasClass('in')) {
