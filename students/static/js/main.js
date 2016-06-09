@@ -64,9 +64,10 @@ function initPage() {
     $('#content-columns')
         .on('click', 'ul.pagination a, table th > a', handlerNav)
         .on('click', 'a.form-link', function() {
-            var spinner = $('#ajax-loader');
+            var spinner = $('#ajax-loader'),
+                url = this.href;
             $.ajax({
-                'url': this.href,
+                'url': url,
                 'dataType': 'html',
                 'type': 'get',
                 'beforeSend': function() {
@@ -96,6 +97,7 @@ function initPage() {
                         'backdrop': false,
                         'show': true
                     });
+                    history.pushState({'modal': true}, document.title, url);
                 }
             });
             return false;
@@ -137,9 +139,10 @@ function initJournal() {
 }
 
 function handlerNav(e) {
-    var spinner = $('#ajax-loader');
+    var spinner = $('#ajax-loader'),
+        url = e.target.href;
     $.ajax({
-        'url': e.target.href,
+        'url': url,
         'dataType': 'html',
         'type': 'get',
         'beforeSend': function() {
@@ -153,6 +156,7 @@ function handlerNav(e) {
         },
         'success' : function(data) {
             $('#content-column').html($(data).find('#content-column').html());
+            history.pushState({'modal': false}, document.title, url);
         }
     });
     return false;
@@ -160,9 +164,10 @@ function handlerNav(e) {
 
 function initTabs() {
     $('#sub-header').on('click', 'ul.nav-tabs a, a#journal-one-man', function() {
-        var spinner = $('#ajax-loader');
+        var spinner = $('#ajax-loader'),
+            url = this.href;
         $.ajax({
-            'url': this.href,
+            'url': url,
             'dataType': 'html',
             'type': 'get',
             'beforeSend': function() {
@@ -179,10 +184,55 @@ function initTabs() {
                 $('title').text(html.filter('title').text());
                 $('#sub-header').html(html.find('#sub-header').html());
                 $('#content-column').html(html.find('#content-column').html());
+                history.pushState({'modal': false}, document.title, url);
             }
         });
         return false;
     });
+}
+
+function initHistory() {
+    window.onpopstate = function(e) {
+        var spinner = $('#ajax-loader'),
+            url = e.target.document.URL;
+        $.ajax({
+            'url': url,
+            'dataType': 'html',
+            'type': 'get',
+            'beforeSend': function () {
+                spinner.show();
+            },
+            'complete': function () {
+                spinner.hide();
+            },
+            'error': function () {
+                alert('Помилка на сервері. Спробуйте, будь-ласка, пізніше.');
+            },
+            'success': function (data) {
+                var html = $(data),
+                    modal = $('#myModal');
+                if (e.state['modal']) {
+                    var form = html.find('#content-column form');
+                    modal.find('.modal-title').html(html.find('#content-column h2').text());
+                    modal.find('.modal-body').html(form);
+                    initForm(form, modal);
+                    modal.modal({
+                        'keyboard': false,
+                        'backdrop': false,
+                        'show': true
+                    });
+                } else {
+                    if (modal.hasClass('in')) {
+                        modal.find('button').trigger('click');
+                    }
+                    $('title').text(html.filter('title').text());
+                    $('#sub-header').html(html.find('#sub-header').html());
+                    $('#content-column').html(html.find('#content-column').html());
+                }
+            }
+        });
+        return false;
+    }
 }
 
 function initGroupSelector() {
@@ -210,4 +260,6 @@ $(function() {
     initTabs();
     initPage();
     initJournal();
+    initHistory();
+    history.replaceState({'modal': false}, document.title, window.location.href);
 });
