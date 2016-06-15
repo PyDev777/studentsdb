@@ -18,7 +18,7 @@
         <thead>
         <tr>
             <th>
-                <a href="{% url "home" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "home" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     #
                     {% if order_by == 'id' and reverse != '1' %}&uarr;
                     {% elif order_by == 'id' and reverse == '1' %}&darr;
@@ -27,7 +27,7 @@
             </th>
             <th>Фото</th>
             <th>
-                <a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     Прізвище
                     {% if order_by == 'last_name' and reverse != '1' %}&uarr;
                     {% elif order_by == 'last_name' and reverse == '1' %}&darr;
@@ -35,7 +35,7 @@
                 </a>
             </th>
             <th>
-                <a href="{% url "home" %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "home" %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     Ім'я
                     {% if order_by == 'first_name' and reverse != '1' %}&uarr;
                     {% elif order_by == 'first_name' and reverse == '1' %}&darr;
@@ -43,7 +43,7 @@
                 </a>
             </th>
             <th>
-                <a href="{% url "home" %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "home" %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     № білета
                     {% if order_by == 'ticket' and reverse != '1' %}&uarr;
                     {% elif order_by == 'ticket' and reverse == '1' %}&darr;
@@ -88,10 +88,11 @@
                         Дія <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="form-link" href="{% url "students_edit" student.id %}">Редагувати</a></li>
-                        <li><a id="journal-one-man" href="{% url "journal" student.id %}">Відвідування</a></li>
+                        <li><a href="{% url "students_edit" student.id %}" class="form-link">Редагувати</a></li>
+{#                        <li><a id="journal-one-man" href="{% url "journal" student.id %}">Відвідування</a></li>#}
+                        <li><a href="{% url "journal" student.id %}" class="content-link">Відвідування</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a class="form-link" href="{% url "students_delete" student.id %}">Видалити</a></li>
+                        <li><a href="{% url "students_delete" student.id %}" class="form-link">Видалити</a></li>
                     </ul>
                 </div>
             </td>
@@ -102,7 +103,7 @@
     </table>
 {% else %}
     <div class="alert alert-warning">
-        Студенти відсутні. Будь-ласка, <a class="form-link" href="{% url "students_add" %}">додайте</a> першого.
+        Студенти відсутні. Будь-ласка, <a href="{% url "students_add" %}" class="form-link">додайте</a> першого.
     </div>
 {% endif %}
 <!-- End Students Listing -->

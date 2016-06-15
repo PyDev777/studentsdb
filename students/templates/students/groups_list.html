@@ -18,7 +18,7 @@
         <thead>
         <tr>
             <th>
-                <a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     #
                     {% if order_by == 'id' and reverse != '1' %}&uarr;
                     {% elif order_by == 'id' and reverse == '1' %}&darr;
@@ -26,7 +26,7 @@
                 </a>
             </th>
             <th>
-                <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     Назва
                     {% if order_by == 'title' and reverse != '1' %}&uarr;
                     {% elif order_by == 'title' and reverse == '1' %}&darr;
@@ -34,7 +34,7 @@
                 </a>
             </th>
             <th>
-                <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
                     Староста
                     {% if order_by == 'leader' and reverse != '1' %}&uarr;
                     {% elif order_by == 'leader' and reverse == '1' %}&darr;

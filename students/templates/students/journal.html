@@ -19,10 +19,10 @@
         </div>
 
         <p id="journal-nav" class="text-center">
-            <a href="{{ journal_url }}?month={{ prev_month }}" title="Попередній Місяць">&larr;</a>
+            <a href="{{ journal_url }}?month={{ prev_month }}" class="content-link" title="Попередній Місяць">&larr;</a>
             <!-- TODO: translate month name -->
             <strong>{{ month_verbose }} {{ year }}</strong>
-            <a href="{{ journal_url }}?month={{ next_month }}" title="Наступний Місяць">&rarr;</a>
+            <a href="{{ journal_url }}?month={{ next_month }}" class="content-link" title="Наступний Місяць">&rarr;</a>
         </p>
         <table class="table table-hover table-striped table-bordered table-condensed">
             <thead>
