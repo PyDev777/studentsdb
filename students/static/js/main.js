@@ -34,21 +34,20 @@ function createForm(form, modal, urlPrev) {
                 newform = html.find('#content-column form'),
                 msg = html.find('.alert');
             modal.find('.modal-body').html(msg);
-
             if (newform.length > 0) {
                 modal.find('.modal-body').append(newform);
                 createForm(newform, modal, urlPrev);
             } else {
-                if (msg.hasClass('alert-warning')) {
-                    setTimeout(function() {close_button.trigger('click')}, 500);
-                }
+                var msg_time = 500;
+                if (msg.hasClass('alert-danger')) {msg_time = 2500}
+                setTimeout(function() {close_button.trigger('click')}, msg_time);
             }
         }
     });
     return false;
 }
 
-function showModal(url, urlPrev, updateHistory) {
+function showModal(url, urlPrev, saveHistory) {
     var spinner = $('#ajax-loader');
     $.ajax({
         'url': url,
@@ -69,7 +68,7 @@ function showModal(url, urlPrev, updateHistory) {
                 'backdrop': false,
                 'show': true
             });
-            if (updateHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
+            if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
         }
     });
 }
@@ -83,7 +82,7 @@ function initModal() {
     });
 }
 
-function updateContent(url, updateHistory) {
+function updateContent(url, saveHistory) {
     var spinner = $('#ajax-loader');
     $.ajax({
         'url': url,
@@ -97,7 +96,7 @@ function updateContent(url, updateHistory) {
             $('title').text(html.filter('title').text());
             $('#sub-header').html(html.find('#sub-header').html());
             $('#content-column').html(html.find('#content-column').html());
-            if (updateHistory) { history.pushState({'urlPrev': false}, document.title, url) }
+            if (saveHistory) {history.pushState({'urlPrev': false}, document.title, url)}
         }
     });
 }
@@ -178,12 +177,3 @@ $(function() {
     initHistory();
     history.replaceState({'urlPrev': false}, document.title, location.href);
 });
-
-
-//function closeModal() {
-//    $('#myModal').on('hidden.bs.modal', function() {
-//        console.log('createForm: CLOSE');
-//        return false;
-//    });
-//
-//}
