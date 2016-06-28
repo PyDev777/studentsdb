@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+import logging
 
 
 class ContactLetterForm(forms.Form):
@@ -74,6 +75,8 @@ class ContactLetterView(FormView):
             message = u'Під час відправки листа виникла непередбачувана помилка. ' \
                         u'Спробуйте скористатись даною формою пізніше.'
             message_error = '1'
+            logger = logging.getLogger(__name__)
+            logger.exception(message)
             return HttpResponseRedirect(u'%s?status_message=%s&message_error=%s' % (reverse('contact_admin'), message, message_error))
         else:
             message = u'Повідомлення успішно надіслане!'
