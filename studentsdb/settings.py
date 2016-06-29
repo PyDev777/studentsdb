@@ -12,10 +12,23 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from django.conf import global_settings
 
+
+#################################################################
+#                                                               #
+#  Rename file local_settings_template.py to local_settings.py  #
+#         and enter your values to his settings fields          #
+#                                                               #
+#################################################################
+#                                                               #
+
 try:
     from local_settings import *
 except ImportError:
     pass
+
+#                                                               #
+#################################################################
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -23,8 +36,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '== Your SECRET_KEY must be in local_settings.py =='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,6 +45,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = [PORTAL_DOMAIN]
+
 
 # Application definition
 
@@ -70,17 +82,6 @@ ROOT_URLCONF = 'studentsdb.urls'
 WSGI_APPLICATION = 'studentsdb.wsgi.application'
 
 
-# == Your DATABASES settings must be in local_settings.py ==
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite3'),
-#     }
-# }
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -100,12 +101,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 
+
+# Crispy forms settings
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+# Logging
 
 LOG_FILE = os.path.join(BASE_DIR, 'studentsdb.log')
 
