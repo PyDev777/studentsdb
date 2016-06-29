@@ -15,7 +15,7 @@ def log_request_started(sender, **kwargs):
     global req_counter
     logger = logging.getLogger(__name__)
     req_counter += 1
-    logger.info("Request counter: %d", req_counter)
+    logger.info("Request counter: %s", req_counter)
 
 
 @receiver(post_save, sender=Student)
