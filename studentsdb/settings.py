@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from django.conf import global_settings
 
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -23,11 +28,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = [PORTAL_DOMAIN]
 
 # Application definition
 
@@ -118,12 +124,12 @@ LOGGING = {
         'null': {
             'level': 'DEBUG',
             'class': 'logging.NullHandler',
-            'formatter': 'verbose'
+            'formatter': 'simple'
         },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'simple'
         },
         'file': {
             'level': 'INFO',
@@ -131,6 +137,10 @@ LOGGING = {
             'filename': LOG_FILE,
             'formatter': 'verbose'
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
     },
     'loggers': {
         'django': {
@@ -138,18 +148,18 @@ LOGGING = {
             'propagate': True,
             'level': 'INFO'
         },
+        'django.request': {
+            'handlers': ['file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
         'students.signals': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'INFO'
         },
         'students.views.contact_admin': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'INFO'
         }
     }
 }
-
-try:
-    from local_settings import *
-except ImportError:
-    pass

@@ -2,9 +2,20 @@
 
 import logging
 from django.db.models.signals import post_save, post_delete
+from django.core.signals import request_started
 from django.dispatch import receiver
-
 from .models import Student, Group
+
+req_counter = 0
+
+
+@receiver(request_started)
+def log_request_started(sender, **kwargs):
+    """Writes information about the amount of requests into log file"""
+    global req_counter
+    logger = logging.getLogger(__name__)
+    req_counter += 1
+    logger.info("Request counter: %d", req_counter)
 
 
 @receiver(post_save, sender=Student)
