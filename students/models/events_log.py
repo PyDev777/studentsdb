@@ -16,7 +16,7 @@ class LogEntry(models.Model):
         auto_now_add=True,
         verbose_name=u'Час створення')
 
-    # C - create, U - update, D - delete
+    # C - create, U - update, D - delete, M - migrate
     evt_type = models.CharField(
         max_length=1,
         verbose_name=u'Тип події')
@@ -25,9 +25,9 @@ class LogEntry(models.Model):
         max_length=30,
         verbose_name=u'Користувач')
 
-    evt_description = models.CharField(
-        max_length=200,
+    evt_desc = models.CharField(
+        max_length=180,
         verbose_name=u'Опис події')
 
     def __unicode__(self):
-        return u"%s %s" % (self.timestamp, self.evt_description)
+        return u"%s %s" % (self.timestamp, self.evt_desc)
