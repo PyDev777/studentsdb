@@ -156,16 +156,22 @@ LOGGING = {
             'level': 'INFO'
         },
         'django.request': {
-            'handlers': ['file', 'mail_admins'],
+            'handlers': ['file'
+                # , 'mail_admins'
+                         ],
             'level': 'ERROR',
             'propagate': False,
         },
         'students.signals': {
-            'handlers': ['console', 'file', 'mail_admins'],
+            'handlers': ['console', 'file'
+                # , 'mail_admins'
+                         ],
             'level': 'INFO'
         },
         'students.views.contact_admin': {
-            'handlers': ['console', 'file', 'mail_admins'],
+            'handlers': ['console', 'file'
+                # , 'mail_admins'
+                         ],
             'level': 'INFO'
         }
     }

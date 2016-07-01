@@ -71,6 +71,9 @@
                     <li role="presentation" {% if groups_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "groups" %}">Групи</a>
                     </li>
+                    <li role="presentation" {% if events_log_url in request.path %} class="active" {% endif %}>
+                        <a href="{% url "events_log" %}">Події</a>
+                    </li>
                     <li role="presentation" {% if contact_url in request.path %} class="active" {% endif %}>
                         <a href="{% url "contact_admin" %}">Контакт</a>
                     </li>
