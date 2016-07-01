@@ -11,7 +11,7 @@ class EventLogView(TemplateView):
         context = super(EventLogView, self).get_context_data(**kwargs)
         context['events_log_url'] = reverse('events_log')
 
-        events_log = LogEntry.objects.all().order_by('-timestamp')
+        events_log = LogEntry.objects.all().order_by('-timestamp')[:100]
         context['events_log'] = events_log
 
         # apply pagination, 10 events per page

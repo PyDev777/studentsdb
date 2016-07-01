@@ -16,8 +16,6 @@
         <thead>
         <tr>
             <th>Час події</th>
-{#            <th>Тип дії</th>#}
-{#            <th>Користувач</th>#}
             <th>Опис події</th>
         </tr>
         </thead>
@@ -25,9 +23,7 @@
         <tbody>
         {% for ev in events_log %}
             <tr class="{% if ev.evt_type == 'C' %}success{% endif %}{% if ev.evt_type == 'U' %}warning{% endif %}{% if ev.evt_type == 'D' %}danger{% endif %}{% if ev.evt_type == 'M' %}info{% endif %}">
-                <td>{{ ev.timestamp }}</td>
-{#                <td>{{ ev.evt_type }}</td>#}
-{#                <td>{{ ev.evt_user }}</td>#}
+                <td>{{ ev.timestamp|date:"Y-m-d [H:i:s]" }}</td>
                 <td>{{ ev.evt_desc }}</td>
             </tr>
         {% endfor %}
@@ -37,5 +33,11 @@
     <p>Події відсутні</p>
 {% endif %}
 <!-- End Groups Listing -->
+
+<!-- Start Pagination -->
+{% with object_list=events_log baseUrl=events_log_url %}
+    {% include "students/pagination.html" %}
+{% endwith %}
+<!-- End Pagination -->
 
 {% endblock content %}
