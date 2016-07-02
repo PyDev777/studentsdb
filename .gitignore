@@ -71,6 +71,4 @@ target/
 
 local_settings.py
 .idea/
-/demo_data.json
-/pg_data.json
-/to_sqlite_data.json
+*.json
