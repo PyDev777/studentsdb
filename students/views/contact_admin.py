@@ -11,6 +11,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from ..signals import contact_letter_sent
 import logging
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
 
 
 class ContactLetterForm(forms.Form):
@@ -56,6 +58,10 @@ class ContactLetterForm(forms.Form):
 class ContactLetterView(FormView):
     template_name = 'contact_admin/contact_form.html'
     form_class = ContactLetterForm
+
+    @method_decorator(permission_required('auth.add_user'))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContactLetterView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ContactLetterView, self).get_context_data(**kwargs)

@@ -82,3 +82,7 @@ td.group-box {
     color: red;
 }
 
+#user-toolbar {
+    margin-top: 30px;
+    text-align: right;
+}

@@ -8,7 +8,8 @@ from django.views.generic import TemplateView
 from ..models import MonthJournal, Student
 from ..util import paginate, get_current_group
 from django.http import JsonResponse
-
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # import random
 # from django.db import DatabaseError
@@ -18,6 +19,10 @@ from django.http import JsonResponse
 
 class JournalView(TemplateView):
     template_name = 'students/journal.html'
+
+    # @method_decorator(login_required)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super(JournalView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         # get context data from TemplateView class
@@ -86,7 +91,7 @@ class JournalView(TemplateView):
                 'fullname': u'%s %s' % (student.last_name, student.first_name),
                 'days': days,
                 'id': student.id,
-                'update_url': reverse('journal')
+                'update_url': context['journal_url']
             })
 
         # apply pagination, 5 students per page
@@ -95,6 +100,7 @@ class JournalView(TemplateView):
         # finally return updated context with paginated students
         return context
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         data = request.POST
 
