@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_view
 from django.contrib.auth.decorators import login_required
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.events_log import EventLogView
@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     # User Related urls
+    url(r'^users/profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),
     url(r'^register/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_complete'),
     url(r'^users/', include('registration.backends.simple.urls', namespace='users')),

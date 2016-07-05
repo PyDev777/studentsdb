@@ -58,7 +58,7 @@
                 </div>
                 <!-- User's toolbar for authenticated users -->
                 <div class="col-xs-2" id="user-toolbar">
-                    <span>{{ user.username }}</span> |
+                    <a href="{% url "profile" %}">{{ user.get_full_name|default:user.username }}</a> |
                     <a href="{% url "users:auth_logout" %}">Вихід</a>
                 </div>
             {% else %}
