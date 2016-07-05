@@ -1,9 +1,16 @@
 Django==1.7.11
 MySQL-python==1.2.5
 Pillow==3.1.1
+PyJWT==1.4.0
 argparse==1.2.1
 django-crispy-forms==1.4.0
+django-registration-redux==1.4
+oauthlib==1.1.2
 psycopg2==2.6.1
 python-dateutil==2.5.2
+python-openid==2.2.5
+python-social-auth==0.2.19
+requests==2.10.0
+requests-oauthlib==0.6.1
 six==1.10.0
 wsgiref==0.1.2

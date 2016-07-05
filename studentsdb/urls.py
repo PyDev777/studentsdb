@@ -15,6 +15,9 @@ urlpatterns = patterns('',
     # url(r'^$', 'studentsdb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    # Social Auth Related urls
+    url('^social/', include('social.apps.django_app.urls', namespace='social')),
+
     # User Related urls
     url(r'^users/profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),

@@ -64,6 +64,7 @@
             {% else %}
                 <!-- User's toolbar for anonymous users -->
                 <div class="col-xs-2" id="user-toolbar">
+                    <a href="{% url "social:begin" "facebook" %}?next={{ request.path }}">via Facebook</a> |
                     <a href="{% url "users:auth_login" %}">Вхід</a> |
                     <a href="{% url "users:registration_register" %}">Реєстрація</a>
                 </div>
