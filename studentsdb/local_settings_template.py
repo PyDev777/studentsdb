@@ -13,7 +13,7 @@ SECRET_KEY = '================= Your SECRET_KEY ================'
 
 # PORTAL settings
 PORTAL_PROTOCOL = 'http'
-PORTAL_DOMAIN = '127.0.0.1'
+PORTAL_DOMAIN = 'localhost'
 PORTAL_PORT = '8000'
 
 # DATABASES settings (use SQLite)
@@ -38,3 +38,5 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 
+SOCIAL_AUTH_FACEBOOK_KEY = '=== Your pub key ==='
+SOCIAL_AUTH_FACEBOOK_SECRET = '=== Your sec key ==='

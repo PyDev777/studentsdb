@@ -1,4 +1,4 @@
-from local_settings import PORTAL_PROTOCOL, PORTAL_DOMAIN, PORTAL_PORT
+from .local_settings import PORTAL_PROTOCOL, PORTAL_DOMAIN, PORTAL_PORT
 
 
 def students_proc(request):

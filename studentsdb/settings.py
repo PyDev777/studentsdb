@@ -56,9 +56,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'registration',
     'social.apps.django_app.default',
-    'crispy_forms',
     'students',
     'studentsdb',
 )
@@ -86,9 +86,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = ''
-SOCIAL_AUTH_FACEBOOK_SECRET = ''
-
 
 ROOT_URLCONF = 'studentsdb.urls'
 
@@ -114,7 +111,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'studentsdb/templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'studentsdb', 'templates'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')

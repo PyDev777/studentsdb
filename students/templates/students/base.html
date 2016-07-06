@@ -43,7 +43,7 @@
 
             <!-- Groups Selector -->
             {% if user.is_authenticated %}
-                <div class="col-xs-4" id="group-selector">
+                <div class="col-xs-3" id="group-selector">
                     <strong>Група:</strong>
                     <select>
                         {% block group_menu %}
@@ -57,14 +57,14 @@
                     </select>
                 </div>
                 <!-- User's toolbar for authenticated users -->
-                <div class="col-xs-2" id="user-toolbar">
+                <div class="col-xs-3" id="user-toolbar">
                     <a href="{% url "profile" %}">{{ user.get_full_name|default:user.username }}</a> |
                     <a href="{% url "users:auth_logout" %}">Вихід</a>
                 </div>
             {% else %}
                 <!-- User's toolbar for anonymous users -->
-                <div class="col-xs-2" id="user-toolbar">
-                    <a href="{% url "social:begin" "facebook" %}?next={{ request.path }}">via Facebook</a> |
+                <div class="col-xs-3" id="user-toolbar">
+                    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">via Facebook</a> |
                     <a href="{% url "users:auth_login" %}">Вхід</a> |
                     <a href="{% url "users:registration_register" %}">Реєстрація</a>
                 </div>
