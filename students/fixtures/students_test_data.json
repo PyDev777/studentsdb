@@ -1,0 +1,94 @@
+[
+{
+    "fields": {
+        "first_name": "Vitaliy",
+        "last_name": "Podoba",
+        "middle_name": "Ivanovych",
+        "photo": "./podoba.jpg",
+        "notes": "",
+        "student_group": 1,
+        "birthday": "1984-06-17",
+        "ticket": "000"
+    },
+    "model": "students.student",
+    "pk": 1
+},
+{
+    "fields": {
+        "first_name": "Student1",
+        "last_name": "Last Name 1",
+        "middle_name": "Middle Name 1",
+        "photo": "",
+        "notes": "Notes 1",
+        "student_group": 1,
+        "birthday": "1994-10-19",
+        "ticket": "111"
+    },
+    "model": "students.student",
+    "pk": 2
+},
+{
+    "fields": {
+        "first_name": "Student2",
+        "last_name": "Last Name 2",
+        "middle_name": "Middle Name 2",
+        "photo": "",
+        "notes": "",
+        "student_group": 1,
+        "birthday": "1998-03-02",
+        "ticket": "222"
+    },
+    "model": "students.student",
+    "pk": 3
+},
+{
+    "fields": {
+        "first_name": "Student3",
+        "last_name": "Last Name 3",
+        "middle_name": "Middle Name 3",
+        "photo": "",
+        "notes": "",
+        "student_group": 2,
+        "birthday": "2000-09-20",
+        "ticket": "333"
+    },
+    "model": "students.student",
+    "pk": 4
+},
+{
+    "fields": {
+        "notes": "",
+        "leader": 1,
+        "title": "Group1"
+    },
+    "model": "students.group",
+    "pk": 1
+},
+{
+    "fields": {
+        "notes": "",
+        "leader": null,
+        "title": "Group2"
+    },
+    "model": "students.group",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2014-11-19T00:17:12.803Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$vwDz0jnc05bN$cZSSKKOkBa0RNAvEyRqNY1OrIfFpH6mpOxdLyc2aB0g=",
+        "email": "admin@admin.com",
+        "date_joined": "2014-11-01T12:59:32.011Z"
+    },
+    "model": "auth.user",
+    "pk": 1
+}
+]

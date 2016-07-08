@@ -71,4 +71,3 @@ target/
 
 local_settings.py
 .idea/
-*.json
