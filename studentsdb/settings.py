@@ -166,11 +166,11 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'propagate': True,
-            'level': 'INFO'
-        },
+        # 'django': {
+        #     'handlers': ['null'],
+        #     'propagate': True,
+        #     'level': 'INFO'
+        # },
         'django.request': {
             'handlers': ['file', 'mail_admins'],
             'level': 'ERROR',
