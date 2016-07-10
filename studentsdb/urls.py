@@ -10,6 +10,11 @@ from students.views.contact_admin import ContactAdminView, ContactLetterView
 from students.views.journal import JournalView
 from .settings import MEDIA_ROOT, DEBUG
 
+js_info_dict = {
+    'packages': ('students',),
+    # 'domain': 'djangojs',
+}
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'studentsdb.views.home', name='home'),
@@ -45,6 +50,8 @@ urlpatterns = patterns('',
     # Contact Admin Form
     url(r'^contact-admin/$', login_required(ContactAdminView.as_view()), name='contact_admin'),
     url(r'^contact-letter/$', login_required(ContactLetterView.as_view()), name='contact_letter'),
+
+    url(r'^jsi18n\.js$', 'django.views.i18n.javascript_catalog', js_info_dict),
 
     url(r'^admin/', include(admin.site.urls)),
 )
