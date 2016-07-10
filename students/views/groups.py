@@ -8,6 +8,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from ..models import Student, Group
 from ..util import paginate
+from django.utils.translation import ugettext as _
 
 
 class GroupUpdateForm(ModelForm):
@@ -21,8 +22,8 @@ class GroupUpdateForm(ModelForm):
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('save_button', _(u'Save')),
+                Submit('cancel_button', _(u'Cancel'))))
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_edit', kwargs={'pk': kwargs['instance'].id})
@@ -36,7 +37,7 @@ class GroupUpdateForm(ModelForm):
         # get students in current group
         students = Student.objects.filter(student_group=self.instance)
         if (self.cleaned_data['leader'] not in students) and self.cleaned_data['leader']:
-            raise ValidationError(u'Студент не належить цій групі', code='invalid')
+            raise ValidationError(_(u'Student not in this group'), code='invalid')
         return self.cleaned_data['leader']
 
 
@@ -47,15 +48,15 @@ class GroupUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdateView, self).get_context_data(**kwargs)
-        context['title'] = u'Редагування групи'
+        context['title'] = _(u'Group edit')
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=Групу успішно збережено!' % reverse('groups')
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Редагування групи відмінено!' % reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group update canceled!'))
         else:
             return super(GroupUpdateView, self).post(request, *args, **kwargs)
 
@@ -71,8 +72,8 @@ class GroupAddForm(ModelForm):
         self.helper.layout = Layout(
             Fieldset('', 'title', 'leader', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('save_button', _(u'Save')),
+                Submit('cancel_button', _(u'Cancel'))))
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse('groups_add')
@@ -88,15 +89,15 @@ class GroupAddView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(GroupAddView, self).get_context_data(**kwargs)
-        context['title'] = u'Додавання групи'
+        context['title'] = _(u'Group add')
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=Групу успішно збережено!' % reverse('groups')
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Додавання групи відмінено!' % reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group add cancelled!'))
         else:
             return super(GroupAddView, self).post(request, *args, **kwargs)
 
@@ -106,11 +107,11 @@ class GroupDeleteView(DeleteView):
     template_name = 'students/groups_confirm_delete.html'
 
     def get_success_url(self):
-        return u'%s?status_message=Групу успішно видалено!' % reverse('groups')
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group deleted successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Видалення групи відмінено!' % reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group delete canceled!'))
         else:
             return super(GroupDeleteView, self).post(request, *args, **kwargs)
 

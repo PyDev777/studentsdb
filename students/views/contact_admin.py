@@ -13,6 +13,7 @@ from ..signals import contact_letter_sent
 import logging
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 
 
 class ContactLetterForm(forms.Form):
@@ -26,8 +27,8 @@ class ContactLetterForm(forms.Form):
         self.helper.layout = Layout(
             Fieldset('', 'from_email', 'subject', 'message'),
             ButtonHolder(
-                Submit('save_button', u'Надіслати'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('save_button', _(u'Send')),
+                Submit('cancel_button', _(u'Cancel'))))
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -40,16 +41,16 @@ class ContactLetterForm(forms.Form):
         self.helper.field_class = 'col-sm-7'
 
     from_email = forms.EmailField(
-        label=u"Ваша Емейл Адреса",
+        label=_(u"Your Email Address"),
         required=True)
 
     subject = forms.CharField(
-        label=u"Заголовок листа",
+        label=_(u"Letter Subject"),
         max_length=128,
         required=True)
 
     message = forms.CharField(
-        label=u"Текст повідомлення",
+        label=_(u"Letter text"),
         max_length=2560,
         widget=forms.Textarea,
         required=True)
@@ -65,7 +66,7 @@ class ContactLetterView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactLetterView, self).get_context_data(**kwargs)
-        context['title'] = u"Зв'язок з Адміністратором"
+        context['title'] = _(u"Contact Administrator")
         return context
 
     def form_valid(self, form):
@@ -79,21 +80,20 @@ class ContactLetterView(FormView):
             # if True:
             #     raise Exception
         except Exception:
-            message = u'Під час відправки листа виникла непередбачувана помилка. ' \
-                        u'Спробуйте скористатись даною формою пізніше.'
+            message = _(u"An error occurred during email transfer. Please, try again later.")
             message_error = '1'
             logger = logging.getLogger(__name__)
-            logger.exception(from_email + u' : помилка відправки повідомлення!')
+            logger.exception(from_email + _(u': error sending letter!'))
             return HttpResponseRedirect(u'%s?status_message=%s&message_error=%s' % (reverse('contact_admin'), message, message_error))
         else:
-            message = u'Повідомлення успішно надіслане!'
+            message = _(u'Letter sent successfully!')
             contact_letter_sent.send(sender=self.__class__, email=from_email)
             # redirect to same contact page with success message
             return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin'), message))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Відправу листа відмінено!' % reverse('contact_admin'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin')), _(u'Letter sent cancelled!'))
         else:
             return super(ContactLetterView, self).post(request, *args, **kwargs)
 

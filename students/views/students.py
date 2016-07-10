@@ -12,6 +12,8 @@ from django.utils.safestring import mark_safe
 from django.forms import ClearableFileInput
 from ..models import Student, Group
 from ..util import paginate, get_current_group
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 
 class ImageViewFileInput(ClearableFileInput):
@@ -25,7 +27,7 @@ class ImageViewFileInput(ClearableFileInput):
 
 
 class StudentUpdateForm(ModelForm):
-    photo = forms.ImageField(widget=ImageViewFileInput(), required=False, label=u"Фото")
+    photo = forms.ImageField(widget=ImageViewFileInput(), required=False, label=ugettext_lazy(u"Photo"))
 
     class Meta:
         model = Student
@@ -41,8 +43,8 @@ class StudentUpdateForm(ModelForm):
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('save_button', _(u'Save')),
+                Submit('cancel_button', _(u'Cancel'))))
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -57,7 +59,7 @@ class StudentUpdateForm(ModelForm):
     def clean_photo(self):
         photo = self.cleaned_data['photo']
         if photo and (len(photo) > 500000):
-            raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
+            raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
         return photo
 
     def clean_student_group(self):
@@ -66,7 +68,7 @@ class StudentUpdateForm(ModelForm):
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(u'Студент є старостою іншої групи', code='invalid')
+            raise ValidationError(_(u'Student is the leader of another group!'), code='invalid')
         return self.cleaned_data['student_group']
 
 
@@ -77,15 +79,15 @@ class StudentUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentUpdateView, self).get_context_data(**kwargs)
-        context['title'] = u'Редагування студента'
+        context['title'] = _(u'Student edit')
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=Студента успішно збережено!' % reverse('home')
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student updated successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Редагування студента відмінено!' % reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student update canceled!')))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
@@ -104,8 +106,8 @@ class StudentAddForm(ModelForm):
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
-                Submit('save_button', u'Зберегти'),
-                Submit('cancel_button', u'Скасувати')))
+                Submit('save_button', _(u'Save')),
+                Submit('cancel_button', _(u'Cancel'))))
 
         # form tag attributes
         self.helper.form_class = 'form-horizontal'
@@ -120,7 +122,7 @@ class StudentAddForm(ModelForm):
     def clean_photo(self):
         photo = self.cleaned_data['photo']
         if photo and (len(photo) > 500000):
-            raise ValidationError(u'Максимальний розмір малюнка - 500Kb!', code='invalid')
+            raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
         return photo
 
 
@@ -131,15 +133,15 @@ class StudentAddView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentAddView, self).get_context_data(**kwargs)
-        context['title'] = u'Додавання студента'
+        context['title'] = _(u'Student add')
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=Студента успішно збережено!' % reverse('home')
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student added successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Додавання студента відмінено!' % reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
 
@@ -149,11 +151,11 @@ class StudentDeleteView(DeleteView):
     template_name = 'students/students_confirm_delete.html'
 
     def get_success_url(self):
-        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=Видалення студента відмінено!' % reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
         else:
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
 

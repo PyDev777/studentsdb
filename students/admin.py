@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm, ValidationError
 from .models import Student, Group, MonthJournal
+from django.utils.translation import ugettext as _
 
 
 class StudentFormAdmin(ModelForm):
@@ -13,7 +14,7 @@ class StudentFormAdmin(ModelForm):
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(u'Студент є старостою іншої групи', code='invalid')
+            raise ValidationError(_(u'Student is a leader of other group'), code='invalid')
         return self.cleaned_data['student_group']
 
 
@@ -38,7 +39,7 @@ class GroupFormAdmin(ModelForm):
         # get students in current group
         students = Student.objects.filter(student_group=self.instance)
         if (self.cleaned_data['leader'] not in students) and self.cleaned_data['leader']:
-            raise ValidationError(u'Студент не належить цій групі', code='invalid')
+            raise ValidationError(_(u'Student not in this group!'), code='invalid')
         return self.cleaned_data['leader']
 
 
