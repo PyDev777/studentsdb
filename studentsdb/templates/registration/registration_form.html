@@ -1,8 +1,9 @@
 {% extends "students/base.html" %}
 
-{% block meta_title %}Реєстрація{% endblock meta_title %}
+{% load i18n %}
+{% block meta_title %}{% trans "Registration" %}{% endblock meta_title %}
 
-{% block title %}Форма реєстрації{% endblock title %}
+{% block title %}{% trans "Registration Form" %}{% endblock title %}
 
 {% block status_message %}
     {% if form.errors %}
@@ -17,28 +18,28 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{% url "home" %}">
         <div class="form-group">
-            <label for="login">Your Username</label>
+            <label for="login">{% trans "Your Username" %}</label>
             <input type="text" class="form-control" id="login" value="" name="username">
             <p class="help-block">{{ form.errors.username.as_text }}</p>
         </div>
 
         <div class="form-group">
-            <label for="email">Your Email</label>
+            <label for="email">{% trans "Your Email" %}</label>
             <input type="text" class="form-control" id="email" value="" name="email">
             <p class="help-block">{{ form.errors.email.as_text }}</p>
         </div>
 
         <div class="form-group">
-            <label for="password">Your Password</label>
+            <label for="password">{% trans "Your Password" %}</label>
             <input type="password" class="form-control" id="password" value="" name="password1">
             <p class="help-block">{{ form.errors.password1.as_text }}</p>
         </div>
 
         <div class="form-group">
-            <label for="password-confirm">Confirm Password</label>
+            <label for="password-confirm">{% trans "Confirm Password" %}</label>
             <input type="password" class="form-control" id="password-confirm" value="" name="password2">
             <p class="help-block">{{ form.errors.password2.as_text }}</p>
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
     </form>
 {% endblock content %}
