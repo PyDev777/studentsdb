@@ -1,16 +1,17 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
 {% load static from staticfiles %}
 
-{% block meta_title %}Групи{% endblock meta_title %}
+{% block meta_title %}{% trans "Groups" %}{% endblock meta_title %}
 
-{% block title %}Список груп{% endblock title %}
+{% block title %}{% trans "Groups List" %}{% endblock title %}
 
 
 {% block content %}
 
 <!-- Add Group Button -->
-<a class="btn btn-primary form-link" href="{% url "groups_add" %}">Додати групу</a>
+<a class="btn btn-primary form-link" href="{% url "groups_add" %}">{% trans "Add Group" %}</a>
 
 <!-- Start Groups Listing -->
 {% if groups %}
@@ -27,7 +28,7 @@
             </th>
             <th>
                 <a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
-                    Назва
+                    {% trans "Title" %}
                     {% if order_by == 'title' and reverse != '1' %}&uarr;
                     {% elif order_by == 'title' and reverse == '1' %}&darr;
                     {% endif %}
@@ -35,7 +36,7 @@
             </th>
             <th>
                 <a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
-                    Староста
+                    {% trans "Leader" %}
                     {% if order_by == 'leader' and reverse != '1' %}&uarr;
                     {% elif order_by == 'leader' and reverse == '1' %}&darr;
                     {% endif %}
@@ -49,17 +50,17 @@
         {% for group in groups %}
         <tr>
             <td class="group-box">{{ forloop.counter }}</td>
-            <td class="group-box"><a title="Редагувати" class="form-link" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
+            <td class="group-box"><a title="{% trans "Edit" %}" class="form-link" href="{% url "groups_edit" group.id %}">{{ group.title }}</a></td>
             <td class="group-box">{{ group.leader }}</td>
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Дія <span class="caret"></span>
+                        {% trans "Action" %} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="form-link" href="{% url "groups_edit" group.id %}">Редагувати</a></li>
+                        <li><a class="form-link" href="{% url "groups_edit" group.id %}">{% trans "Edit" %}</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a class="form-link" href="{% url "groups_delete" group.id %}">Видалити</a></li>
+                        <li><a class="form-link" href="{% url "groups_delete" group.id %}">{% trans "Delete" %}</a></li>
                     </ul>
                 </div>
             </td>
@@ -69,7 +70,7 @@
         </tbody>
     </table>
 {% else %}
-    <p>Групи відсутні</p>
+    <p>{% trans "There is no group in the database yet" %}</p>
 {% endif %}
 <!-- End Groups Listing -->
 

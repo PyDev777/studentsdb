@@ -1,38 +1,41 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
 {% load static from staticfiles %}
 
-{% block meta_title %}Журнал{% endblock meta_title %}
+{% block meta_title %}{% trans "Journal" %}{% endblock meta_title %}
 
-{% block title %}Облік відвідування{% endblock title %}
+{% block title %}{% trans "Monthly Journal" %}{% endblock title %}
 
 
 {% block content %}
     {% if not students %}
         <div class="alert alert-warning">
-            Студенти відсутні. Будь-ласка, <a class="form-link" href="{% url "students_add" %}">додайте</a> першого.
+            {% url "students_add" as students_add_anchor %}
+            {% blocktrans %}
+                There are no students in the database yet.
+                Please, <a href="{{ students_add_anchor }}">add</a> your first student.
+            {% endblocktrans %}
         </div>
     {% else %}
         <div class="alert alert-warning">
-            Зміни в журнал зберігаються автоматично при кожному кліку в клітинці таблиці.
-            <span id="ajax-error">Виникла помилка, дані не збереженно!</span>
+            {% trans "We automatically save changes into journal while you click inside table cells." %}
+            <span id="ajax-error">{% trans "Error! Data not saved." %}</span>
         </div>
 
         <p id="journal-nav" class="text-center">
-            <a href="{{ journal_url }}?month={{ prev_month }}" class="content-link" title="Попередній Місяць">&larr;</a>
-            <!-- TODO: translate month name -->
-            <strong>{{ month_verbose }} {{ year }}</strong>
-            <a href="{{ journal_url }}?month={{ next_month }}" class="content-link" title="Наступний Місяць">&rarr;</a>
+            <a href="{{ journal_url }}?month={{ prev_month }}" class="content-link" title="{% trans "Previous Month" %}">&larr;</a>
+            <strong>{% trans month_verbose %} {{ year }}</strong>
+            <a href="{{ journal_url }}?month={{ next_month }}" class="content-link" title="{% trans "Next Month" %}">&rarr;</a>
         </p>
         <table class="table table-hover table-striped table-bordered table-condensed">
             <thead>
                 <tr class="header">
                     <th class="num day-header">#</th>
-                    <th class="name day-header">Студент</th>
+                    <th class="name day-header">{% trans "Student" %}</th>
                     {% for day in month_header %}
                         <th class="day-header">
-                            <!-- TODO: translate day name -->
-                            {{ day.verbose }}
+                            {% trans day.verbose %}
                             <br>
                             {{ day.day }}
                         </th>
@@ -52,7 +55,7 @@
                             {% endif %}
                         </td>
                         <td class="student-box">
-                            <a href="{% url "students_edit" student.id %}" class="form-link" title="Редагувати">
+                            <a href="{% url "students_edit" student.id %}" class="form-link" title="{% trans "Edit" %}">
                                 {{ student.fullname }}
                             </a>
                         </td>

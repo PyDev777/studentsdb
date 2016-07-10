@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
@@ -7,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Система обліку студентів Навчального Закладу">
-    <title>Сервіс обліку студентів - {% block meta_title %}{% endblock meta_title %}</title>
+    <title>{% trans "Students Accounting Service" %} - {% block meta_title %}{% endblock meta_title %}</title>
 
     <!-- Bootstrap CSS -->
     {#<link rel="stylesheet" href="{{ PORTAL_URL }}{% static "css/bootstrap.min.css" %}">#}
@@ -38,16 +40,16 @@
         <div class="row" id="header">
             <!-- Logo -->
             <div class="col-xs-6">
-                <h1>{% block logo %}Сервіс Обліку Студентів{% endblock logo %}</h1>
+                <h1>{% block logo %}{% trans "Students Accounting Service" %}{% endblock logo %}</h1>
             </div>
 
             <!-- Groups Selector -->
             {% if user.is_authenticated %}
                 <div class="col-xs-3" id="group-selector">
-                    <strong>Група:</strong>
+                    <strong>{% trans "Group" %}:</strong>
                     <select>
                         {% block group_menu %}
-                        <option value="">Усі Студенти</option>
+                        <option value="">{% trans "All Students" %}Усі Студенти</option>
                         {% for group in GROUPS %}
                             <option value="{{ group.id }}" {% if group.selected %} selected="1" {% endif %}>
                                 {{ group.title }} {% if group.leader %}, {{ group.leader }}{% endif %}
@@ -59,14 +61,14 @@
                 <!-- User's toolbar for authenticated users -->
                 <div class="col-xs-3" id="user-toolbar">
                     <a href="{% url "profile" %}">{{ user.get_full_name|default:user.username }}</a> |
-                    <a href="{% url "users:auth_logout" %}">Вихід</a>
+                    <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
             {% else %}
                 <!-- User's toolbar for anonymous users -->
                 <div class="col-xs-3" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">via Facebook</a> |
-                    <a href="{% url "users:auth_login" %}">Вхід</a> |
-                    <a href="{% url "users:registration_register" %}">Реєстрація</a>
+                    <a href="{% url "users:auth_login" %}">{% trans "Login" %}</a> |
+                    <a href="{% url "users:registration_register" %}">{% trans "Registration" %}</a>
                 </div>
             {% endif %}
         </div>
@@ -78,22 +80,22 @@
             <div class="col-xs-12">
                 <ul class="nav nav-tabs">
                     <li role="presentation" {% if request.path == students_url %} class="active" {% endif %}>
-                        <a href="{% url "home" %}">Студенти</a>
+                        <a href="{% url "home" %}">{% trans "Students" %}</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li role="presentation" {% if request.path in journal_url %} class="active" {% endif %}>
-                            <a href="{% url "journal" student.id %}">Відвідування</a>
+                            <a href="{% url "journal" student.id %}">{% trans "Journal" %}</a>
                         </li>
                         <li role="presentation" {% if request.path in groups_url %} class="active" {% endif %}>
-                            <a href="{% url "groups" %}">Групи</a>
+                            <a href="{% url "groups" %}">{% trans "Groups" %}</a>
                         </li>
                         <li role="presentation" {% if request.path in events_log_url %} class="active" {% endif %}>
-                            <a href="{% url "events_log" %}">Події</a>
+                            <a href="{% url "events_log" %}">{% trans "Log" %}</a>
                         </li>
                     {% endif %}
                     {% if perms.auth.add_user %}
                         <li role="presentation" {% if request.path in contact_url %} class="active" {% endif %}>
-                            <a href="{% url "contact_admin" %}">Контакт</a>
+                            <a href="{% url "contact_admin" %}">{% trans "Contact" %}</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -127,7 +129,7 @@
         <!-- Start footer -->
         <div class="row" id="footer">
             <div class="col-xs-12">
-                {% block footer %}&copy 2016, Сервіс Обліку Студентів{% endblock footer %}
+                {% block footer %}&copy 2016, {% trans "Students Accounting Service" %}{% endblock footer %}
             </div>
         </div>
         <!-- End footer -->

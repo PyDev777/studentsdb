@@ -1,10 +1,11 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
 {% load static from staticfiles %}
 
-{% block meta_title %}Зв'язок з Адміністратором{% endblock meta_title %}
+{% block meta_title %}{% trans "Admin Contact" %}{% endblock meta_title %}
 
-{% block title %}Зв'язок з Адміністратором{% endblock title %}
+{% block title %}{% trans "Admin Contact" %}{% endblock title %}
 
 {% block status_message %}
     {% if request.GET.message_error %}
@@ -18,6 +19,6 @@
 
 {% block content %}
     <a class="btn btn-primary form-link" href="{% url "contact_letter" %}">
-        Написати листа Адміністратору
+        {% trans "Send letter to Administrator" %}
     </a>
 {% endblock content %}

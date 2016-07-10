@@ -1,16 +1,17 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
 {% load static from staticfiles %}
 
-{% block meta_title %}Студенти{% endblock meta_title %}
+{% block meta_title %}{% trans "Students" %}{% endblock meta_title %}
 
-{% block title %}База Студентів{% endblock title %}
+{% block title %}{% trans "Students List" %}{% endblock title %}
 
 
 {% block content %}
 
 <!-- Add Student Button -->
-<a class="btn btn-primary form-link" href="{% url "students_add" %}">Додати Студента</a>
+<a class="btn btn-primary form-link" href="{% url "students_add" %}">{% trans "Add Student" %}</a>
 
 <!-- Start Students Listing -->
 {% if students %}
@@ -25,10 +26,10 @@
                     {% endif %}
                 </a>
             </th>
-            <th>Фото</th>
+            <th>{% trans "Photo" %}</th>
             <th>
                 <a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
-                    Прізвище
+                    {% trans "Last Name" %}
                     {% if order_by == 'last_name' and reverse != '1' %}&uarr;
                     {% elif order_by == 'last_name' and reverse == '1' %}&darr;
                     {% endif %}
@@ -36,7 +37,7 @@
             </th>
             <th>
                 <a href="{% url "home" %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
-                    Ім'я
+                    {% trans "First Name" %}
                     {% if order_by == 'first_name' and reverse != '1' %}&uarr;
                     {% elif order_by == 'first_name' and reverse == '1' %}&darr;
                     {% endif %}
@@ -44,13 +45,13 @@
             </th>
             <th>
                 <a href="{% url "home" %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}" class="content-link">
-                    № білета
+                    {% trans "Ticket #" %}
                     {% if order_by == 'ticket' and reverse != '1' %}&uarr;
                     {% elif order_by == 'ticket' and reverse == '1' %}&darr;
                     {% endif %}
                 </a>
             </th>
-            <th>Дії</th>
+            <th>{% trans "Actions" %}</th>
         </tr>
         </thead>
         <tbody>
@@ -72,12 +73,12 @@
                 {% endif %}
             </td>
                 <td class="student-box">
-                    <a title="Редагувати" class="form-link" href="{% url "students_edit" student.id %}">
+                    <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
                         {{ student.last_name }}
                     </a>
                 </td>
                 <td class="student-box">
-                    <a title="Редагувати" class="form-link" href="{% url "students_edit" student.id %}">
+                    <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
                         {{ student.first_name }}
                     </a>
                 </td>
@@ -85,13 +86,13 @@
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Дія <span class="caret"></span>
+                        {% trans "Action" %} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{% url "students_edit" student.id %}" class="form-link">Редагувати</a></li>
-                        <li><a href="{% url "journal" student.id %}" class="content-link">Відвідування</a></li>
+                        <li><a href="{% url "students_edit" student.id %}" class="form-link">{% trans "Edit" %}</a></li>
+                        <li><a href="{% url "journal" student.id %}" class="content-link">{% trans "Journal" %}</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "students_delete" student.id %}" class="form-link">Видалити</a></li>
+                        <li><a href="{% url "students_delete" student.id %}" class="form-link">{% trans "Delete" %}</a></li>
                     </ul>
                 </div>
             </td>
@@ -102,7 +103,11 @@
     </table>
 {% else %}
     <div class="alert alert-warning">
-        Студенти відсутні. Будь-ласка, <a href="{% url "students_add" %}" class="form-link">додайте</a> першого.
+        {% url "students_add" as students_add_anchor %}
+        {% blocktrans %}
+            There are no students in the database yet.
+            Please, <a href="{{ students_add_anchor }}">add</a> your first student.
+        {% endblocktrans %}
     </div>
 {% endif %}
 <!-- End Students Listing -->
