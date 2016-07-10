@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Система обліку студентів Навчального Закладу">
+    <meta name="description" content="{% trans "App to manage students database" %}">
     <title>{% trans "Students Accounting Service" %} - {% block meta_title %}{% endblock meta_title %}</title>
 
     <!-- Bootstrap CSS -->
@@ -66,7 +66,7 @@
             {% else %}
                 <!-- User's toolbar for anonymous users -->
                 <div class="col-xs-3" id="user-toolbar">
-                    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">via Facebook</a> |
+                    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
                     <a href="{% url "users:auth_login" %}">{% trans "Login" %}</a> |
                     <a href="{% url "users:registration_register" %}">{% trans "Registration" %}</a>
                 </div>
