@@ -28,7 +28,7 @@ function createForm(form, modal, urlPrev) {
             $('button, fieldset, input').prop("disabled", false);
             modal_spinner.hide();
         },
-        'error': function() {alert(gettext('Помилка на сервері. Спробуйте, будь-ласка, пізніше.'))},
+        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
         'success': function(data) {
             var html = $(data),
                 newform = html.find('#content-column form'),
@@ -55,7 +55,7 @@ function showModal(url, urlPrev, saveHistory) {
         'type': 'get',
         'beforeSend': function() {spinner.show()},
         'complete': function() {spinner.hide()},
-        'error': function() {alert(gettext('Помилка на сервері. Спробуйте, будь-ласка, пізніше.'))},
+        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
         'success': function(data) {
             var html = $(data),
                 form = html.find('#content-column form'),
@@ -90,7 +90,7 @@ function updateContent(url, saveHistory) {
         'type': 'get',
         'beforeSend': function() {spinner.show()},
         'complete': function() {spinner.hide()},
-        'error': function() {alert(gettext('Помилка на сервері. Спробуйте, будь-ласка, пізніше.'))},
+        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
         'success': function(data) {
             var html = $(data);
             $('title').text(html.filter('title').text());

@@ -12,7 +12,6 @@ from .settings import MEDIA_ROOT, DEBUG
 
 js_info_dict = {
     'packages': ('students',),
-    # 'domain': 'djangojs',
 }
 
 urlpatterns = patterns('',
