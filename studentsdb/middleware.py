@@ -2,7 +2,30 @@ from datetime import datetime
 from django.http import HttpResponse
 from bs4 import BeautifulSoup
 from settings import DEBUG
+from django.db import connection
 # import time
+
+
+class DBTimeMiddleware(object):
+    """Display DB time on a page"""
+
+    def __init__(self):
+        self.db_time = 0
+
+    def process_exception(self, request, exception):
+        return HttpResponse('Exception found: %s' % exception)
+
+    def process_response(self, request, response):
+        if DEBUG:
+            self.db_time += sum([float(q['time']) for q in connection.queries])
+            if 'text/html' in response.get('Content-Type', ''):
+                soup = BeautifulSoup(response.content, 'lxml')
+                if soup.body:
+                    tag = soup.new_tag('code', style='position: fixed; top: 0; right: 400px')
+                    tag.string = 'DB took: %s' % str(self.db_time)
+                    soup.body.insert(0, tag)
+                    response.content = soup.prettify()
+        return response
 
 
 class RequestTimeMiddleware(object):
