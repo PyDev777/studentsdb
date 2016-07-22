@@ -2,6 +2,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from bs4 import BeautifulSoup
 from settings import DEBUG
+# import time
 
 
 class RequestTimeMiddleware(object):
@@ -25,6 +26,7 @@ class RequestTimeMiddleware(object):
         if DEBUG and hasattr(request, 'start_time') and ('text/html' in response.get('Content-Type', '')):
             soup = BeautifulSoup(response.content, 'lxml')
             if soup.body:
+                # time.sleep(2)
                 dtime = datetime.now() - request.start_time
                 if dtime.seconds < 2:
                     tag = soup.new_tag('code', style='position: fixed; top: 0; right: 0')
