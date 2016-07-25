@@ -24,13 +24,13 @@ class Command(BaseCommand):
 
         for name in self.models:
             if options[name]:
-                for i in range(1, options[name]+1):
+                for i in range(options[name]):
                     r1, r2, r3 = randint(1, 9999), randint(1, 9999), randint(1, 9999)
                     if name == 'student':
                         student = Student(
                             first_name='Name-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3),
                             last_name='Surname-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3),
-                            ticket=i,
+                            ticket=i+1,
                             birthday=timezone.now())
                         student.save()
                     if name == 'group':
