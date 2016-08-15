@@ -29,9 +29,6 @@ class Command(BaseCommand):
         for tag in tags:
             # self._save_CDN_file(tag)
             ref_idx = t.find(tag['ref'])
-            print 'tag_href =', tag['ref']
-            if tag['ref'] in t:
-                print '!!!!!!!!!!!!!!!'
             if ref_idx < 0:
                 self._error_exit('Ref %s not found (split by "\\"?) in template file!' % tag['ref'])
             open_idx = t.rfind(tag['open'], 0, ref_idx)
@@ -61,7 +58,7 @@ class Command(BaseCommand):
                 if tag['static_path'] in t[s_open_idx:s_close_idx]:
                     online_str = tag['comment'].replace(tag['close'][1], '')
                     t = t.replace(t[c_idx:s_close_idx + 1], online_str)
-        print t
+        # print t
         # self._save_html_file(t)
 
     def _save_CDN_file(self, tag):
