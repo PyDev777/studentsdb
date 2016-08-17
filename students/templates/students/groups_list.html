@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load static from staticfiles %}
+{% load pagenav %}
 
 {% block meta_title %}{% trans "Groups" %}{% endblock meta_title %}
 
@@ -75,9 +76,7 @@
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
-{% with object_list=groups baseUrl=groups_url %}
-    {% include "students/pagination.html" %}
-{% endwith %}
+{% pagenav groups groups_url order_by reverse None is_paginated paginator %}
 <!-- End Pagination -->
 
 {% endblock content %}

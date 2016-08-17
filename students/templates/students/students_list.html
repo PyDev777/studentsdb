@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load static from staticfiles %}
+{% load pagenav %}
 
 {% block meta_title %}{% trans "Students" %}{% endblock meta_title %}
 
@@ -113,9 +114,7 @@
 <!-- End Students Listing -->
 
 <!-- Start Pagination -->
-{% with object_list=students baseUrl=students_url %}
-    {% include "students/pagination.html" %}
-{% endwith %}
+{% pagenav students students_url order_by reverse None is_paginated paginator %}
 <!-- End Pagination -->
 
 {% endblock content %}

@@ -1,27 +1,23 @@
-<!-- Start Pagination -->
 {% if is_paginated %}
-    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
-        <nav>
-            <ul class="pagination">
-                <li>
-                    <a href="{{ baseUrl }}?page=1{%if order_by %}&amp;order_by={{ order_by }}{%endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
-                        &laquo;
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a href="{{ base_url }}?page=1{%if order_by %}&amp;order_by={{ order_by }}{%endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
+                    &laquo;
+                </a>
+            </li>
+            {% for p in paginator.page_range %}
+                <li {% if object_list.number == p %}class="active"{% endif %}>
+                    <a href="{{ base_url }}?page={{ p }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
+                        {{ p }}
                     </a>
                 </li>
-                {% for p in paginator.page_range %}
-                    <li {% if object_list.number == p %}class="active"{% endif %}>
-                        <a href="{{ baseUrl }}?page={{ p }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
-                            {{ p }}
-                        </a>
-                    </li>
-                {% endfor %}
-                <li>
-                    <a href="{{ baseUrl }}?page={{ paginator.num_pages }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
-                        &raquo;
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    {% endwith %}
+            {% endfor %}
+            <li>
+                <a href="{{ base_url }}?page={{ paginator.num_pages }}{%if order_by %}&amp;order_by={{ order_by }}{% endif %}{% if reverse %}&amp;reverse={{ reverse }}{% endif %}{% if cur_month %}&amp;month={{ cur_month }}{% endif %}" class="content-link">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
 {% endif %}
-<!-- End Pagination -->
