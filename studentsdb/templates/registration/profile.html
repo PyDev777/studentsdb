@@ -1,9 +1,11 @@
 {% extends "students/base.html" %}
 
 {% load i18n %}
-{% block meta_title %}{{ user.get_full_name|default:user.username }}{% endblock meta_title %}
+{% load nice_username %}
 
-{% block title %}{{ user.get_full_name|default:user.username }}{% endblock title %}
+{% block meta_title %}{{ user|nice_username }}{% endblock meta_title %}
+
+{% block title %}{{ user|nice_username }}{% endblock title %}
 
 {% block content %}
 
@@ -14,24 +16,20 @@
             <td>{{ user.email }}</td>
         </tr>
     {% endif %}
-    {% if user.username %}
-        <tr>
-            <td>{% trans "Nick" %}</td>
-            <td>{{ user.username }}</td>
-        </tr>
-    {% endif %}
+    <tr>
+        <td>{% trans "Nick" %}</td>
+        <td>{{ user.username }}</td>
+    </tr>
     {% if user.stprofile.mobile_phone %}
         <tr>
             <td>{% trans "Mobile Phone" %}</td>
             <td>{{ user.stprofile.mobile_phone }}</td>
         </tr>
     {% endif %}
-    {% if user.date_joined %}
-        <tr>
-            <td>{% trans "Registration date" %}</td>
-            <td>{{ user.date_joined }}</td>
-        </tr>
-    {% endif %}
+    <tr>
+        <td>{% trans "Registration date" %}</td>
+        <td>{{ user.date_joined }}</td>
+    </tr>
 </table>
 
 {% endblock content %}

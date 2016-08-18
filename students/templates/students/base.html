@@ -1,6 +1,7 @@
 {% load i18n %}
 
 {% load static from staticfiles %}
+{% load nice_username %}
 
 <!DOCTYPE html>
 <html lang="uk">
@@ -56,7 +57,7 @@
                 </div>
                 <!-- User's toolbar for authenticated users -->
                 <div class="col-xs-3" id="user-toolbar">
-                    <a href="{% url "profile" %}">{{ user.get_full_name|default:user.username }}</a> |
+                    <a href="{% url "profile" %}">{{ user|nice_username }}</a> |
                     <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
             {% else %}
