@@ -6,14 +6,13 @@
 
 {% block meta_title %}{% trans "Log" %}{% endblock meta_title %}
 
-{% block title %}{% trans "Log" %}{% endblock title %}
+{% block title %}{% trans "Log list" %}{% endblock title %}
 
 
 {% block content %}
 
 <!-- Start Groups Listing -->
 {% if events_log %}
-    <h3>{% trans "Log list" %}</h3>
     <table class="table table-hover table-striped table-condensed">
         <thead>
         <tr>
@@ -37,7 +36,7 @@
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
-{% pagenav events_log events_log_url None None None is_paginated paginator %}
+{% pagenav object_list=events_log base_url=events_log_url order_by=None reverse=None cur_month=None is_paginated=is_paginated paginator=paginator %}
 <!-- End Pagination -->
 
 {% endblock content %}

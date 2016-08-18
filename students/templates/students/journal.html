@@ -74,7 +74,7 @@
     {% endif %}
 
 <!-- Start Pagination -->
-{% pagenav students journal_url None None cur_month is_paginated paginator %}
+{% pagenav object_list=students base_url=journal_url order_by=None reverse=None cur_month=cur_month is_paginated=is_paginated paginator=paginator %}
 <!-- End Pagination -->
 
 {% endblock content %}

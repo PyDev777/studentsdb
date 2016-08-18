@@ -76,7 +76,7 @@
 <!-- End Groups Listing -->
 
 <!-- Start Pagination -->
-{% pagenav groups groups_url order_by reverse None is_paginated paginator %}
+{% pagenav object_list=groups base_url=groups_url order_by=order_by reverse=reverse cur_month=None is_paginated=is_paginated paginator=paginator %}
 <!-- End Pagination -->
 
 {% endblock content %}
