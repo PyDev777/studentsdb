@@ -44,7 +44,7 @@
             {% if user.is_authenticated %}
                 <div class="col-xs-3" id="group-selector">
                     <strong>{% trans "Group" %}:</strong>
-                    <select>
+                    <select title="">
                         {% block group_menu %}
                         <option value="">{% trans "All Students" %}</option>
                         {% for group in GROUPS %}
@@ -62,7 +62,7 @@
                 </div>
             {% else %}
                 <!-- User's toolbar for anonymous users -->
-                <div class="col-xs-3" id="user-toolbar">
+                <div class="col-xs-6" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
                     <a href="{% url "users:auth_login" %}">{% trans "Login" %}</a> |
                     <a href="{% url "users:registration_register" %}">{% trans "Registration" %}</a>

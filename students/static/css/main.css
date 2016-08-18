@@ -84,5 +84,5 @@ td.group-box {
 
 #user-toolbar {
     margin-top: 30px;
-    text-align: right;
+    float: right;
 }
