@@ -25,7 +25,7 @@ class TestStudentList(TestCase):
         # remember url to our homepage
         self.url = reverse('home')
 
-    def test_students_list(self):
+    def test_student_list(self):
         # make request to the server to get homepage page
         response = self.client.get(self.url)
 
