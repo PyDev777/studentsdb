@@ -37,7 +37,7 @@ class UtilsTestCase(TestCase):
         self.assertEqual(None, get_current_group(request))
 
         # test with proper group identificator
-        group = Group.objects.filter(title='Group2')[0]
+        group = Group.objects.filter(title='Group1')[0]
         request.COOKIES['current_group'] = str(group.id)
         self.assertEqual(group, get_current_group(request))
 

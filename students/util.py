@@ -1,11 +1,11 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def paginate(objects, size, request, context, var_name='object_list'):
+def paginate(objects, per_page, request, context, var_name='object_list'):
     """Paginate objects provided by view.
     This function takes:
     * objects - list of elements;
-    * number of objects per page;
+    * per_page - number of objects per page;
     * request object to get url parameters from;
     * context to set new variables into;
     * var_name - variable name for list of objects.
@@ -13,9 +13,9 @@ def paginate(objects, size, request, context, var_name='object_list'):
     """
 
     # apply pagination
-    paginator = Paginator(objects, size)
+    paginator = Paginator(objects, per_page)
     # try to get page number from request
-    page = request.GET.get('page', '1')
+    page = request.GET.get('page')
     try:
         object_list = paginator.page(page)
     except PageNotAnInteger:
