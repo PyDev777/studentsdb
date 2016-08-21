@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url "users:auth_login" %}" method="post">
+    <form name="Login Form" action="{% url "users:auth_login" %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="next" value="{% url "home" %}">
         <div class="form-group">
