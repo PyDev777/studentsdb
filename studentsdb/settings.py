@@ -163,12 +163,11 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': LOG_FILE,
             'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
         }
-        # ,
-        # 'mail_admins': {
-        #     'level': 'ERROR',
-        #     'class': 'django.utils.log.AdminEmailHandler'
-        # }
     },
     'loggers': {
         'django': {
@@ -176,18 +175,18 @@ LOGGING = {
             'propagate': True,
             'level': 'INFO'
         },
-        # 'django.request': {
-        #     'handlers': ['file', 'mail_admins'],
-        #     'level': 'ERROR',
-        #     'propagate': False,
-        # },
-        # 'students.signals': {
-        #     'handlers': ['console', 'file', 'mail_admins'],
-        #     'level': 'INFO'
-        # },
-        # 'students.views.contact_admin': {
-        #     'handlers': ['console', 'file', 'mail_admins'],
-        #     'level': 'INFO'
-        # }
+        'django.request': {
+            'handlers': ['file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'students.signals': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'INFO'
+        },
+        'students.views.contact_admin': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'INFO'
+        }
     }
 }
