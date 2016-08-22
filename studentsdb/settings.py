@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'registration',
     'social.apps.django_app.default',
+    'django_coverage',
     'students',
     'studentsdb',
 )
@@ -131,6 +132,8 @@ LOGOUT_URL = 'users:auth_logout'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+# Coverage report settings
+COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'coverage')
 
 # Logging
 
