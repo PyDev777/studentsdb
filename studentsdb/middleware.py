@@ -23,7 +23,7 @@ class DBTimeMiddleware(object):
             if 'text/html' in response.get('Content-Type', ''):
                 soup = BeautifulSoup(response.content, 'lxml')
                 if soup.body:
-                    tag = soup.new_tag('code', style='position: fixed; top: 0; right: 400px')
+                    tag = soup.new_tag('code', style='position: fixed; top: 0; left: 0px')
                     tag.string = 'DB took: %s, DB queries count: %s' % (str(self.db_time), str(self.db_qcount))
                     soup.body.insert(0, tag)
                     response.content = soup.prettify()

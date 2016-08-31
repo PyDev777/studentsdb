@@ -16,8 +16,11 @@ PORTAL_PROTOCOL = 'http'
 PORTAL_DOMAIN = 'localhost'
 PORTAL_PORT = '8000'
 
-# DATABASES settings (use SQLite)
+
+# DATABASES settings
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+# SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -25,6 +28,30 @@ DATABASES = {
         'TEST': {}
     }
 }
+
+# MySQL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': 'localhost',
+#         'USER': 'your_db_user',
+#         'PASSWORD': 'your_db_user_password',
+#         'NAME': 'students_db',
+#     }
+# }
+
+# PostgreSQL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': 'localhost',
+#         'USER': 'your_db_user',
+#         'PASSWORD': 'your_db_user_password',
+#         'NAME': 'students_db',
+#         'PORT': '',
+#     }
+# }
+
 
 # EMAIL settings (use SSL)
 ADMINS = [('John', 'john@example.com')]
@@ -39,5 +66,6 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 
+# Social
 SOCIAL_AUTH_FACEBOOK_KEY = '=== Your pub key ==='
 SOCIAL_AUTH_FACEBOOK_SECRET = '=== Your sec key ==='

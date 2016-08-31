@@ -8,7 +8,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.conf import global_settings
 
@@ -30,6 +29,7 @@ except ImportError:
 #################################################################
 
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -38,13 +38,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
 
-TEMPLATE_DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = [PORTAL_DOMAIN]
 
 
 # Application definition
@@ -100,14 +97,9 @@ WSGI_APPLICATION = 'studentsdb.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'uk'
-# LANGUAGE_CODE = 'en'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -117,25 +109,27 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'studentsdb', 'templates'),)
+TEMPLATE_DEBUG = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 
 
-# Registration settings
+# Crispy forms settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+
+# Registration settings
 REGISTRATION_OPEN = True
 LOGIN_URL = 'users:auth_login'
 LOGOUT_URL = 'users:auth_logout'
 
-# Crispy forms settings
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Coverage report settings
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'coverage')
 
-# Logging
+
+# Logging settings
 
 LOG_FILE = os.path.join(BASE_DIR, 'studentsdb.log')
 
