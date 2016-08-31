@@ -3,13 +3,13 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
-from studentsdb.settings import ADMIN_EMAIL, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS, EMAIL_USE_SSL
+from django.conf import settings
 from django import forms
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
-from ..signals import contact_letter_sent
+from students.signals import contact_letter_sent
 import logging
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
@@ -75,10 +75,7 @@ class ContactLetterView(FormView):
         message = form.cleaned_data['message']
         from_email = form.cleaned_data['from_email']
         try:
-            send_mail(from_email + ' send me: ' + subject, message, EMAIL_HOST_USER, [ADMIN_EMAIL])
-            # pass
-            # if True:
-            #     raise Exception
+            send_mail(from_email + ' send me: ' + subject, message, settings.EMAIL_HOST_USER, [settings.ADMIN_EMAIL])
         except Exception:
             message = _(u"An error occurred during email transfer. Please, try again later.")
             message_error = '1'

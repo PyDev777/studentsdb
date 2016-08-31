@@ -11,18 +11,10 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-# import random
-# from django.db import DatabaseError
 
 # Views for Journal
-
-
 class JournalView(TemplateView):
     template_name = 'students/journal.html'
-
-    # @method_decorator(login_required)
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super(JournalView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         # get context data from TemplateView class
@@ -38,7 +30,6 @@ class JournalView(TemplateView):
 
         # calculate current, previous and next month details;
         # we need this for month navigation element in template
-
         next_month = month + relativedelta(months=1)
         prev_month = month - relativedelta(months=1)
         context['prev_month'] = prev_month.strftime('%Y-%m-%d')
@@ -117,8 +108,5 @@ class JournalView(TemplateView):
         setattr(journal, 'present_day%d' % current_date.day, present)
 
         journal.save()
-
-        # if random.random() > 0.5:
-        #     raise DatabaseError
 
         return JsonResponse({})

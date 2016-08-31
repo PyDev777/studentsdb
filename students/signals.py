@@ -4,7 +4,7 @@ import logging
 from django.db.models.signals import post_save, post_delete, post_migrate
 from django.core.signals import request_started
 from django.dispatch import receiver, Signal
-from .models import Student, Group, LogEntry
+from students.models import Student, Group, LogEntry
 from django.utils.translation import ugettext as _
 
 req_counter = 0
