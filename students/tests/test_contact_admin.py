@@ -23,5 +23,5 @@ class ContactAdminFormTests(TestCase):
         # check if test email backend catched our email to admin
         msg = mail.outbox[0].message()
         self.assertEqual(msg.get('subject'), 'from@gmail.com send me: test email')
-        self.assertEqual(msg.get('from'), u'')
+        self.assertEqual(msg.get('from'), u'msg-sender@ukr.net')
         self.assertEqual(msg.get_payload(), 'test email message',)

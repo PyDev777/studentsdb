@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
-from students.signals import contact_letter_sent
+from ..signals import contact_letter_sent
 import logging
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
