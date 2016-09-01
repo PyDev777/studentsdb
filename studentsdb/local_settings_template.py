@@ -11,11 +11,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '================= Your SECRET_KEY ================'
 
-# PORTAL settings
-PORTAL_PROTOCOL = 'http'
-PORTAL_DOMAIN = 'localhost'
-PORTAL_PORT = '8000'
-
 
 # DATABASES settings
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
