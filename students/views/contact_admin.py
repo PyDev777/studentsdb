@@ -14,6 +14,7 @@ import logging
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from captcha.fields import CaptchaField
 
 
 class ContactLetterForm(forms.Form):
@@ -25,7 +26,7 @@ class ContactLetterForm(forms.Form):
         self.helper = FormHelper(self)
 
         self.helper.layout = Layout(
-            Fieldset('', 'from_email', 'subject', 'message'),
+            Fieldset('', 'from_email', 'subject', 'message', 'captcha'),
             ButtonHolder(
                 Submit('save_button', _(u'Send')),
                 Submit('cancel_button', _(u'Cancel'))))
@@ -54,6 +55,8 @@ class ContactLetterForm(forms.Form):
         max_length=2560,
         widget=forms.Textarea,
         required=True)
+
+    captcha = CaptchaField()
 
 
 class ContactLetterView(FormView):

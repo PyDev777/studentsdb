@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'registration',
     'social.apps.django_app.default',
     'django_coverage',
+    'captcha',
     'students',
     'studentsdb',
 )

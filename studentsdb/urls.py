@@ -46,6 +46,9 @@ urlpatterns = patterns('',
     # Events
     url(r'^events_log/$', login_required(EventLogView.as_view()), name='events_log'),
 
+    # Captcha
+    url(r'^captcha/', include('captcha.urls')),
+
     # Contact Admin Form
     url(r'^contact-admin/$', login_required(ContactAdminView.as_view()), name='contact_admin'),
     url(r'^contact-letter/$', login_required(ContactLetterView.as_view()), name='contact_letter'),
