@@ -12,21 +12,29 @@ import os
 from django.conf import global_settings
 
 
-#################################################################
-#                                                               #
-#  Rename file local_settings_template.py to local_settings.py  #
-#         and enter your values to his settings fields          #
-#                                                               #
-#################################################################
-#                                                               #
-
+####################################################################
+#                                                                  #
+#                  Development mode (default)                      #
+#                                                                  #
+#  1. Rename file dev_settings_template.py to dev_settings.py      #
+#     and enter your values to his settings fields                 #
+#  2. Comment string:   from prod_settings import *                #
+#  3. Uncomment string: from dev_settings import *                 #
+#                                                                  #
+#                      Production mode                             #
+#                                                                  #
+#  1. Rename file prod_settings_template.py to prod_settings.py    #
+#     and enter your values to his settings fields                 #
+#  2. Uncomment string: from prod_settings import *                #
+#  3. Comment string:   from dev_settings import *                 #
+#                                                                  #
 try:
-    from local_settings import *
+    # from prod_settings import *
+    from dev_settings import *
 except ImportError:
     pass
-
-#                                                               #
-#################################################################
+#                                                                  #
+####################################################################
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -35,13 +43,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -104,18 +105,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
-
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'studentsdb', 'templates'),)
-TEMPLATE_DEBUG = True
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
-
-
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -130,61 +119,3 @@ LOGOUT_URL = 'users:auth_logout'
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'coverage')
 
 
-# Logging settings
-
-LOG_FILE = os.path.join(BASE_DIR, 'studentsdb.log')
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s: %(message)s'
-        },
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-            'formatter': 'simple'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': LOG_FILE,
-            'formatter': 'verbose'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'propagate': True,
-            'level': 'INFO'
-        },
-        'django.request': {
-            'handlers': ['file', 'mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'students.signals': {
-            'handlers': ['console', 'file', 'mail_admins'],
-            'level': 'INFO'
-        },
-        'students.views.contact_admin': {
-            'handlers': ['console', 'file', 'mail_admins'],
-            'level': 'INFO'
-        }
-    }
-}

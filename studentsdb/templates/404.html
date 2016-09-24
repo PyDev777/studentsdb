@@ -1,0 +1,15 @@
+{% extends "students/base.html" %}
+
+{% load i18n %}
+{% load static from staticfiles %}
+
+{% block meta_title %}{% trans "Page not found" %}{% endblock meta_title %}
+
+{% block title %}{% trans "Sorry, we haven't found what you're looking for." %}{% endblock title %}
+
+
+{% block content %}
+
+<p>Go back to <a href="/">homepage</a></p>
+
+{% endblock content %}

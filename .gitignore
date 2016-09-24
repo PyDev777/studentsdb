@@ -69,5 +69,7 @@ target/
 /students/static/js/moment.min.js
 /students/static/js/uk.js
 
-local_settings.py
+/studentsdb/dev_settings.py
+/studentsdb/prod_settings.py
+
 .idea/
