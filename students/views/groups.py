@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm, ValidationError
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
@@ -45,6 +46,9 @@ class GroupUpdateView(UpdateView):
     model = Group
     template_name = 'students/groups_add_edit.html'
     form_class = GroupUpdateForm
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdateView, self).get_context_data(**kwargs)
@@ -105,6 +109,9 @@ class GroupAddView(CreateView):
 class GroupDeleteView(DeleteView):
     model = Group
     template_name = 'students/groups_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_success_url(self):
         return u'%s?status_message=%s' % (reverse('groups'), _(u'Group deleted successfully!'))

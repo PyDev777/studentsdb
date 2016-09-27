@@ -8,7 +8,7 @@ from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView
 from students.views.events_log import EventLogView
 from students.views.contact_admin import ContactAdminView, ContactLetterView
 from students.views.journal import JournalView
-from .settings import MEDIA_ROOT, DEBUG
+
 
 js_info_dict = {
     'packages': ('students',),
@@ -58,7 +58,19 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-if DEBUG:
-    urlpatterns += patterns('',
-        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': MEDIA_ROOT}))
+
+#################################################
+#                                               #
+#  Comment this code block for production mode  #
+#                                               #
+#################################################
+#                                               #
+#                                               #
+from django.conf import settings
+if settings.DEBUG:
+    urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
+else:
+    urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
+    urlpatterns += patterns('', url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}))
+#                                               #
+#################################################

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
@@ -77,6 +78,20 @@ class StudentUpdateView(UpdateView):
     template_name = 'students/students_add_edit.html'
     form_class = StudentUpdateForm
 
+    # def dispatch(self, *args, **kwargs):
+    #     get_object_or_404(Student, pk=kwargs['pk'])
+    #     return super(StudentUpdateView, self).dispatch(*args, **kwargs)
+
+    # def get_object(self, queryset=None):
+    #     try:
+    #         obj = self.model.objects.get(pk=self.kwargs.get('pk'))
+    #     except self.model.DoesNotExist:
+    #         raise Http404
+    #     return obj
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
+
     def get_context_data(self, **kwargs):
         context = super(StudentUpdateView, self).get_context_data(**kwargs)
         context['title'] = _(u'Student edit')
@@ -149,6 +164,9 @@ class StudentAddView(CreateView):
 class StudentDeleteView(DeleteView):
     model = Student
     template_name = 'students/students_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_success_url(self):
         return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
