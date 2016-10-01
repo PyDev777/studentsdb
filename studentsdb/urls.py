@@ -10,6 +10,15 @@ from students.views.contact_admin import ContactAdminView, ContactLetterView
 from students.views.journal import JournalView
 
 
+###################################################
+#                                                 #
+#                   WARNING!                      #
+#                                                 #
+#      Read instruction bottom of this file       #
+#                                                 #
+###################################################
+
+
 js_info_dict = {
     'packages': ('students',),
 }
@@ -59,18 +68,24 @@ urlpatterns = patterns('',
 )
 
 
-#################################################
-#                                               #
-#  Comment this code block for production mode  #
-#                                               #
-#################################################
-#                                               #
-#                                               #
+###################################################
+#                                                 #
+#                   WARNING!                      #
+#                                                 #
+#  This code block only for development mode and  #
+#  testing NON REAL production mode!              #
+#                                                 #
+#  Comment or delete this code block for REAL     #
+#  production mode!                               #
+#                                                 #
+###################################################
+#                                                 #
+#                                                 #
 from django.conf import settings
 if settings.DEBUG:
     urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
 else:
     urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
     urlpatterns += patterns('', url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}))
-#                                               #
-#################################################
+#                                                 #
+###################################################
