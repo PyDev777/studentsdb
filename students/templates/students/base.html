@@ -86,11 +86,11 @@
                         <li role="presentation" {% if request.path in groups_url %} class="active" {% endif %}>
                             <a href="{% url "groups" %}">{% trans "Groups" %}</a>
                         </li>
+                    {% endif %}
+                    {% if perms.auth.add_user %}
                         <li role="presentation" {% if request.path in events_log_url %} class="active" {% endif %}>
                             <a href="{% url "events_log" %}">{% trans "Log" %}</a>
                         </li>
-                    {% endif %}
-                    {% if perms.auth.add_user %}
                         <li role="presentation" {% if request.path in contact_url %} class="active" {% endif %}>
                             <a href="{% url "contact_admin" %}">{% trans "Contact" %}</a>
                         </li>

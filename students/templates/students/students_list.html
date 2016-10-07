@@ -12,8 +12,9 @@
 {% block content %}
 
 <!-- Add Student Button -->
-<a class="btn btn-primary form-link" href="{% url "students_add" %}">{% trans "Add Student" %}</a>
-
+{% if user.is_authenticated %}
+    <a class="btn btn-primary form-link" href="{% url "students_add" %}">{% trans "Add Student" %}</a>
+{% endif %}
 <!-- Start Students Listing -->
 {% if students %}
     <table class="table table-hover table-striped table-condensed">
@@ -74,28 +75,40 @@
                 {% endif %}
             </td>
                 <td class="student-box">
-                    <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
-                        {{ student.last_name }}
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
+                            {{ student.last_name }}
+                        </a>
+                    {% else %}
+                        <p>{{ student.last_name }}</p>
+                    {% endif %}
                 </td>
                 <td class="student-box">
-                    <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
-                        {{ student.first_name }}
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a title="{% trans "Edit" %}" class="form-link" href="{% url "students_edit" student.id %}">
+                            {{ student.first_name }}
+                        </a>
+                    {% else %}
+                        <p>{{ student.first_name }}</p>
+                    {% endif %}
                 </td>
             <td class="student-box">{{ student.ticket }}</td>
             <td>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "Action" %} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{% url "students_edit" student.id %}" class="form-link">{% trans "Edit" %}</a></li>
-                        <li><a href="{% url "journal" student.id %}" class="content-link">{% trans "Journal" %}</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{% url "students_delete" student.id %}" class="form-link">{% trans "Delete" %}</a></li>
-                    </ul>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% trans "Action" %} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="{% url "students_edit" student.id %}" class="form-link">{% trans "Edit" %}</a></li>
+                            <li><a href="{% url "journal" student.id %}" class="content-link">{% trans "Journal" %}</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url "students_delete" student.id %}" class="form-link">{% trans "Delete" %}</a></li>
+                        </ul>
+                    </div>
+                 {% else %}
+                    <p>-</p>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
@@ -104,11 +117,15 @@
     </table>
 {% else %}
     <div class="alert alert-warning">
-        {% url "students_add" as students_add_anchor %}
-        {% blocktrans %}
-            There are no students in the database yet.
-            Please, <a href="{{ students_add_anchor }}">add</a> your first student.
-        {% endblocktrans %}
+        {% if user.is_authenticated %}
+            {% url "students_add" as students_add_anchor %}
+            {% blocktrans %}
+                There are no students in the database yet.
+                Please, <a href="{{ students_add_anchor }}">add</a> your first student.
+            {% endblocktrans %}
+        {% else %}
+            <p>There are no students in the database yet.</p>
+        {% endif %}
     </div>
 {% endif %}
 <!-- End Students Listing -->
