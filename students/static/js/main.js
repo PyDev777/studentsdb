@@ -112,6 +112,16 @@ function initGroupSelector() {
     });
 }
 
+function initLangSelector() {
+    $('#header').on('change', '#lang-selector select', function() {
+        var curr_lang = $(this).val(),
+            curr_path = location.href;
+        $.cookie('django_language', curr_lang, {'path': curr_path, 'expires': 365});
+        document.location.reload(true);
+        return false;
+    });
+}
+
 function initTabs() {
     $('#sub-header').on('click', 'ul.nav-tabs a', function() {
         var url = this.href;
@@ -172,6 +182,7 @@ $(function() {
     initTabs();
     initNavs();
     initJournal();
+    initLangSelector();
     initGroupSelector();
     initModal();
     initHistory();

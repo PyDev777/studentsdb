@@ -13,7 +13,8 @@
     <title>{% trans "Students Accounting Service" %} - {% block meta_title %}{% endblock meta_title %}</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
+<link rel="stylesheet" href="{{ PORTAL_URL }}{% static "css/bootstrap.min.css" %}" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,7 +24,8 @@
     <![endif]-->
 
     <!-- Bootstrap-datetimepicker CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />-->
+<link rel="stylesheet" href="{{ PORTAL_URL }}{% static "css/bootstrap-datetimepicker.min.css" %}" />
     <link rel="stylesheet" href="{{ PORTAL_URL }}{% static "css/main.css" %}" />
     {% block extra_css %}{% endblock extra_css %}
 
@@ -35,16 +37,17 @@
 
         <!-- Start header -->
         <div class="row" id="header">
+
             <!-- Logo -->
-            <div class="col-xs-6">
-                <h1>{% block logo %}{% trans "Students Accounting Service" %}{% endblock logo %}</h1>
+            <div class="col-sm-6">
+                <h1 id="text-logo">{% block logo %}{% trans "Students Accounting Service" %}{% endblock logo %}</h1>
             </div>
 
             <!-- Groups Selector -->
             {% if user.is_authenticated %}
-                <div class="col-xs-3" id="group-selector">
+                <div class="col-sm-3" id="group-selector">
                     <strong>{% trans "Group" %}:</strong>
-                    <select title="">
+                    <select title="{% trans "Group" %}">
                         {% block group_menu %}
                         <option value="">{% trans "All Students" %}</option>
                         {% for group in GROUPS %}
@@ -56,25 +59,35 @@
                     </select>
                 </div>
                 <!-- User's toolbar for authenticated users -->
-                <div class="col-xs-3" id="user-toolbar">
+                <div class="col-sm-2" id="user-toolbar">
                     <a href="{% url "profile" %}">{{ user|nice_username }}</a> |
                     <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
             {% else %}
                 <!-- User's toolbar for anonymous users -->
-                <div class="col-xs-6" id="user-toolbar">
+                <div class="col-sm-5" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
                     <a href="{% url "users:auth_login" %}">{% trans "Login" %}</a> |
                     <a href="{% url "users:registration_register" %}">{% trans "Registration" %}</a>
                 </div>
             {% endif %}
+
+            <!-- Language Selector -->
+            <div class="col-sm-1" id="lang-selector">
+                <select title="">
+                    <option value="en-US"{% if "en-US" == LANGUAGE_CODE %} selected="selected"{% endif %}>Eng</option>
+                    <option value="uk"{% if "uk" == LANGUAGE_CODE %} selected="selected"{% endif %}>Укр</option>
+                </select>
+            </div>
+            <!-- End Language Selector -->
+
         </div>
         <!-- End header -->
 
         <!-- Start sub-header -->
         {% block sub-header %}
         <div class="row" id="sub-header">
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 <ul class="nav nav-tabs">
                     <li role="presentation" {% if request.path == students_url %} class="active" {% endif %}>
                         <a href="{% url "home" %}">{% trans "Students" %}</a>
@@ -103,7 +116,7 @@
 
         <!-- Start Main Page Content -->
         <div class="row" id="content-columns">
-            <div class="col-xs-12" id="content-column">
+            <div class="col-sm-12" id="content-column">
 
                 <!-- Status Message -->
                 {% block status_message %}
@@ -125,7 +138,7 @@
         <br>
         <!-- Start footer -->
         <div class="row" id="footer">
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 {% block footer %}&copy; 2016, {% trans "Students Accounting Service" %}{% endblock footer %}
             </div>
         </div>
@@ -162,23 +175,30 @@
     <!-- Javascript Inclusion -->
 
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/jquery.min.js" %}"></script>
 
     <!-- Moment -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/uk.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/moment.min.js" %}"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/uk.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/uk.js" %}"></script>
 
     <!-- jQuery Cookie -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/jquery.cookie.min.js" %}"></script>
 
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/bootstrap.min.js" %}"></script>
 
     <!-- Bootstrap-datetimepicker JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
 
     <!-- jQuery form -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>-->
+<script src="{{ PORTAL_URL }}{% static "js/jquery.form.min.js" %}"></script>
 
     <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
     <script src="{{ PORTAL_URL }}{% static "js/main.js" %}"></script>
