@@ -60,7 +60,7 @@ INSTALLED_APPS = (
     'django_coverage',
     'captcha',
     'students',
-    'studentsdb',
+    'stud_auth',
 )
 
 MIDDLEWARE_CLASSES = (
