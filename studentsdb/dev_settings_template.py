@@ -80,7 +80,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 # Template files
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'studentsdb', 'templates'),
-                 os.path.join(BASE_DIR, 'students', 'templates', 'students'),)
+                 os.path.join(BASE_DIR, 'stud_auth', 'templates'),
+                 os.path.join(BASE_DIR, 'students', 'templates', 'students'), )
 
 
 # Social

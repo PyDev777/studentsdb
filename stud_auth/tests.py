@@ -1,5 +1,6 @@
 from django.test import TestCase
-from models import StProfile, User
+
+from stud_auth.models import StProfile, User
 
 
 class StProfileModelTests(TestCase):
