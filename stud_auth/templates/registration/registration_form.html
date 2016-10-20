@@ -1,6 +1,8 @@
 {% extends "students/base.html" %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
+
 {% block meta_title %}{% trans "Registration" %}{% endblock meta_title %}
 
 {% block title %}{% trans "Registration Form" %}{% endblock title %}
@@ -8,38 +10,11 @@
 {% block status_message %}
     {% if form.errors %}
         <div class="alert alert-danger" role="alert">
-            Please, correct the following errors: {{ form.non_field_errors }}
+            {% trans "Please, correct the following errors" %}:
         </div>
     {% endif %}
 {% endblock %}
 
 {% block content %}
-    <form action="{% url "users:registration_register" %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{% url "home" %}">
-        <div class="form-group">
-            <label for="login">{% trans "Your Username" %}</label>
-            <input type="text" class="form-control" id="login" value="" name="username">
-            <p class="help-block">{{ form.errors.username.as_text }}</p>
-        </div>
-
-        <div class="form-group">
-            <label for="email">{% trans "Your Email" %}</label>
-            <input type="text" class="form-control" id="email" value="" name="email">
-            <p class="help-block">{{ form.errors.email.as_text }}</p>
-        </div>
-
-        <div class="form-group">
-            <label for="password">{% trans "Your Password" %}</label>
-            <input type="password" class="form-control" id="password" value="" name="password1">
-            <p class="help-block">{{ form.errors.password1.as_text }}</p>
-        </div>
-
-        <div class="form-group">
-            <label for="password-confirm">{% trans "Confirm Password" %}</label>
-            <input type="password" class="form-control" id="password-confirm" value="" name="password2">
-            <p class="help-block">{{ form.errors.password2.as_text }}</p>
-        </div>
-        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
-    </form>
+    {% crispy form %}
 {% endblock content %}

@@ -94,14 +94,8 @@ input {
     width: 50px;
 }
 
-#ajax-progress-indicator,
-#ajax-error,
-#ajax-loader,
-#ajax-loader-modal {
-    display: none;
-}
-
 #ajax-error {
+    display: none;
     color: red;
 }
 

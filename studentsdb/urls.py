@@ -1,10 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_view
+from stud_auth.forms import CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import RedirectView, TemplateView
-from registration.backends.default.views import RegistrationView as rRegView, ActivationView as rActView
-from registration.forms import RegistrationFormUniqueEmail as rFormUniqueEmail
+from registration.backends.default.views import RegistrationView, ActivationView
+from stud_auth.forms import CustomRegistrationFormUniqueEmail
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.events_log import EventLogView
@@ -30,19 +31,16 @@ urlpatterns = patterns('',
     # Social Auth Related urls
     url('^social/', include('social.apps.django_app.urls', namespace='social')),
 
+    url(r'^profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
 
     # User Related urls
-    url(r'^users/register/$', rRegView.as_view(form_class=rFormUniqueEmail), name='registration_register'),
-    # url(r'^register/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_complete'),
-    # url(r'^register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), kwargs={'next_page': 'home'}, name='registration_complete'),
-
-    # url(r'^users/activate/(?P<activation_key>\w+)/$', rActView.as_view(), name='registration_activate'),
-    url(r'^activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
-
-    url(r'^users/profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
-
+    url(r'^users/register/$', RegistrationView.as_view(form_class=CustomRegistrationFormUniqueEmail), name='registration_register'),
+    url(r'^users/register/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_complete'),
+    # url(r'^users/register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), kwargs={'next_page': 'home'}, name='registration_complete'),
+    url(r'^users/activate/(?P<activation_key>\w+)/$', ActivationView.as_view(), name='registration_activate'),
+    url(r'^users/activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
+    url(r'^users/login/$', auth_view.login, {'authentication_form': CustomAuthenticationForm}, name='auth_login'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),
-
     url(r'^users/', include('registration.backends.default.urls', namespace='users')),
     # url(r'^users/', include('registration.backends.simple.urls', namespace='users')),
 

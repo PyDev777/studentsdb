@@ -77,6 +77,7 @@ class ContactLetterView(FormView):
         subject = form.cleaned_data['subject']
         message = form.cleaned_data['message']
         from_email = form.cleaned_data['from_email']
+        human = True
         try:
             send_mail(from_email + ' send me: ' + subject, message, settings.EMAIL_HOST_USER, [settings.ADMIN_EMAIL])
         except Exception:

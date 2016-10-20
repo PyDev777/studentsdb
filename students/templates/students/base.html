@@ -60,15 +60,15 @@
                 </div>
                 <!-- User's toolbar for authenticated users -->
                 <div class="col-sm-2" id="user-toolbar">
-                    <a href="{% url "profile" %}">{{ user|nice_username }}</a> |
+                    <a href="{% url "profile" %}" class="prof-link">{{ user|nice_username }}</a> |
                     <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
             {% else %}
                 <!-- User's toolbar for anonymous users -->
                 <div class="col-sm-5" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
-                    <a href="{% url "users:auth_login" %}">{% trans "Login" %}</a> |
-                    <a href="{% url "users:registration_register" %}">{% trans "Registration" %}</a>
+                    <a href="{% url "users:auth_login" %}" class="user-link">{% trans "Login" %}</a> |
+                    <a href="{% url "users:registration_register" %}" class="user-link">{% trans "Registration" %}</a>
                 </div>
             {% endif %}
 
@@ -121,12 +121,16 @@
                 <!-- Status Message -->
                 {% block status_message %}
                     {% if request.GET.status_message %}
-                        <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+                        <div id="block-message" class="alert alert-warning" role="alert">
+                            {{ request.GET.status_message }}
+                        </div>
                     {% endif %}
                 {% endblock %}
 
                 <!-- Tittle -->
-                <h2>{% block title %}{% endblock title %}</h2>
+                <h2>
+                    {% block title %}{% endblock title %}
+                </h2>
 
                 <!-- Content -->
                 {% block content %}{% endblock content %}
