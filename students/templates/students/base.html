@@ -118,23 +118,42 @@
         <div class="row" id="content-columns">
             <div class="col-sm-12" id="content-column">
 
-                <!-- Status Message -->
-                {% block status_message %}
-                    {% if request.GET.status_message %}
-                        <div id="block-message" class="alert alert-warning" role="alert">
-                            {{ request.GET.status_message }}
-                        </div>
-                    {% endif %}
-                {% endblock %}
-
                 <!-- Tittle -->
-                <h2>
+                <h2 id="block-title">
                     {% block title %}{% endblock title %}
                 </h2>
+                <!-- End Tittle -->
 
-                <!-- Content -->
-                {% block content %}{% endblock content %}
+                <!-- Status Message and Content -->
+                <div id="block-body">
 
+                    <!-- Status Message -->
+                    <div id="block-message">
+                        {% block status_message %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+        {#                    {% if request.GET.status_message %}#}
+        {#                        <div id="block-message" class="alert alert-warning" role="alert">#}
+        {#                            {{ request.GET.status_message }}#}
+        {#                        </div>#}
+        {#                    {% endif %}#}
+                        {% endblock %}
+                    </div>
+                    <!-- End Status Message -->
+
+                    <!-- Content -->
+                    <div id="block-content">
+                        {% block content %}{% endblock content %}
+                    </div>
+                    <!-- End Content -->
+
+                </div>
+                <!-- End Status Message and Content -->
             </div>
         </div>
         <!-- End Main Page Content -->

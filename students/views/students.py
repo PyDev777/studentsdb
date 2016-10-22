@@ -3,6 +3,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
@@ -35,27 +36,21 @@ class StudentUpdateForm(ModelForm):
         fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'photo', 'ticket', 'student_group', 'notes']
 
     def __init__(self, *args, **kwargs):
-        # call original initialization
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
-        # this helper object allows us to customize form
         self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'POST'
+        self.helper.form_action = reverse('students_edit', kwargs={'pk': kwargs['instance'].id})
+        self.helper.help_text_inline = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
         self.helper.layout = Layout(
             Fieldset('', 'first_name', 'last_name', 'middle_name',
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', _(u'Save')),
-                Submit('cancel_button', _(u'Cancel'))))
-
-        # form tag attributes
-        self.helper.form_class = 'form-horizontal'
-        self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('students_edit', kwargs={'pk': kwargs['instance'].id})
-
-        # twitter bootstrap styles
-        self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-4 control-label'
-        self.helper.field_class = 'col-sm-7'
+                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
@@ -98,11 +93,15 @@ class StudentUpdateView(UpdateView):
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=%s' % (reverse('home'), _(u'Student updated successfully!'))
+        messages.success(self.request, (_(u'Student updated successfully!') + ' (%s)' % self.object.__unicode__()))
+        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student updated successfully!'))
+        return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student update canceled!')))
+            messages.warning(self.request, _(u'Student update canceled!'))
+            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student update canceled!')))
+            return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
@@ -115,24 +114,19 @@ class StudentAddForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentAddForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'POST'
+        self.helper.form_action = reverse('students_add')
+        self.helper.help_text_inline = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
         self.helper.layout = Layout(
             Fieldset('', 'first_name', 'last_name', 'middle_name',
                      AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', _(u'Save')),
-                Submit('cancel_button', _(u'Cancel'))))
-
-        # form tag attributes
-        self.helper.form_class = 'form-horizontal'
-        self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('students_add')
-
-        # twitter bootstrap styles
-        self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-4 control-label'
-        self.helper.field_class = 'col-sm-7'
+                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
@@ -152,11 +146,15 @@ class StudentAddView(CreateView):
         return context
 
     def get_success_url(self):
-        return u'%s?status_message=%s' % (reverse('home'), _(u'Student added successfully!'))
+        messages.success(self.request, (_(u'Student added successfully!') + ' (%s)' % self.object.__unicode__()))
+        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student added successfully!'))
+        return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
+            messages.warning(self.request, _(u'Student addition canceled!'))
+            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
+            return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
 
@@ -169,11 +167,15 @@ class StudentDeleteView(DeleteView):
         return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_success_url(self):
-        return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
+        messages.success(self.request, (_(u'Student deleted successfully!') + ' (%s)' % self.object.__unicode__()))
+        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
+        return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
+            messages.warning(self.request, _(u'Student deletion canceled!'))
+            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
+            return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
 

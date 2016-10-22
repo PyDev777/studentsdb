@@ -1,89 +1,108 @@
-function createForm(form, modal, urlPrev, saveHistory, updLev) {
-    var modal_spinner = $('#ajax-loader-modal'),
-        close_button = modal.find('button.close');
+const modal = $('#myModal');
+const ajaxSpinner = $('#ajax-loader');
+const modalSpinner = $('#ajax-loader-modal');
+const modalTitle = modal.find('.modal-title');
+const modalBody = modal.find('.modal-body');
+const modalCloseButton = modal.find('button.close');
+
+function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
+
+function createForm(form, urlPrev, saveHistory, updLev) {
     initDateFields();
-    close_button.off('click').click(function() {
-        updatePage(urlPrev, saveHistory, updLev);
+    modalCloseButton.off('click').click(function() {
         modal.modal('hide');
+        updatePage(urlPrev, saveHistory, updLev);
         return false;
     });
     form.find('input[name="cancel_button"]').click(function() {
-        updatePage(urlPrev, saveHistory, updLev);
         modal.modal('hide');
+        updatePage(urlPrev, saveHistory, updLev);
         return false;
     });
     form.ajaxForm({
         'dataType': 'html',
         'beforeSend': function() {
-            modal_spinner.show();
-            $(':input').prop("disabled", true);
+            modalSpinner.show();
+            $('#myModal:input').prop("disabled", true);
         },
         'complete': function () {
-            $(':input').prop("disabled", false);
-            modal_spinner.hide();
+            $('#myModal:input').prop("disabled", false);
+            modalSpinner.hide();
         },
-        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
+        'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data),
                 msg = html.find('.alert'),
                 newform = html.find('#content-column form');
-            modal.find('.modal-body').html(msg);
+            modalBody.html(msg);
             if (newform.length > 0) {
-                modal.find('.modal-body').append(newform);
-                createForm(newform, modal, urlPrev, saveHistory, updLev);
+                modalBody.append(newform);
+                createForm(newform, urlPrev, saveHistory, updLev);
             } else {
-
-                if (msg.hasClass('alert')) {setTimeout(function() {close_button.trigger('click')},
+                if (msg.hasClass('alert')) {setTimeout(function() {modalCloseButton.click()},
                     msg.hasClass('alert-danger') ? 2500 : 500)}
-                else {close_button.trigger('click')}
+                else {modalCloseButton.click()}
             }
         }
     });
     return false;
 }
 
-function showModal(url, urlPrev, saveHistory, updLev) {
-    var spinner = $('#ajax-loader');
-    $.ajax({
-        'url': url,
+function modalForm(url, urlPrev, saveHistory, updLev) {
+    $.ajax(url, {
         'dataType': 'html',
-        'type': 'get',
-        'beforeSend': function() {spinner.show()},
-        'complete': function() {spinner.hide()},
-        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
+        'type': 'GET',
+        'beforeSend': function() {ajaxSpinner.show()},
+        'complete': function() {ajaxSpinner.hide()},
+        'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data),
-                form = html.find('#content-column form'),
-                modal = $('#myModal');
-
-            modal.find('.modal-title').html(html.find('#content-column h2').text());
+                form = html.find('#content-column form');
             if (form.length > 0) {
-                modal.find('.modal-body').html(form);
-                createForm(form, modal, urlPrev, saveHistory, updLev);
-            } else {
-                modal.find('.modal-body').html(html.find('#content-column'));
-                modal.find('button.close').off('click').click(function() {
-                    modal.modal('hide');
-                    updatePage(urlPrev, saveHistory, updLev);
-                    return false;
-                });
+                modalTitle.html(html.find('#content-column h2').text());
+                modalBody.html(form);
+                createForm(form, urlPrev, saveHistory, updLev);
+                modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
+                if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
             }
+        }
+    });
+    return false;
+}
+
+// Show modal with info.
+// url: target url
+// urlPrev: if present then history must be save
+function modalInfo(url, urlPrev) {
+    $.ajax(url, {
+        'dataType': 'html',
+        'type': 'GET',
+        'beforeSend': function() {ajaxSpinner.show()},
+        'complete': function() {ajaxSpinner.hide()},
+        'error': function() {alertAjaxError()},
+        'success': function(data) {
+            var html = $(data);
+            modalTitle.html(html.find('#block-title').text());
+            modalBody.html(html.find('#block-body').html());
+            modalCloseButton.off('click').click(function() {
+                modal.modal('hide');
+                if (urlPrev) {updatePage(urlPrev, true, 'header')}
+                return false;
+            });
+            if (urlPrev) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
             modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
-            if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
         }
     });
     return false;
 }
 
 function updatePage(url, saveHistory, updLev) {
-    var spinner = $('#ajax-loader');
-    $.ajax({
-        'url': url,
+    $.ajax(url, {
         'dataType': 'html',
-        'type': 'get',
-        'beforeSend': function() {spinner.show()},
-        'complete': function() {spinner.hide()},
-        'error': function() {alert(gettext('There was an error on the server. Please, try again a bit later.'))},
+        'type': 'GET',
+        'beforeSend': function() {ajaxSpinner.show()},
+        'complete': function() {ajaxSpinner.hide()},
+        'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data);
             $('title').text(html.filter('title').text());
@@ -93,6 +112,7 @@ function updatePage(url, saveHistory, updLev) {
             if (saveHistory) {history.pushState({'urlPrev': false}, document.title, url)}
         }
     });
+    return false;
 }
 
 function initDateFields() {
@@ -101,27 +121,27 @@ function initDateFields() {
         .on('dp.hide', function() {$(this).blur()});
 }
 
-function initHandlers() {
+function initEventHandlers() {
     $('#header')
         // login form
         .on('click', 'a.user-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            showModal(url, urlPrev, false, 'header');
+            modalForm(url, urlPrev, false, 'header');
             return false;
         })
         // registration form
         .on('click', 'a.reg-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            showModal(url, urlPrev, false, 'header');
+            modalForm(url, urlPrev, false, 'header');
             return false;
         })
-        // user profile form
+        // profile info
         .on('click', 'a.prof-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            showModal(url, urlPrev, true, 'header');
+            modalInfo(url, urlPrev);
             return false;
         })
         // group select
@@ -153,7 +173,7 @@ function initHandlers() {
         .on('click', 'a.form-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            showModal(url, urlPrev, true, 'content');
+            modalForm(url, urlPrev, true, 'content');
             return false;
         })
         // journal month navigation links
@@ -165,8 +185,7 @@ function initHandlers() {
         // journal marking
         .on('click', '.day-box input[type="checkbox"]', function(e) {
             var box = $(this),
-                err_msg = $('#ajax-error'),
-                spinner = $('#ajax-loader');
+                errorMsg = $('#ajax-error');
             $.ajax(box.data('url'), {
                 'type': 'POST',
                 'async': true,
@@ -177,23 +196,21 @@ function initHandlers() {
                     'present': box.is(':checked') ? '1': '',
                     'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                 },
-                'beforeSend': function() {
-                    err_msg.hide();
-                    spinner.show();
-                },
-                'complete': function() {spinner.hide()},
-                'error': function() {err_msg.show()}
+                'beforeSend': function() {ajaxSpinner.show()},
+                'complete': function() {ajaxSpinner.hide()},
+                'error': function() {errorMsg.show()},
+                'success': function() {errorMsg.hide()}
             });
         });
 }
 
 function initHistory() {
+    // AJAX History
     window.onpopstate = function(e) {
         var url = e.target.document.URL,
-            urlPrev = e.state['urlPrev'];
-        if (urlPrev) {showModal(url, urlPrev, false, 'sub-header')}
+            urlPrev = e.state.urlPrev;
+        if (urlPrev) {modalForm(url, urlPrev, false, 'sub-header')}
         else {
-            var modal = $('#myModal');
             if (modal.is(':visible')) {modal.modal('hide')}
             updatePage(url, false, 'sub-header');
         }
@@ -203,7 +220,7 @@ function initHistory() {
 
 $(function() {
     initDateFields();
-    initHandlers();
+    initEventHandlers();
     initHistory();
     history.replaceState({'urlPrev': false}, document.title, location.href);
 });

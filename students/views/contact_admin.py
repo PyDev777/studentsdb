@@ -2,6 +2,7 @@
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django import forms
@@ -18,28 +19,6 @@ from captcha.fields import CaptchaField
 
 
 class ContactLetterForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        # call original initializator
-        super(ContactLetterForm, self).__init__(*args, **kwargs)
-
-        # this helper object allows us to customize form
-        self.helper = FormHelper(self)
-
-        self.helper.layout = Layout(
-            Fieldset('', 'from_email', 'subject', 'message', 'captcha'),
-            ButtonHolder(
-                Submit('save_button', _(u'Send')),
-                Submit('cancel_button', _(u'Cancel'))))
-
-        # form tag attributes
-        self.helper.form_class = 'form-horizontal'
-        self.helper.form_method = 'post'
-        self.helper.form_action = reverse('contact_letter')
-
-        # twitter bootstrap styles
-        self.helper.help_text_inline = True
-        self.helper.label_class = 'col-sm-4 control-label'
-        self.helper.field_class = 'col-sm-7'
 
     from_email = forms.EmailField(
         label=_(u"Your Email Address"),
@@ -57,6 +36,21 @@ class ContactLetterForm(forms.Form):
         required=True)
 
     captcha = CaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        super(ContactLetterForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'POST'
+        self.helper.form_action = reverse('contact_letter')
+        self.helper.help_text_inline = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
+        self.helper.layout = Layout(
+            Fieldset('', 'from_email', 'subject', 'message', 'captcha'),
+            ButtonHolder(
+                Submit('save_button', _(u'Send')),
+                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
 class ContactLetterView(FormView):
@@ -81,20 +75,25 @@ class ContactLetterView(FormView):
         try:
             send_mail(from_email + ' send me: ' + subject, message, settings.EMAIL_HOST_USER, [settings.ADMIN_EMAIL])
         except Exception:
-            message = _(u"An error occurred during email transfer. Please, try again later.")
-            message_error = '1'
+            # message = _(u"An error occurred during email transfer. Please, try again later.")
+            # message_error = '1'
             logger = logging.getLogger(__name__)
             logger.exception(from_email + _(u': error sending letter!'))
-            return HttpResponseRedirect(u'%s?status_message=%s&message_error=%s' % (reverse('contact_admin'), message, message_error))
+            messages.error(self.request, _(u"An error occurred during email transfer. Please, try again later."))
+            # return HttpResponseRedirect(u'%s?status_message=%s&message_error=%s' % (reverse('contact_admin'), message, message_error))
         else:
-            message = _(u'Letter sent successfully!')
+            # message = _(u'Letter sent successfully!')
             contact_letter_sent.send(sender=self.__class__, email=from_email)
-            # redirect to same contact page with success message
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin'), message))
+            messages.success(self.request, _(u'Letter sent successfully!'))
+            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin'), message))
+        finally:
+            return HttpResponseRedirect(reverse('contact_admin'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin')), _(u'Letter sent cancelled!'))
+            messages.warning(self.request, _(u'Letter sent cancelled!'))
+            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin')), _(u'Letter sent cancelled!'))
+            return HttpResponseRedirect(reverse('contact_admin'))
         else:
             return super(ContactLetterView, self).post(request, *args, **kwargs)
 
