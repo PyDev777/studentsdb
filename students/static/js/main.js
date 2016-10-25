@@ -7,7 +7,7 @@ const modalCloseButton = modal.find('button.close');
 
 function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
 
-function createForm(form, urlPrev, saveHistory, updLev) {
+function createForm(form, urlPrev, saveHistory, updLev, showReply) {
     initDateFields();
     modalCloseButton.off('click').click(function() {
         modal.modal('hide');
@@ -34,21 +34,25 @@ function createForm(form, urlPrev, saveHistory, updLev) {
             var html = $(data),
                 msg = html.find('.alert'),
                 newform = html.find('#content-column form');
-            modalBody.html(msg);
             if (newform.length > 0) {
-                modalBody.append(newform);
-                createForm(newform, urlPrev, saveHistory, updLev);
+                modalBody.html(msg).append(newform);
+                createForm(newform, urlPrev, saveHistory, updLev, showReply);
             } else {
-                if (msg.hasClass('alert')) {setTimeout(function() {modalCloseButton.click()},
-                    msg.hasClass('alert-danger') ? 2500 : 500)}
-                else {modalCloseButton.click()}
+                if (showReply) {
+                    modalTitle.html(html.find('#block-title').text());
+                    modalBody.html(html.find('#block-content'));
+                } else {
+                    if (msg.hasClass('alert')) {setTimeout(function() {modalCloseButton.click()},
+                        msg.hasClass('alert-danger') ? 2500 : 500)}
+                    else {modalCloseButton.click();}
+                }
             }
         }
     });
     return false;
 }
 
-function modalForm(url, urlPrev, saveHistory, updLev) {
+function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
@@ -61,10 +65,18 @@ function modalForm(url, urlPrev, saveHistory, updLev) {
             if (form.length > 0) {
                 modalTitle.html(html.find('#content-column h2').text());
                 modalBody.html(form);
-                createForm(form, urlPrev, saveHistory, updLev);
-                modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
-                if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
+                createForm(form, urlPrev, saveHistory, updLev, showReply);
+            } else {
+                modalTitle.text('Bad request');
+                modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
+                modalCloseButton.off('click').click(function() {
+                    modal.modal('hide');
+                    updatePage(urlPrev, saveHistory, updLev);
+                    return false;
+                });
             }
+            modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
+            if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
         }
     });
     return false;
@@ -127,14 +139,14 @@ function initEventHandlers() {
         .on('click', 'a.user-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            modalForm(url, urlPrev, false, 'header');
+            modalForm(url, urlPrev, false, 'header', false);
             return false;
         })
         // registration form
-        .on('click', 'a.reg-link', function() {
+        .on('click', 'a.reply-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            modalForm(url, urlPrev, false, 'header');
+            modalForm(url, urlPrev, false, 'header', true);
             return false;
         })
         // profile info
@@ -173,7 +185,7 @@ function initEventHandlers() {
         .on('click', 'a.form-link', function() {
             var urlPrev = location.href,
                 url = this.href;
-            modalForm(url, urlPrev, true, 'content');
+            modalForm(url, urlPrev, true, 'content', false);
             return false;
         })
         // journal month navigation links

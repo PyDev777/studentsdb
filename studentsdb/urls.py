@@ -31,19 +31,18 @@ urlpatterns = patterns('',
     # Social Auth Related urls
     url('^social/', include('social.apps.django_app.urls', namespace='social')),
 
+    # User profile
     url(r'^profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
 
     # User Related urls
     url(r'^users/register/$', RegistrationView.as_view(form_class=CustomRegistrationFormUniqueEmail), name='registration_register'),
-    url(r'^users/register/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_complete'),
-    # url(r'^users/register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), kwargs={'next_page': 'home'}, name='registration_complete'),
+    url(r'^users/register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), name='registration_complete'),
+    url(r'^users/register/closed/$', TemplateView.as_view(template_name='registration/registration_closed.html'), name='registration_disallowed'),
     url(r'^users/activate/(?P<activation_key>\w+)/$', ActivationView.as_view(), name='registration_activate'),
     url(r'^users/activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
     url(r'^users/login/$', auth_view.login, {'authentication_form': CustomAuthenticationForm}, name='auth_login'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),
     url(r'^users/', include('registration.backends.default.urls', namespace='users')),
-    # url(r'^users/', include('registration.backends.simple.urls', namespace='users')),
-
 
     # Students urls
     url(r'^$', StudentListView.as_view(), name='home'),

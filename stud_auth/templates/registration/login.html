@@ -18,39 +18,3 @@
 {% block content %}
     {% crispy form %}
 {% endblock content %}
-
-{#{% block content %}#}
-{#    <form name="Login Form" action="{% url "users:auth_login" %}" method="post">#}
-{#        {% csrf_token %}#}
-{#        <p>Hello from login form!</p>#}
-{#        <div class="form-group">#}
-{#            <label for="login">{% trans "Your Name" %}</label>#}
-{#            <input type="text" class="form-control" id="login" value="" name="username">#}
-{#            <p class="help-block">{{ form.errors.username.as_data.0.0 }}</p>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="password">{% trans "Your Password" %}</label>#}
-{#            <input type="password" class="form-control" id="password" value="" name="password">#}
-{#            <p class="help-block">{{ form.errors.password.as_data.0.0 }}</p>#}
-{#        </div>#}
-{#        <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>#}
-{#        <input type="hidden" name="next" value="{% url "home" %}">#}
-{#    </form>#}
-{##}
-{#    <p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>#}
-{#    <p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p>#}
-{#{% endblock content %}#}
-
-{#{% block status_message %}#}
-{#    {% if form.errors %}#}
-{#        <div class="alert alert-danger" role="alert">#}
-{#            {% if form.non_field_errors %}#}
-{#                {{ form.non_field_errors.as_text }}#}
-{#            {% else %}#}
-{#                {% trans "Please, correct the following errors" %}:#}
-{#            {% endif %}#}
-{#        </div>#}
-{#    {% endif %}#}
-{#{% endblock %}#}
-
-

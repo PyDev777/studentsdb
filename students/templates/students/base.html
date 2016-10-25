@@ -68,7 +68,7 @@
                 <div class="col-sm-5" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
                     <a href="{% url "users:auth_login" %}" class="user-link">{% trans "Login" %}</a> |
-                    <a href="{% url "users:registration_register" %}" class="user-link">{% trans "Registration" %}</a>
+                    <a href="{% url "users:registration_register" %}" class="reply-link">{% trans "Registration" %}</a>
                 </div>
             {% endif %}
 
@@ -137,11 +137,6 @@
                                     </div>
                                 {% endfor %}
                             {% endif %}
-        {#                    {% if request.GET.status_message %}#}
-        {#                        <div id="block-message" class="alert alert-warning" role="alert">#}
-        {#                            {{ request.GET.status_message }}#}
-        {#                        </div>#}
-        {#                    {% endif %}#}
                         {% endblock %}
                     </div>
                     <!-- End Status Message -->
