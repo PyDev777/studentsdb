@@ -8,9 +8,9 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
-.alert {
-    margin: 10px 0 5px 0;
-}
+/*.alert {*/
+    /*margin: 10px 0 5px 0;*/
+/*}*/
 
 #text-logo {
     text-align: left;
@@ -22,7 +22,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 10px;
     display: inline-block;
 }
-
 #group-selector select {
     margin: 0 10px 0 0;
     height: 26px;
@@ -44,7 +43,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 10px;
     display: inline-block;
 }
-
 #lang-selector select {
     margin: 30px 0 20px;
     height: 26px;
@@ -54,18 +52,15 @@ h1, h2, h3, h4, h5, h6 {
     text-align: left;
 }
 
-
 .table-caption {
   text-align: center;
   padding-bottom: 10px;
 }
-
 td.day-box,
 th.day-header {
     vertical-align: middle !important;
     text-align: center;
 }
-
 td.student-box,
 td.group-box {
     vertical-align: middle !important;
@@ -77,13 +72,12 @@ input {
     max-width: 400px;
 }
 
-#ajax-loader,
-#ajax-loader-modal {
+#spinner,
+#modalSpinner {
     display: none;
 }
-
-#ajax-loader > img,
-#ajax-loader-modal > img {
+#spinner > img,
+#modalSpinner > img {
     position: fixed;
     left: 0;
     right: 0;
@@ -94,7 +88,7 @@ input {
     width: 50px;
 }
 
-#ajax-error {
+#errJournalSave {
     display: none;
     color: red;
 }

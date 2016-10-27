@@ -1,15 +1,23 @@
+const mainTitle = $('#title');
+const mainHeader = $('#header');
+const mainSubHeader = $('#sub-header');
+const mainContent = $('#content-column');
+const mainSpinner = $('#spinner');
+
 const modal = $('#myModal');
-const ajaxSpinner = $('#ajax-loader');
-const modalSpinner = $('#ajax-loader-modal');
-const modalTitle = modal.find('.modal-title');
-const modalBody = modal.find('.modal-body');
-const modalCloseButton = modal.find('button.close');
+const modalCloseBtn = $('#modalCloseBtn');
+const modalTitle = $('#modalTitle');
+const modalBody = $('#modalBody');
+const modalSpinner = $('#modalSpinner');
+
+
+// WORK FUNCTIONS
 
 function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
 
 function createForm(form, urlPrev, saveHistory, updLev, showReply) {
     initDateFields();
-    modalCloseButton.off('click').click(function() {
+    modalCloseBtn.off('click').click(function() {
         modal.modal('hide');
         updatePage(urlPrev, saveHistory, updLev);
         return false;
@@ -23,17 +31,17 @@ function createForm(form, urlPrev, saveHistory, updLev, showReply) {
         'dataType': 'html',
         'beforeSend': function() {
             modalSpinner.show();
-            $('#myModal:input').prop("disabled", true);
+            modal.find(':input').prop("disabled", true);
         },
         'complete': function () {
-            $('#myModal:input').prop("disabled", false);
+            modal.find(':input').prop("disabled", false);
             modalSpinner.hide();
         },
         'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data),
-                msg = html.find('.alert'),
-                newform = html.find('#content-column form');
+                msg = html.find('#block-body .alert'),
+                newform = html.find('#block-content form');
             if (newform.length > 0) {
                 modalBody.html(msg).append(newform);
                 createForm(newform, urlPrev, saveHistory, updLev, showReply);
@@ -42,9 +50,9 @@ function createForm(form, urlPrev, saveHistory, updLev, showReply) {
                     modalTitle.html(html.find('#block-title').text());
                     modalBody.html(html.find('#block-content'));
                 } else {
-                    if (msg.hasClass('alert')) {setTimeout(function() {modalCloseButton.click()},
+                    if (msg.hasClass('alert')) {setTimeout(function() {modalCloseBtn.click()},
                         msg.hasClass('alert-danger') ? 2500 : 500)}
-                    else {modalCloseButton.click();}
+                    else {modalCloseBtn.click()}
                 }
             }
         }
@@ -56,20 +64,29 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
-        'beforeSend': function() {ajaxSpinner.show()},
-        'complete': function() {ajaxSpinner.hide()},
+        'beforeSend': function() {mainSpinner.show()},
+        'complete': function() {mainSpinner.hide()},
         'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data),
-                form = html.find('#content-column form');
+                form = html.find('#block-content form');
             if (form.length > 0) {
-                modalTitle.html(html.find('#content-column h2').text());
+                modalTitle.html(html.find('#block-title').text());
                 modalBody.html(form);
                 createForm(form, urlPrev, saveHistory, updLev, showReply);
             } else {
                 modalTitle.text('Bad request');
                 modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
-                modalCloseButton.off('click').click(function() {
+
+                //if (showReply) {
+                //    modalTitle.html(html.find('#block-title').text());
+                //    modalBody.html(html.find('#block-body').html());
+                //} else {
+                //    modalTitle.text('Bad request');
+                //    modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
+                //}
+
+                modalCloseBtn.off('click').click(function() {
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);
                     return false;
@@ -82,21 +99,18 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
     return false;
 }
 
-// Show modal with info.
-// url: target url
-// urlPrev: if present then history must be save
 function modalInfo(url, urlPrev) {
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
-        'beforeSend': function() {ajaxSpinner.show()},
-        'complete': function() {ajaxSpinner.hide()},
+        'beforeSend': function() {mainSpinner.show()},
+        'complete': function() {mainSpinner.hide()},
         'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data);
             modalTitle.html(html.find('#block-title').text());
             modalBody.html(html.find('#block-body').html());
-            modalCloseButton.off('click').click(function() {
+            modalCloseBtn.off('click').click(function() {
                 modal.modal('hide');
                 if (urlPrev) {updatePage(urlPrev, true, 'header')}
                 return false;
@@ -112,92 +126,77 @@ function updatePage(url, saveHistory, updLev) {
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
-        'beforeSend': function() {ajaxSpinner.show()},
-        'complete': function() {ajaxSpinner.hide()},
+        'beforeSend': function() {mainSpinner.show()},
+        'complete': function() {mainSpinner.hide()},
         'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data);
-            $('title').text(html.filter('title').text());
-            $('#content-column').html(html.find('#content-column').html());
-            if (updLev != 'content') {$('#sub-header').html(html.find('#sub-header').html())}
-            if (updLev == 'header') {$('#header').html(html.find('#header').html())}
+            mainTitle.text(html.find('#mainTitle').text());
+            if (updLev == 'header') {mainHeader.html(html.find('#header').html())}
+            if (updLev != 'content') {mainSubHeader.html(html.find('#sub-header').html())}
+            mainContent.html(html.find('#content-column').html());
             if (saveHistory) {history.pushState({'urlPrev': false}, document.title, url)}
         }
     });
     return false;
 }
 
+
+// INITIALS
+
 function initDateFields() {
     $('input.dateinput')
         .datetimepicker({'format': 'YYYY-MM-DD'})
-        .on('dp.hide', function() {$(this).blur()});
+        .on('dp.hide', function() {$(this).blur()})
 }
 
 function initEventHandlers() {
-    $('#header')
-        // login form
+    // login form, registration form, profile info, group select, lang select
+    mainHeader
         .on('click', 'a.user-link', function() {
-            var urlPrev = location.href,
-                url = this.href;
-            modalForm(url, urlPrev, false, 'header', false);
+            modalForm(this.href, location.href, false, 'header', false);
             return false;
         })
-        // registration form
         .on('click', 'a.reply-link', function() {
-            var urlPrev = location.href,
-                url = this.href;
-            modalForm(url, urlPrev, false, 'header', true);
+            modalForm(this.href, location.href, false, 'header', true);
             return false;
         })
-        // profile info
         .on('click', 'a.prof-link', function() {
-            var urlPrev = location.href,
-                url = this.href;
-            modalInfo(url, urlPrev);
+            modalInfo(this.href, location.href);
             return false;
         })
-        // group select
         .on('change', '#group-selector select', function() {
-            var group = $(this).val(),
-                url = location.href;
+            var group = $(this).val();
             if (group) {$.cookie('current_group', group, {'path': '/', 'expires': 365})}
             else {$.removeCookie('current_group', {'path': '/'})}
-            updatePage(url, false, 'content');
+            updatePage(location.href, false, 'content');
             return false;
         })
-        // lang select
         .on('change', '#lang-selector select', function() {
-            var lang = $(this).val(),
-                url = location.href;
+            var lang = $(this).val();
             $.cookie('django_language', lang, {'path': '/', 'expires': 365});
-            updatePage(url, false, 'header');
+            updatePage(location.href, false, 'header');
             return false;
         });
-    $('#sub-header')
-        // tabs navigation links
+    // tabs navigation links
+    mainSubHeader
         .on('click', 'ul.nav-tabs a', function() {
-            var url = this.href;
-            updatePage(url, true, 'sub-header');
+            updatePage(this.href, true, 'sub-header');
             return false;
         });
-    $('#content-columns')
-        // student/group add/edit forms
+    // student/group add/edit forms, send letter form, ordering/reversing links, journal marking
+    mainContent
         .on('click', 'a.form-link', function() {
-            var urlPrev = location.href,
-                url = this.href;
-            modalForm(url, urlPrev, true, 'content', false);
+            modalForm(this.href, location.href, true, 'content', false);
             return false;
         })
-        // journal month navigation links
         .on('click', 'a.content-link', function() {
-            var url = this.href;
-            updatePage(url, true, 'content');
+            updatePage(this.href, true, 'content');
             return false;
         })
-        // journal marking
         .on('click', '.day-box input[type="checkbox"]', function(e) {
             var box = $(this),
-                errorMsg = $('#ajax-error');
+                errorMsg = $('#errJournalSave');
             $.ajax(box.data('url'), {
                 'type': 'POST',
                 'async': true,
@@ -208,20 +207,25 @@ function initEventHandlers() {
                     'present': box.is(':checked') ? '1': '',
                     'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                 },
-                'beforeSend': function() {ajaxSpinner.show()},
-                'complete': function() {ajaxSpinner.hide()},
+                'beforeSend': function() {mainSpinner.show()},
+                'complete': function() {mainSpinner.hide()},
                 'error': function() {errorMsg.show()},
                 'success': function() {errorMsg.hide()}
             });
         });
+    // password reset form
+    modal
+        .on('click', 'a.modal-link', function() {
+            modalForm(this.href, location.href, false, 'header', true);
+            return false;
+        });
 }
 
 function initHistory() {
-    // AJAX History
     window.onpopstate = function(e) {
         var url = e.target.document.URL,
             urlPrev = e.state.urlPrev;
-        if (urlPrev) {modalForm(url, urlPrev, false, 'sub-header')}
+        if (urlPrev) {modalForm(url, urlPrev, false, 'sub-header', false)}
         else {
             if (modal.is(':visible')) {modal.modal('hide')}
             updatePage(url, false, 'sub-header');
@@ -229,6 +233,9 @@ function initHistory() {
         return false;
     }
 }
+
+
+// MAIN
 
 $(function() {
     initDateFields();

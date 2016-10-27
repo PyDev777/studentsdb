@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="{% trans "App to manage students database" %}" />
-    <title>{% trans "Students Accounting Service" %} - {% block meta_title %}{% endblock meta_title %}</title>
+    <title id="title">{% trans "Students Accounting Service" %} - {% block meta_title %}{% endblock meta_title %}</title>
 
     <!-- Bootstrap CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
@@ -32,47 +32,63 @@
 </head>
 
 <body>
-    <!-- Start container -->
+
+    <!-- Start Container -->
     <div id="container" class="container">
 
-        <!-- Start header -->
+        <!-- Start Header -->
         <div class="row" id="header">
 
-            <!-- Logo -->
+            <!-- Start Logo -->
             <div class="col-sm-6">
-                <h1 id="text-logo">{% block logo %}{% trans "Students Accounting Service" %}{% endblock logo %}</h1>
+                <h1 id="text-logo">
+                    <!-- Start [BLOCK LOGO] -->
+                    {% block logo %}{% trans "Students Accounting Service" %}{% endblock logo %}
+                    <!-- End [BLOCK LOGO] -->
+                </h1>
             </div>
+            <!-- End Logo -->
 
-            <!-- Groups Selector -->
             {% if user.is_authenticated %}
+
+                <!-- Start Groups Selector for auth users -->
                 <div class="col-sm-3" id="group-selector">
                     <strong>{% trans "Group" %}:</strong>
                     <select title="{% trans "Group" %}">
+                        <!-- Start [BLOCK GROUP MENU] -->
                         {% block group_menu %}
-                        <option value="">{% trans "All Students" %}</option>
-                        {% for group in GROUPS %}
-                            <option value="{{ group.id }}" {% if group.selected %} selected="1" {% endif %}>
-                                {{ group.title }} {% if group.leader %}, {{ group.leader }}{% endif %}
-                            </option>
-                        {% endfor %}
+                            <option value="">{% trans "All Students" %}</option>
+                            {% for group in GROUPS %}
+                                <option value="{{ group.id }}" {% if group.selected %} selected="1" {% endif %}>
+                                    {{ group.title }} {% if group.leader %}, {{ group.leader }}{% endif %}
+                                </option>
+                            {% endfor %}
                         {% endblock group_menu %}
+                        <!-- End [BLOCK GROUP MENU] -->
                     </select>
                 </div>
-                <!-- User's toolbar for authenticated users -->
+                <!-- End Groups Selector for auth users -->
+
+                <!-- Start User's toolbar for auth users -->
                 <div class="col-sm-2" id="user-toolbar">
                     <a href="{% url "profile" %}" class="prof-link">{{ user|nice_username }}</a> |
                     <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
+                <!-- End User's toolbar for auth users -->
+
             {% else %}
-                <!-- User's toolbar for anonymous users -->
+
+                <!-- Start User's toolbar for anonymous users -->
                 <div class="col-sm-5" id="user-toolbar">
                     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">{% trans "via Facebook" %}</a> |
                     <a href="{% url "users:auth_login" %}" class="user-link">{% trans "Login" %}</a> |
                     <a href="{% url "users:registration_register" %}" class="reply-link">{% trans "Registration" %}</a>
                 </div>
+                <!-- End User's toolbar for anonymous users -->
+
             {% endif %}
 
-            <!-- Language Selector -->
+            <!-- Start Language Selector -->
             <div class="col-sm-1" id="lang-selector">
                 <select title="">
                     <option value="en-US"{% if "en-US" == LANGUAGE_CODE %} selected="selected"{% endif %}>Eng</option>
@@ -82,113 +98,145 @@
             <!-- End Language Selector -->
 
         </div>
-        <!-- End header -->
+        <!-- End Header -->
 
-        <!-- Start sub-header -->
-        {% block sub-header %}
+
+        <!-- Start Sub-Header -->
         <div class="row" id="sub-header">
             <div class="col-sm-12">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" {% if request.path == students_url %} class="active" {% endif %}>
-                        <a href="{% url "home" %}">{% trans "Students" %}</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li role="presentation" {% if request.path in journal_url %} class="active" {% endif %}>
-                            <a href="{% url "journal" student.id %}">{% trans "Journal" %}</a>
+
+                <!-- Start [BLOCK SUB-HEADER] -->
+                {% block sub-header %}
+
+                    <!-- Start Nav Tabs -->
+                    <ul class="nav nav-tabs">
+
+                        <li role="presentation" {% if request.path == students_url %} class="active" {% endif %}>
+                            <a href="{% url "home" %}">{% trans "Students" %}</a>
                         </li>
-                        <li role="presentation" {% if request.path in groups_url %} class="active" {% endif %}>
-                            <a href="{% url "groups" %}">{% trans "Groups" %}</a>
-                        </li>
-                    {% endif %}
-                    {% if perms.auth.add_user %}
-                        <li role="presentation" {% if request.path in events_log_url %} class="active" {% endif %}>
-                            <a href="{% url "events_log" %}">{% trans "Log" %}</a>
-                        </li>
-                        <li role="presentation" {% if request.path in contact_url %} class="active" {% endif %}>
-                            <a href="{% url "contact_admin" %}">{% trans "Contact" %}</a>
-                        </li>
-                    {% endif %}
-                </ul>
+
+                        <!-- Tabs for auth users only -->
+                        {% if user.is_authenticated %}
+                            <li role="presentation" {% if request.path in journal_url %} class="active" {% endif %}>
+                                <a href="{% url "journal" student.id %}">{% trans "Journal" %}</a>
+                            </li>
+                            <li role="presentation" {% if request.path in groups_url %} class="active" {% endif %}>
+                                <a href="{% url "groups" %}">{% trans "Groups" %}</a>
+                            </li>
+                        {% endif %}
+
+                        <!-- Tabs for users with perms 'add_user' only -->
+                        {% if perms.auth.add_user %}
+                            <li role="presentation" {% if request.path in events_log_url %} class="active" {% endif %}>
+                                <a href="{% url "events_log" %}">{% trans "Log" %}</a>
+                            </li>
+                            <li role="presentation" {% if request.path in contact_url %} class="active" {% endif %}>
+                                <a href="{% url "contact_admin" %}">{% trans "Contact" %}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <!-- End Nav Tabs -->
+
+                {% endblock sub-header %}
+                <!-- END [BLOCK SUB-HEADER] -->
+
             </div>
         </div>
-        {% endblock sub-header %}
-        <!-- End sub-header -->
+        <!-- End Sub-Header -->
+
 
         <!-- Start Main Page Content -->
         <div class="row" id="content-columns">
             <div class="col-sm-12" id="content-column">
 
-                <!-- Tittle -->
+                <!-- Start Content Title -->
                 <h2 id="block-title">
+                    <!-- Start [BLOCK CONTENT TITLE] -->
                     {% block title %}{% endblock title %}
+                    <!-- End [BLOCK CONTENT TITLE] -->
                 </h2>
-                <!-- End Tittle -->
+                <!-- End Content Title -->
 
-                <!-- Status Message and Content -->
+                <!-- Start Content Message and Content Body -->
                 <div id="block-body">
 
-                    <!-- Status Message -->
+                    <!-- Start Content Message -->
                     <div id="block-message">
+                        <!-- Start [BLOCK CONTENT MESSAGE] -->
                         {% block status_message %}
                             {% if messages %}
                                 {% for message in messages %}
-                                    <div class="alert alert-{{ message.tags }}" role="alert">
-                                        {{ message }}
-                                    </div>
+                                    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
                                 {% endfor %}
                             {% endif %}
                         {% endblock %}
+                        <!-- End [BLOCK CONTENT MESSAGE] -->
                     </div>
-                    <!-- End Status Message -->
+                    <!-- End Content Message -->
 
-                    <!-- Content -->
+                    <!-- Start Content Body -->
                     <div id="block-content">
+                        <!-- Start [BLOCK CONTENT BODY] -->
                         {% block content %}{% endblock content %}
+                        <!-- End [BLOCK CONTENT BODY] -->
                     </div>
-                    <!-- End Content -->
+                    <!-- End Content Body -->
 
                 </div>
-                <!-- End Status Message and Content -->
+                <!-- End Content Message and Content Body -->
+
             </div>
         </div>
         <!-- End Main Page Content -->
 
         <br>
-        <!-- Start footer -->
+        <!-- Start Footer -->
         <div class="row" id="footer">
             <div class="col-sm-12">
+                <!-- Start [BLOCK FOOTER] -->
                 {% block footer %}&copy; 2016, {% trans "Students Accounting Service" %}{% endblock footer %}
+                <!-- End [BLOCK FOOTER] -->
             </div>
         </div>
-        <!-- End footer -->
-    </div>
-    <!-- End container -->
+        <!-- End Footer -->
 
-    <!-- Add spinner -->
-    <div id="ajax-loader">
-        <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}">
     </div>
+    <!-- End Container -->
 
-    <!-- Start Modal student add/edit -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <!-- Start Main Spinner -->
+    <div id="spinner"><img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}"></div>
+    <!-- End Main Spinner -->
+
+
+    <!-- Start Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <!-- Start Modal Close Button -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCloseBtn">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="MyModalLabel"></h4>
+                    <!-- End Modal Close Button -->
+                    <!-- Start Modal Title -->
+                    <h4 class="modal-title" id="modalTitle"></h4>
+                    <!-- End Modal Title -->
                 </div>
-                <!-- Add spinner -->
-                <div class="modal-body"></div>
-                <div id="ajax-loader-modal">
-                    <img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}">
-                </div>
+                <!-- Start Modal Body -->
+                <div class="modal-body" id="modalBody"></div>
+                <!-- End Modal Body -->
+                <!-- Start Modal Footer -->
                 <div class="modal-footer"></div>
+                <!-- End Modal Footer -->
+                <!-- Start Modal Spinner -->
+                <div id="modalSpinner"><img src="{{ PORTAL_URL }}{% static "img/spinner.gif" %}"></div>
+                <!-- End Modal Spinner -->
             </div>
         </div>
     </div>
-    <!-- End Modal student add/edit -->
+    <!-- End Modal -->
+
 
     <!-- Javascript Inclusion -->
 
