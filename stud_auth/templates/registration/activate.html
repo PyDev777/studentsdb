@@ -1,0 +1,35 @@
+{% extends "students/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% if user.is_authenticated %}
+        {% trans "Account Activated" %}
+    {% else %}
+        {% trans "Account activation failed." %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user }}!</p>
+        <p>Key {{ activation_key }} is good.</p>
+        <p>{% trans "Your account is now activated." %}</p>
+    {% else %}
+        <p>Key {{ activation_key }} is bad?</p>
+        <p>{% trans "Account activation failed." %}</p>
+    {% endif %}
+{% endblock %}
+
+
+{% comment %}
+**registration/activate.html**
+
+If account activation fails.
+With the default setup, has the following context:
+``activation_key``
+    The activation key used during the activation attempt.
+
+If successful account activation.
+This template has no context variables of its own, and should
+simply inform the user that their account is now active.
+{% endcomment %}

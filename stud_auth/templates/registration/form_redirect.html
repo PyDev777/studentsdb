@@ -1,0 +1,11 @@
+{% extends "students/base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans "Confirm password reset" %}{% endblock meta_title %}
+{% block title %}{% trans "Confirm password reset" %}{% endblock %}
+{% block sub-header %}{% endblock %}
+
+{% block content %}
+    <div id="form_action" data-form-url="{{ form_url }}"></div>
+{% endblock %}
+

@@ -15,7 +15,7 @@ const modalSpinner = $('#modalSpinner');
 
 function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
 
-function createForm(form, urlPrev, saveHistory, updLev, showReply) {
+function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
     initDateFields();
     modalCloseBtn.off('click').click(function() {
         modal.modal('hide');
@@ -43,12 +43,15 @@ function createForm(form, urlPrev, saveHistory, updLev, showReply) {
                 msg = html.find('#block-body .alert'),
                 newform = html.find('#block-content form');
             if (newform.length > 0) {
+                if (!newform.prop('action')) {newform.prop('action', url)}
                 modalBody.html(msg).append(newform);
-                createForm(newform, urlPrev, saveHistory, updLev, showReply);
+                createForm(newform, url, urlPrev, saveHistory, updLev, showReply);
             } else {
                 if (showReply) {
-                    modalTitle.html(html.find('#block-title').text());
-                    modalBody.html(html.find('#block-content'));
+                    //modalTitle.html(html.find('#block-title').text());
+                    modalTitle.html(html.find('#block-title').addClass('alert alert-warning'));
+                    modalBody.html(html.find('#block-content').addClass('alert alert-info'));
+                    setTimeout(function() {modalCloseBtn.click()}, 1500);
                 } else {
                     if (msg.hasClass('alert')) {setTimeout(function() {modalCloseBtn.click()},
                         msg.hasClass('alert-danger') ? 2500 : 500)}
@@ -72,20 +75,13 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 form = html.find('#block-content form');
             if (form.length > 0) {
                 modalTitle.html(html.find('#block-title').text());
+                if (!form.prop('action')) {form.prop('action', url)}
                 modalBody.html(form);
-                createForm(form, urlPrev, saveHistory, updLev, showReply);
-            } else {
+                createForm(form, url, urlPrev, saveHistory, updLev, showReply);
+            }
+            else {
                 modalTitle.text('Bad request');
                 modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
-
-                //if (showReply) {
-                //    modalTitle.html(html.find('#block-title').text());
-                //    modalBody.html(html.find('#block-body').html());
-                //} else {
-                //    modalTitle.text('Bad request');
-                //    modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
-                //}
-
                 modalCloseBtn.off('click').click(function() {
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);
@@ -166,6 +162,7 @@ function initEventHandlers() {
             return false;
         })
         .on('change', '#group-selector select', function() {
+            console.log('#group-selector select is changed!');
             var group = $(this).val();
             if (group) {$.cookie('current_group', group, {'path': '/', 'expires': 365})}
             else {$.removeCookie('current_group', {'path': '/'})}
@@ -213,7 +210,7 @@ function initEventHandlers() {
                 'success': function() {errorMsg.hide()}
             });
         });
-    // password reset form
+    // forgot password reset form
     modal
         .on('click', 'a.modal-link', function() {
             modalForm(this.href, location.href, false, 'header', true);
@@ -234,6 +231,12 @@ function initHistory() {
     }
 }
 
+// forgot password reset confirm, activation confirm
+function CheckRedirectForm() {
+    var urlForm = $('#form_url').data('form-url');
+    if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
+}
+
 
 // MAIN
 
@@ -241,5 +244,6 @@ $(function() {
     initDateFields();
     initEventHandlers();
     initHistory();
-    history.replaceState({'urlPrev': false}, document.title, location.href);
+    history.replaceState({'urlPrev': false}, document.title, location.origin);
+    CheckRedirectForm();
 });

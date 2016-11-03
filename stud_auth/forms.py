@@ -41,7 +41,6 @@ class CustomAuthenticationForm(AuthenticationForm):
             Hidden('next', value=reverse('home')),
             Fieldset('', 'username', 'password',
                      HTML(u"<strong><a href='%s' class='btn btn-link col-sm-offset-3 modal-link'>%s</a></strong>" % (reverse('password_reset'), _(u'Forgot your password?'))),
-                     # HTML(u"<a href='%s' class='btn btn-link modal-link'>%s</a>" % (reverse('password_reset'), _(u'Forgot your password?'))),
                      'captcha'),
             ButtonHolder(Submit('submit_button', _(u'Log in')),
                          Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
@@ -60,12 +59,15 @@ class CustomPasswordResetForm(PasswordResetForm):
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
         self.helper.error_text_inline = False
-        self.helper.layout = Layout(
-            Hidden('next', value=reverse('home')),
-            HTML(u"<p>%s</p>" % _(u"Forgot your password? Enter your email in the form below and we'll send you instructions for creating a new one.")),
-            Fieldset('', 'email', 'captcha'),
-            ButtonHolder(Submit('submit_button', _(u'Confirm')),
-                         Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
+        self.helper.add_input(Submit('submit_button', _(u'Confirm')))
+        self.helper.add_input(Button('cancel_button', _(u'Cancel'), css_class='btn-default'))
+
+        # self.helper.layout = Layout(
+        #     # Hidden('next', value=reverse('home')),
+        #     HTML(u"<p>%s</p>" % _(u"Forgot your password? Enter your email in the form below and we'll send you instructions for creating a new one.")),
+        #     Fieldset('', 'email', 'captcha'),
+        #     ButtonHolder(Submit('submit_button', _(u'Confirm')),
+        #                  Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
 class CustomSetPasswordForm(SetPasswordForm):
@@ -78,6 +80,7 @@ class CustomSetPasswordForm(SetPasswordForm):
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
         self.helper.error_text_inline = False
+        # self.helper.disable_csrf = True
         self.helper.layout = Layout(
             HTML(u"<p>%s</p>" % _(u"Enter your new password below to reset your password:")),
             Fieldset('', 'new_password1', 'new_password2'),
