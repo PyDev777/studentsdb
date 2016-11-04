@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import RedirectView, TemplateView
 from registration.backends.default.views import RegistrationView, ActivationView
 from stud_auth.forms import CustomRegistrationFormUniqueEmail, CustomAuthenticationForm, CustomPasswordResetForm, CustomSetPasswordForm, CustomPasswordChangeForm
-from stud_auth.views import custom_password_reset_confirm, custom_activation_complete
+from stud_auth.views import custom_password_reset_confirm  # , custom_activation_complete
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.events_log import EventLogView
@@ -39,8 +39,8 @@ urlpatterns = patterns('',
     url(r'^users/register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), name='registration_complete'),
     url(r'^users/register/closed/$', TemplateView.as_view(template_name='registration/registration_closed.html'), name='registration_disallowed'),
     url(r'^users/activate/(?P<activation_key>\w+)/$', ActivationView.as_view(), name='registration_activate'),
-    url(r'^users/activate/complete/$', custom_activation_complete, name='registration_activation_complete'),
-    # url(r'^users/activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
+    # url(r'^users/activate/complete/$', custom_activation_complete, name='registration_activation_complete'),
+    url(r'^users/activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
     url(r'^users/login/$', auth_view.login, {'authentication_form': CustomAuthenticationForm}, name='auth_login'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),
     url(r'^users/password_reset/$', auth_view.password_reset, {'password_reset_form': CustomPasswordResetForm}, name='password_reset'),
