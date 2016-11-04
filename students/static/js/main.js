@@ -233,7 +233,7 @@ function initHistory() {
 
 // forgot password reset confirm, activation confirm
 function CheckRedirectForm() {
-    var urlForm = $('#form_url').data('form-url');
+    var urlForm = $('#form_action').data('form-url');
     if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
 }
 

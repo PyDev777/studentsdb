@@ -80,7 +80,7 @@ class CustomSetPasswordForm(SetPasswordForm):
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
         self.helper.error_text_inline = False
-        # self.helper.disable_csrf = True
+        self.helper.disable_csrf = True
         self.helper.layout = Layout(
             HTML(u"<p>%s</p>" % _(u"Enter your new password below to reset your password:")),
             Fieldset('', 'new_password1', 'new_password2'),
