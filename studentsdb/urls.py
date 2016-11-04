@@ -21,12 +21,6 @@ from students.views.journal import JournalView
 #                                                 #
 ###################################################
 
-# def ajaxRequest(request):
-#     return request.is_ajax()
-#
-# info_dict = {
-#     'req': ajaxRequest(),
-# }
 
 js_info_dict = {
     'packages': ('students',),

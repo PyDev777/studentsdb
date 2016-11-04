@@ -37,6 +37,12 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
             modal.find(':input').prop("disabled", false);
             modalSpinner.hide();
         },
+        //'error': function(jqXHR, textStatus, errorThrown) {
+        //    console.log('jqXHR:', jqXHR);
+        //    console.log('textStatus:', textStatus);
+        //    console.log('errorThrown:', errorThrown);
+        //    alertAjaxError();
+        //},
         'error': function() {alertAjaxError()},
         'success': function(data) {
             var html = $(data),
