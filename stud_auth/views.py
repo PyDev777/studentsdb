@@ -1,22 +1,20 @@
 from django import forms
 from django.forms import ModelForm, ValidationError, ClearableFileInput
-from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import views as auth_view
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, get_object_or_404, Http404
-
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from registration.forms import RegistrationFormUniqueEmail
 from captcha.fields import CaptchaField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Button, Hidden, Fieldset, Field, Div, ButtonHolder, Layout, HTML
+from crispy_forms.layout import Submit, Button, Hidden, Fieldset, Field, ButtonHolder, Layout, HTML
 from crispy_forms.bootstrap import AppendedText
 from django.contrib.auth.models import User
 from .models import StProfile
-from django.forms.models import BaseInlineFormSet, inlineformset_factory
+from django.forms.models import inlineformset_factory
 
 
 # Create your views here.
@@ -117,33 +115,6 @@ class CustPswChangeForm(PasswordChangeForm):
         self.helper.add_input(Button('cancel_button', _(u'Cancel'), css_class='btn-default'))
 
 
-# class AuthorForm(ModelForm):
-#     class Meta:
-#         model = Author
-#         fields = ('name', 'title', 'birth_date')
-#         labels = {
-#             'name': _('Writer'),
-#         }
-#         help_texts = {
-#             'name': _('Some useful help text.'),
-#         }
-#         error_messages = {
-#             'name': {
-#                 'max_length': _("This writer's name is too long."),
-#             },
-#         }
-
-
-class ImageViewFileInput(ClearableFileInput):
-
-    def render(self, name, value, attrs=None):
-        html = super(ImageViewFileInput, self).render(name, value, attrs)
-        if value and hasattr(value, 'url'):
-            img_html = mark_safe('<img src="%s" class="img-circle" height="30" width="30"><br>' % value.url)
-            html = img_html + html
-        return html
-
-
 class UserForm(ModelForm):
 
     class Meta:
@@ -168,6 +139,16 @@ class UserForm(ModelForm):
             HTML(u'<div class="form-group" id="div_id_main-date_joined"><label class="control-label col-sm-4" for="id_main-date_joined">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-date_joined" name="main-date_joined" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Date joined'), self.date_joined)))
 
 
+class ImageViewFileInput(ClearableFileInput):
+
+    def render(self, name, value, attrs=None):
+        html = super(ImageViewFileInput, self).render(name, value, attrs)
+        if value and hasattr(value, 'url'):
+            img_html = mark_safe('<img src="%s" class="img-circle" height="30" width="30"><br>' % value.url)
+            html = img_html + html
+        return html
+
+
 class ProfileForm(ModelForm):
 
     photo = forms.ImageField(widget=ImageViewFileInput(), required=False, label=_(u"Photo"))
@@ -185,13 +166,15 @@ class ProfileForm(ModelForm):
         self.helper.help_text_inline = False
         self.helper.layout = Layout(
             Field('photo'),
-            Field('birthday'),
+            Field(AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>')),
             Field('mobile_phone'),
             Field('address'))
-            # Fieldset('', 'photo',
-            #          # 'birthday',
-            #          AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
-            #          'mobile_phone', 'address'))
+
+    def clean_photo(self):
+        photo = self.cleaned_data['photo']
+        if photo and (len(photo) > 500000):
+            raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
+        return photo
 
 
 def user_profile(request):
@@ -208,14 +191,6 @@ def user_profile(request):
         form = UserForm(instance=request.user, prefix="main")
         formset = UserProfileInlineFormSet(instance=curr_user, prefix="nested")
     return render(request, "registration/profile.html", {"form": form, "formset": formset})
-
-
-
-#     def clean_photo(self):
-#         photo = self.cleaned_data['photo']
-#         if photo and (len(photo) > 500000):
-#             raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
-#         return photo
 
 
 def custom_password_reset_confirm(request, uidb64=None, token=None):

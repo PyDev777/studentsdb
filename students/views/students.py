@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Button
 from django import forms
 from django.forms import ModelForm, ValidationError
 from django.utils.safestring import mark_safe
@@ -23,7 +23,7 @@ class ImageViewFileInput(ClearableFileInput):
     def render(self, name, value, attrs=None):
         html = super(ImageViewFileInput, self).render(name, value, attrs)
         if value and hasattr(value, 'url'):
-            img_html = mark_safe('<img src="%s" class="img-circle" height="30" width="30"><br>' % value.url)
+            img_html = mark_safe('<img src="%s" class="img-circle" height="40" width="40"><br>' % value.url)
             html = img_html + html
         return html
 
@@ -50,7 +50,7 @@ class StudentUpdateForm(ModelForm):
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', _(u'Save')),
-                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
+                Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
@@ -94,13 +94,11 @@ class StudentUpdateView(UpdateView):
 
     def get_success_url(self):
         messages.success(self.request, (_(u'Student updated successfully!') + ' (%s)' % self.object.__unicode__()))
-        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student updated successfully!'))
         return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
             messages.warning(self.request, _(u'Student update canceled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student update canceled!')))
             return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
@@ -126,7 +124,7 @@ class StudentAddForm(ModelForm):
                      'photo', 'ticket', 'student_group', 'notes'),
             ButtonHolder(
                 Submit('save_button', _(u'Save')),
-                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
+                Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
@@ -147,13 +145,11 @@ class StudentAddView(CreateView):
 
     def get_success_url(self):
         messages.success(self.request, (_(u'Student added successfully!') + ' (%s)' % self.object.__unicode__()))
-        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student added successfully!'))
         return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
             messages.warning(self.request, _(u'Student addition canceled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
             return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
@@ -168,13 +164,11 @@ class StudentDeleteView(DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, (_(u'Student deleted successfully!') + ' (%s)' % self.object.__unicode__()))
-        # return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
         return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
             messages.warning(self.request, _(u'Student deletion canceled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
             return HttpResponseRedirect(reverse('home'))
         else:
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
