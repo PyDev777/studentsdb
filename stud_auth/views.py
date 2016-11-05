@@ -144,7 +144,7 @@ class ImageViewFileInput(ClearableFileInput):
     def render(self, name, value, attrs=None):
         html = super(ImageViewFileInput, self).render(name, value, attrs)
         if value and hasattr(value, 'url'):
-            img_html = mark_safe('<img src="%s" class="img-circle" height="30" width="30"><br>' % value.url)
+            img_html = mark_safe('<img src="%s" class="img-circle" height="40" width="40"><br>' % value.url)
             html = img_html + html
         return html
 
@@ -188,7 +188,7 @@ def user_profile(request):
             formset.save()
             return HttpResponseRedirect(reverse('home'))
     else:
-        form = UserForm(instance=request.user, prefix="main")
+        form = UserForm(instance=curr_user, prefix="main")
         formset = UserProfileInlineFormSet(instance=curr_user, prefix="nested")
     return render(request, "registration/profile.html", {"form": form, "formset": formset})
 

@@ -48,8 +48,7 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
                 createForm(newform, url, urlPrev, saveHistory, updLev, showReply);
             } else {
                 if (showReply) {
-                    //modalTitle.html(html.find('#block-title').text());
-                    modalTitle.html(html.find('#block-title').addClass('alert alert-warning'));
+                    modalTitle.html(html.find('#block-title').text());
                     modalBody.html(html.find('#block-content').addClass('alert alert-info'));
                     setTimeout(function() {modalCloseBtn.click()}, 1500);
                 } else {
@@ -78,8 +77,7 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 if (!form.prop('action')) {form.prop('action', url)}
                 modalBody.html(form);
                 createForm(form, url, urlPrev, saveHistory, updLev, showReply);
-            }
-            else {
+            } else {
                 modalTitle.text('Bad request');
                 modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
                 modalCloseBtn.off('click').click(function() {
@@ -95,28 +93,28 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
     return false;
 }
 
-function modalInfo(url, urlPrev) {
-    $.ajax(url, {
-        'dataType': 'html',
-        'type': 'GET',
-        'beforeSend': function() {mainSpinner.show()},
-        'complete': function() {mainSpinner.hide()},
-        'error': function() {alertAjaxError()},
-        'success': function(data) {
-            var html = $(data);
-            modalTitle.html(html.find('#block-title').text());
-            modalBody.html(html.find('#block-body').html());
-            modalCloseBtn.off('click').click(function() {
-                modal.modal('hide');
-                if (urlPrev) {updatePage(urlPrev, true, 'header')}
-                return false;
-            });
-            if (urlPrev) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
-            modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
-        }
-    });
-    return false;
-}
+//function modalInfo(url, urlPrev) {
+//    $.ajax(url, {
+//        'dataType': 'html',
+//        'type': 'GET',
+//        'beforeSend': function() {mainSpinner.show()},
+//        'complete': function() {mainSpinner.hide()},
+//        'error': function() {alertAjaxError()},
+//        'success': function(data) {
+//            var html = $(data);
+//            modalTitle.html(html.find('#block-title').text());
+//            modalBody.html(html.find('#block-body').html());
+//            modalCloseBtn.off('click').click(function() {
+//                modal.modal('hide');
+//                if (urlPrev) {updatePage(urlPrev, true, 'header')}
+//                return false;
+//            });
+//            if (urlPrev) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
+//            modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
+//        }
+//    });
+//    return false;
+//}
 
 function updatePage(url, saveHistory, updLev) {
     $.ajax(url, {
@@ -159,7 +157,6 @@ function initEventHandlers() {
         })
         .on('click', 'a.prof-link', function() {
             modalForm(this.href, location.href, true, 'header', false);
-            //modalInfo(this.href, location.href);
             return false;
         })
         .on('change', '#group-selector select', function() {

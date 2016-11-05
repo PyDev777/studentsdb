@@ -12,7 +12,6 @@
 {% block content %}
     {% if user.is_authenticated %}
         <p>Hello, {{ user }}!</p>
-        <p>Key {{ activation_key }} is good.</p>
         <p>{% trans "Your account is now activated." %}</p>
     {% else %}
         <p>Key {{ activation_key }} is bad?</p>
