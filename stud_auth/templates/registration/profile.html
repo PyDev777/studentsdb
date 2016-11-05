@@ -1,0 +1,27 @@
+{% extends "students/base.html" %}
+
+{% load i18n %}
+{% load static from staticfiles %}
+{% load nice_username %}
+{% load crispy_forms_tags %}
+
+{% block meta_title %}{{ user|nice_username }}{% endblock %}
+
+{% block title %}{{ user|nice_username }}{% endblock %}
+
+{% block status_message %}
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% trans "Please, correct the following errors" %}:
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="" class="form-horizontal">
+        {% crispy form %}
+        {% crispy formset formset.form.helper %}
+        <input type="submit" name="save_button" class="btn btn-primary col-sm-offset-7" value="{% trans "Save" %}">
+        <input type="button" name="cancel_button" class="btn btn-default" value="{% trans "Cancel" %}">
+    </form>
+{% endblock content %}

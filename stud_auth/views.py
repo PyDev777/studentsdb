@@ -12,9 +12,11 @@ from django.utils.safestring import mark_safe
 from registration.forms import RegistrationFormUniqueEmail
 from captcha.fields import CaptchaField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Button, Hidden, Fieldset, ButtonHolder, Layout, HTML
+from crispy_forms.layout import Submit, Button, Hidden, Fieldset, Field, Div, ButtonHolder, Layout, HTML
 from crispy_forms.bootstrap import AppendedText
+from django.contrib.auth.models import User
 from .models import StProfile
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
 
 # Create your views here.
@@ -115,6 +117,23 @@ class CustPswChangeForm(PasswordChangeForm):
         self.helper.add_input(Button('cancel_button', _(u'Cancel'), css_class='btn-default'))
 
 
+# class AuthorForm(ModelForm):
+#     class Meta:
+#         model = Author
+#         fields = ('name', 'title', 'birth_date')
+#         labels = {
+#             'name': _('Writer'),
+#         }
+#         help_texts = {
+#             'name': _('Some useful help text.'),
+#         }
+#         error_messages = {
+#             'name': {
+#                 'max_length': _("This writer's name is too long."),
+#             },
+#         }
+
+
 class ImageViewFileInput(ClearableFileInput):
 
     def render(self, name, value, attrs=None):
@@ -125,7 +144,32 @@ class ImageViewFileInput(ClearableFileInput):
         return html
 
 
+class UserForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        self.username = kwargs['instance'].username
+        self.email = kwargs['instance'].email
+        self.date_joined = kwargs['instance'].date_joined
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
+        self.helper.help_text_inline = False
+        self.helper.layout = Layout(
+            HTML(u'<div class="form-group" id="div_id_main-username"><label class="control-label col-sm-4" for="id_main-username">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-username" name="main-username" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Username'), self.username)),
+            Field('first_name'),
+            Field('last_name'),
+            HTML(u'<div class="form-group" id="div_id_main-email"><label class="control-label col-sm-4" for="id_main-email">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-email" name="main-email" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Email'), self.email)),
+            HTML(u'<div class="form-group" id="div_id_main-date_joined"><label class="control-label col-sm-4" for="id_main-date_joined">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-date_joined" name="main-date_joined" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Date joined'), self.date_joined)))
+
+
 class ProfileForm(ModelForm):
+
     photo = forms.ImageField(widget=ImageViewFileInput(), required=False, label=_(u"Photo"))
 
     class Meta:
@@ -135,45 +179,43 @@ class ProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.form_action = reverse('profile')
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-sm-3'
-        self.helper.field_class = 'col-sm-9'
+        self.helper.form_tag = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
         self.helper.help_text_inline = False
         self.helper.layout = Layout(
-            Fieldset('', 'photo',
-                     AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
-                     'mobile_phone', 'address'),
-            ButtonHolder(
-                Submit('save_button', _(u'Save')),
-                Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
-
-    def clean_photo(self):
-        photo = self.cleaned_data['photo']
-        if photo and (len(photo) > 500000):
-            raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
-        return photo
+            Field('photo'),
+            Field('birthday'),
+            Field('mobile_phone'),
+            Field('address'))
+            # Fieldset('', 'photo',
+            #          # 'birthday',
+            #          AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>'),
+            #          'mobile_phone', 'address'))
 
 
-class ProfileView(UpdateView):
-    model = StProfile
-    template_name = 'profile.html'
-    form_class = ProfileForm
-
-    def get_object(self, queryset=None):
-        obj, created = self.model.objects.get_or_create(user=self.request.user)
-        return obj
-
-    def get_success_url(self):
-        # messages.success(self.request, (_(u'Student updated successfully!') + ' (%s)' % self.object.__unicode__()))
-        return HttpResponseRedirect(reverse('home'))
-
-    def post(self, request, *args, **kwargs):
-        if request.POST.get('cancel_button'):
-            # messages.warning(self.request, _(u'Student update canceled!'))
+def user_profile(request):
+    curr_user = request.user
+    UserProfileInlineFormSet = inlineformset_factory(User, StProfile, form=ProfileForm, extra=2, can_delete=True)
+    if request.method == "POST":
+        form = UserForm(request.POST, request.FILES, instance=curr_user, prefix="main")
+        formset = UserProfileInlineFormSet(request.POST, request.FILES, instance=curr_user, prefix="nested")
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
             return HttpResponseRedirect(reverse('home'))
-        else:
-            return super(ProfileView, self).post(request, *args, **kwargs)
+    else:
+        form = UserForm(instance=request.user, prefix="main")
+        formset = UserProfileInlineFormSet(instance=curr_user, prefix="nested")
+    return render(request, "registration/profile.html", {"form": form, "formset": formset})
+
+
+
+#     def clean_photo(self):
+#         photo = self.cleaned_data['photo']
+#         if photo and (len(photo) > 500000):
+#             raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
+#         return photo
 
 
 def custom_password_reset_confirm(request, uidb64=None, token=None):

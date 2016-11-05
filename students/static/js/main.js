@@ -159,6 +159,7 @@ function initEventHandlers() {
         })
         .on('click', 'a.prof-link', function() {
             modalForm(this.href, location.href, true, 'header', false);
+            //modalInfo(this.href, location.href);
             return false;
         })
         .on('change', '#group-selector select', function() {

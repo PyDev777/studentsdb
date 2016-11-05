@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_view
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import RedirectView, TemplateView
 from registration.backends.default.views import RegistrationView, ActivationView
-from stud_auth.views import CustRegFormUniqEmail, CustAuthForm, CustPswResetForm, CustPswChangeForm, ProfileView, custom_password_reset_confirm
+from stud_auth.views import CustRegFormUniqEmail, CustAuthForm, CustPswResetForm, CustPswChangeForm, user_profile, custom_password_reset_confirm
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.events_log import EventLogView
@@ -51,8 +51,7 @@ urlpatterns = patterns('',
     url(r'^users/', include('registration.backends.default.urls', namespace='users')),
 
     # User profile
-    url(r'^profile/$', login_required(ProfileView.as_view()), name='profile'),
-    # url(r'^profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
+    url(r'^profile/$', login_required(user_profile), name='profile'),
 
     # Students urls
     url(r'^$', StudentListView.as_view(), name='home'),
