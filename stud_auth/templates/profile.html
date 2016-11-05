@@ -1,0 +1,38 @@
+{% extends "students/base.html" %}
+
+{% load i18n %}
+{% load static from staticfiles %}
+{% load nice_username %}
+{% load crispy_forms_tags %}
+
+{% block meta_title %}{{ user|nice_username }}{% endblock %}
+
+{% block title %}{{ user|nice_username }}{% endblock %}
+
+{% block status_message %}
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% trans "Please, correct the following errors" %}:
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{#    <form action="">#}
+{#        <table class="table table-striped">#}
+{#            <tr><td>{% trans "Nick" %}</td><td>{{ user.username }}</td></tr>#}
+{#            <tr><td>{% trans "Name" %}</td><td>{{ user.first_name }}</td></tr>#}
+{#            <tr><td>{% trans "Surname" %}</td><td>{{ user.last_name }}</td></tr>#}
+{#            <tr><td>{% trans "E-mail" %}</td><td>{{ user.email }}</td></tr>#}
+{#            <tr><td>{% trans "Photo" %}</td><td>{{ user.stprofile.photo }}</td></tr>#}
+{#            <tr><td>{% trans "Birthday" %}</td><td>{{ user.stprofile.birthday }}</td></tr>#}
+{#            <tr><td>{% trans "Mobile Phone" %}</td><td>{{ user.stprofile.mobile_phone }}</td></tr>#}
+{#            <tr><td>{% trans "Address" %}</td><td>{{ user.stprofile.address }}</td></tr>#}
+{#            <tr><td>{% trans "Registration date" %}</td><td>{{ user.date_joined }}</td></tr>#}
+{#        </table>#}
+{#    </form>#}
+
+    {% crispy form %}
+
+{% endblock content %}

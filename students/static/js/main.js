@@ -147,7 +147,7 @@ function initDateFields() {
 }
 
 function initEventHandlers() {
-    // login form, registration form, profile info, group select, lang select
+    // login form, registration form, profile form, group select, lang select
     mainHeader
         .on('click', 'a.user-link', function() {
             modalForm(this.href, location.href, false, 'header', false);
@@ -158,7 +158,7 @@ function initEventHandlers() {
             return false;
         })
         .on('click', 'a.prof-link', function() {
-            modalInfo(this.href, location.href);
+            modalForm(this.href, location.href, true, 'header', false);
             return false;
         })
         .on('change', '#group-selector select', function() {

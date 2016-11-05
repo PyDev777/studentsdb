@@ -4,8 +4,7 @@ from django.contrib.auth import views as auth_view
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import RedirectView, TemplateView
 from registration.backends.default.views import RegistrationView, ActivationView
-from stud_auth.forms import CustomRegistrationFormUniqueEmail, CustomAuthenticationForm, CustomPasswordResetForm, CustomSetPasswordForm, CustomPasswordChangeForm
-from stud_auth.views import custom_password_reset_confirm  # , custom_activation_complete
+from stud_auth.views import CustRegFormUniqEmail, CustAuthForm, CustPswResetForm, CustPswChangeForm, ProfileView, custom_password_reset_confirm
 from students.views.students import StudentAddView, StudentUpdateView, StudentDeleteView, StudentListView
 from students.views.groups import GroupAddView, GroupUpdateView, GroupDeleteView, GroupListView
 from students.views.events_log import EventLogView
@@ -35,24 +34,25 @@ urlpatterns = patterns('',
     url('^social/', include('social.apps.django_app.urls', namespace='social')),
 
     # User Related urls
-    url(r'^users/register/$', RegistrationView.as_view(form_class=CustomRegistrationFormUniqueEmail), name='registration_register'),
+    url(r'^users/register/$', RegistrationView.as_view(form_class=CustRegFormUniqEmail), name='registration_register'),
     url(r'^users/register/complete/$', TemplateView.as_view(template_name='registration/registration_complete.html'), name='registration_complete'),
     url(r'^users/register/closed/$', TemplateView.as_view(template_name='registration/registration_closed.html'), name='registration_disallowed'),
     url(r'^users/activate/(?P<activation_key>\w+)/$', ActivationView.as_view(), name='registration_activate'),
     # url(r'^users/activate/complete/$', custom_activation_complete, name='registration_activation_complete'),
     url(r'^users/activate/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_activation_complete'),
-    url(r'^users/login/$', auth_view.login, {'authentication_form': CustomAuthenticationForm}, name='auth_login'),
+    url(r'^users/login/$', auth_view.login, {'authentication_form': CustAuthForm}, name='auth_login'),
     url(r'^users/logout/$', auth_view.logout, kwargs={'next_page': 'home'}, name='auth_logout'),
-    url(r'^users/password_reset/$', auth_view.password_reset, {'password_reset_form': CustomPasswordResetForm}, name='password_reset'),
+    url(r'^users/password_reset/$', auth_view.password_reset, {'password_reset_form': CustPswResetForm}, name='password_reset'),
     url(r'^users/password_reset/done/$', auth_view.password_reset_done, name='password_reset_done'),
     url(r'^users/password_reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', custom_password_reset_confirm, name='password_reset_confirm'),
     url(r'^users/password_reset/complete/$', auth_view.password_reset_complete, name='password_reset_complete'),
-    url(r'^users/password_change/$', auth_view.password_change, {'password_change_form': CustomPasswordChangeForm}, name='password_change'),
+    url(r'^users/password_change/$', auth_view.password_change, {'password_change_form': CustPswChangeForm}, name='password_change'),
     url(r'^users/password_change/done/$', auth_view.password_change_done, name='password_change_done'),
     url(r'^users/', include('registration.backends.default.urls', namespace='users')),
 
     # User profile
-    url(r'^profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
+    url(r'^profile/$', login_required(ProfileView.as_view()), name='profile'),
+    # url(r'^profile/$', login_required(TemplateView.as_view(template_name='registration/profile.html')), name='profile'),
 
     # Students urls
     url(r'^$', StudentListView.as_view(), name='home'),
