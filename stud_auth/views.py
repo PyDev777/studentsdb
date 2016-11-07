@@ -122,21 +122,38 @@ class UserForm(ModelForm):
         fields = ['first_name', 'last_name']
 
     def __init__(self, *args, **kwargs):
-        self.username = kwargs['instance'].username
-        self.email = kwargs['instance'].email
-        self.date_joined = kwargs['instance'].date_joined
         super(UserForm, self).__init__(*args, **kwargs)
+
         self.helper = FormHelper(self)
         self.helper.form_tag = False
         self.helper.label_class = 'col-sm-4'
         self.helper.field_class = 'col-sm-7'
         self.helper.help_text_inline = False
+
+        # "Fake Fields" allow to show specified fields in User form and protect them by mutation
+        self.fakeFields = (
+            ('username',    _(u'Username'),    kwargs['instance'].username),
+            ('email',       _(u'Email'),       kwargs['instance'].email),
+            ('date_joined', _(u'Date joined'), kwargs['instance'].date_joined))
+
+        self.fakeFieldsHTML = [
+            u'<div class="form-group">' \
+            u'<label class="control-label %(label_class)s" for="%(field_name)s">%(label)s</label>' \
+            u'<div class="controls %(field_class)s">' \
+            u'<input class="form-control" id="%(field_name)s" value="%(field_value)s" type="text" disabled>' \
+            u'</div></div>' % {
+                'field_name':  self.fakeFields[i][0],
+                'label':       self.fakeFields[i][1],
+                'field_value': self.fakeFields[i][2],
+                'field_class': self.helper.field_class,
+                'label_class': self.helper.label_class} for i in range(len(self.fakeFields))]
+
         self.helper.layout = Layout(
-            HTML(u'<div class="form-group" id="div_id_main-username"><label class="control-label col-sm-4" for="id_main-username">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-username" name="main-username" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Username'), self.username)),
+            HTML(self.fakeFieldsHTML[0]),
             Field('first_name'),
             Field('last_name'),
-            HTML(u'<div class="form-group" id="div_id_main-email"><label class="control-label col-sm-4" for="id_main-email">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-email" name="main-email" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Email'), self.email)),
-            HTML(u'<div class="form-group" id="div_id_main-date_joined"><label class="control-label col-sm-4" for="id_main-date_joined">%s</label><div class="controls col-sm-7"><input class="textinput textInput form-control" id="id_main-date_joined" name="main-date_joined" value="%s" type="text" disabled="disabled"></div></div>' % (_(u'Date joined'), self.date_joined)))
+            HTML(self.fakeFieldsHTML[1]),
+            HTML(self.fakeFieldsHTML[2]))
 
 
 class ImageViewFileInput(ClearableFileInput):
