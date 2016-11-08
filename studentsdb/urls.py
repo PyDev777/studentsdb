@@ -48,10 +48,8 @@ urlpatterns = patterns('',
     url(r'^users/password_reset/complete/$', auth_view.password_reset_complete, name='password_reset_complete'),
     url(r'^users/password_change/$', auth_view.password_change, {'password_change_form': CustPswChangeForm}, name='password_change'),
     url(r'^users/password_change/done/$', auth_view.password_change_done, name='password_change_done'),
+    url(r'^users/profile/$', login_required(user_profile), name='profile'),
     url(r'^users/', include('registration.backends.default.urls', namespace='users')),
-
-    # User profile
-    url(r'^profile/$', login_required(user_profile), name='profile'),
 
     # Students urls
     url(r'^$', StudentListView.as_view(), name='home'),

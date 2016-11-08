@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm, ValidationError, ClearableFileInput
 from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
 from django.contrib.auth import views as auth_view
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.core.urlresolvers import reverse
@@ -100,21 +101,6 @@ class CustSetPswForm(SetPasswordForm):
                          Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
-class CustPswChangeForm(PasswordChangeForm):
-
-    def __init__(self, *args, **kwargs):
-        super(CustPswChangeForm, self).__init__(*args, **kwargs)
-
-        self.helper = FormHelper(self)
-        self.helper.form_action = reverse('auth_password_change')
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-3'
-        self.helper.field_class = 'col-md-9'
-        self.helper.error_text_inline = False
-        self.helper.add_input(Submit('submit_button', _(u'Confirm')))
-        self.helper.add_input(Button('cancel_button', _(u'Cancel'), css_class='btn-default'))
-
-
 class UserForm(ModelForm):
 
     class Meta:
@@ -185,7 +171,9 @@ class ProfileForm(ModelForm):
             Field('photo'),
             Field(AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>')),
             Field('mobile_phone'),
-            Field('address'))
+            Field('address'),
+            HTML(u"<strong><a href='%s' class='btn btn-link col-sm-offset-4 modal-link'>\
+            %s</a></strong>" % (reverse('password_change'), _(u'You want to change the password?'))))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
@@ -207,7 +195,7 @@ def user_profile(request):
     else:
         form = UserForm(instance=curr_user, prefix="main")
         formset = UserProfileInlineFormSet(instance=curr_user, prefix="nested")
-    return render(request, "registration/profile.html", {"form": form, "formset": formset})
+    return TemplateResponse(request, "registration/profile.html", {"form": form, "formset": formset})
 
 
 def custom_password_reset_confirm(request, uidb64=None, token=None):
@@ -215,6 +203,21 @@ def custom_password_reset_confirm(request, uidb64=None, token=None):
         return auth_view.password_reset_confirm(request, uidb64, token, set_password_form=CustSetPswForm)
     else:
         return render(request, 'registration/form_redirect.html', {'form_url': request.build_absolute_uri()})
+
+
+class CustPswChangeForm(PasswordChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CustPswChangeForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_action = reverse('password_change')
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.error_text_inline = False
+        self.helper.add_input(Submit('submit_button', _(u'Confirm')))
+        self.helper.add_input(Button('cancel_button', _(u'Cancel'), css_class='btn-default'))
 
 
 # def custom_activation_complete(request):

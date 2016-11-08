@@ -16,13 +16,19 @@ const modalSpinner = $('#modalSpinner');
 function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
 
 function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
+    console.log('createForm.urlPrev:', urlPrev);
+    //var modalCloseBtn = $('#modalCloseBtn');
+
     initDateFields();
+
     modalCloseBtn.off('click').click(function() {
+        console.log('createForm.modalCloseBtn.urlPrev:', urlPrev);
         modal.modal('hide');
         updatePage(urlPrev, saveHistory, updLev);
         return false;
     });
     form.find('input[name="cancel_button"]').click(function() {
+        console.log('createForm.cancel_button.urlPrev:', urlPrev);
         modal.modal('hide');
         updatePage(urlPrev, saveHistory, updLev);
         return false;
@@ -43,6 +49,7 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
                 msg = html.find('#block-body .alert'),
                 newform = html.find('#block-content form');
             if (newform.length > 0) {
+                console.log('createForm(form.length > 0).urlPrev:', urlPrev);
                 if (!newform.prop('action')) {newform.prop('action', url)}
                 modalBody.html(msg).append(newform);
                 createForm(newform, url, urlPrev, saveHistory, updLev, showReply);
@@ -63,6 +70,7 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
 }
 
 function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
+    console.log('modalForm.urlPrev:', urlPrev);
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
@@ -73,6 +81,7 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
             var html = $(data),
                 form = html.find('#block-content form');
             if (form.length > 0) {
+                console.log('modalForm(form.length > 0).urlPrev:', urlPrev);
                 modalTitle.html(html.find('#block-title').text());
                 if (!form.prop('action')) {form.prop('action', url)}
                 modalBody.html(form);
@@ -81,6 +90,7 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 modalTitle.text('Bad request');
                 modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
                 modalCloseBtn.off('click').click(function() {
+                    console.log('modalForm.modalCloseBtn.urlPrev:', urlPrev);
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);
                     return false;
@@ -155,10 +165,6 @@ function initEventHandlers() {
             modalForm(this.href, location.href, false, 'header', true);
             return false;
         })
-        .on('click', 'a.prof-link', function() {
-            modalForm(this.href, location.href, true, 'header', false);
-            return false;
-        })
         .on('change', '#group-selector select', function() {
             console.log('#group-selector select is changed!');
             var group = $(this).val();
@@ -208,7 +214,7 @@ function initEventHandlers() {
                 'success': function() {errorMsg.hide()}
             });
         });
-    // forgot password reset form
+    // forgot password reset&change form
     modal
         .on('click', 'a.modal-link', function() {
             modalForm(this.href, location.href, false, 'header', true);

@@ -71,7 +71,7 @@
 
                 <!-- Start User's toolbar for auth users -->
                 <div class="col-sm-2" id="user-toolbar">
-                    <a href="{% url "profile" %}" class="prof-link">{{ user|nice_username }}</a> |
+                    <a href="{% url "profile" %}" class="user-link">{{ user|nice_username }}</a> |
                     <a href="{% url "users:auth_logout" %}">{% trans "Logout" %}</a>
                 </div>
                 <!-- End User's toolbar for auth users -->
