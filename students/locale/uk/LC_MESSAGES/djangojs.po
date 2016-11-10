@@ -19,6 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: static/js/main.js:31 static/js/main.js.c:58 static/js/main.js.c:93
+#: static/js/main.js:16
 msgid "There was an error on the server. Please, try again a bit later."
 msgstr "Помилка на сервері. Спробуйте, будь-ласка, пізніше."
+
+#: static/js/main.js:81
+msgid "Bad request"
+msgstr "Невірний запит"
+
+#: static/js/main.js:82
+msgid "Цей об'єкт більше не існує."
+msgstr ""

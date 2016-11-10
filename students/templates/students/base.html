@@ -266,7 +266,7 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>-->
 <script src="{{ PORTAL_URL }}{% static "js/jquery.form.min.js" %}"></script>
 
-    <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+    <script src="{% url "django.views.i18n.javascript_catalog" %}"></script>
     <script src="{{ PORTAL_URL }}{% static "js/main.js" %}"></script>
 
     {% block extra_js %}{% endblock extra_js %}

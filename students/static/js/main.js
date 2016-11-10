@@ -13,7 +13,7 @@ const modalSpinner = $('#modalSpinner');
 
 // WORK FUNCTIONS
 
-function alertAjaxError() {alert(gettext('There was an error on the server. Please, try again a bit later.'))}
+function alertAjaxError() {alert(gettext("There was an error on the server. Please, try again a bit later."))}
 
 function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
     initDateFields();
@@ -78,8 +78,8 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 modalBody.html(form);
                 createForm(form, url, urlPrev, saveHistory, updLev, showReply);
             } else {
-                modalTitle.text(gettext('Bad request'));
-                modalBody.html($('<p/>').text(gettext('This object no longer exist.')).addClass('alert alert-danger'));
+                modalTitle.text(gettext("Bad request"));
+                modalBody.html($('<p/>').text(gettext("This object no longer exist.")).addClass('alert alert-danger'));
                 modalCloseBtn.off('click').click(function() {
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);

@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/main.js:31 static/js/main.js.c:58 static/js/main.js.c:93
+#: static/js/main.js:16
 msgid "There was an error on the server. Please, try again a bit later."
+msgstr ""
+
+#: static/js/main.js:81
+msgid "Bad request"
+msgstr ""
+
+#: static/js/main.js:82
+msgid "This object no longer exist."
 msgstr ""
