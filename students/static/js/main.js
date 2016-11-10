@@ -49,15 +49,12 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
             } else {
                 if (showReply) {
                     modalTitle.html(html.find('#block-title').text());
-                    modalBody.html(html.find('#block-content').addClass('alert alert-info'));
-                    //setTimeout(function() {modalCloseBtn.click()}, 2500);
+                    modalBody.html(html.find('#block-body').addClass('alert alert-info'));
                 } else {
                     if (msg.hasClass('alert')) {
+                        modalBody.html(msg);
                         if (msg.hasClass('alert-success')) {setTimeout(function() {modalCloseBtn.click()}, 500)}
-                    }
-                    //if (msg.hasClass('alert')) {setTimeout(function() {modalCloseBtn.click()},
-                    //    msg.hasClass('alert-danger') ? 2500 : 500)}
-                    else {modalCloseBtn.click()}
+                    } else {modalCloseBtn.click()}
                 }
             }
         }
@@ -81,8 +78,8 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 modalBody.html(form);
                 createForm(form, url, urlPrev, saveHistory, updLev, showReply);
             } else {
-                modalTitle.text('Bad request');
-                modalBody.html($('<p/>').text('This object no longer exist.').addClass('alert alert-danger'));
+                modalTitle.text(gettext('Bad request'));
+                modalBody.html($('<p/>').text(gettext('This object no longer exist.')).addClass('alert alert-danger'));
                 modalCloseBtn.off('click').click(function() {
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);
@@ -116,13 +113,13 @@ function updatePage(url, saveHistory, updLev) {
 }
 
 // password reset confirm
-function CheckRedirectForm() {
+function checkRedirectForm() {
     var urlForm = $('#form_action').data('form-url');
     if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
 }
 
 
-// INITIALS
+// INIT FUNCTIONS
 
 function initDateFields() {
     $('input.dateinput')
@@ -189,7 +186,7 @@ function initEventHandlers() {
                 'success': function() {errorMsg.hide()}
             });
         });
-    // forgot password reset&change form
+    // password reset&change form
     modal
         .on('click', 'a.modal-link', function() {
             modalForm(this.href, location.href, false, 'header', true);
@@ -218,5 +215,5 @@ $(function() {
     initEventHandlers();
     initHistory();
     history.replaceState({'urlPrev': false}, document.title, location.origin);
-    CheckRedirectForm();
+    checkRedirectForm();
 });

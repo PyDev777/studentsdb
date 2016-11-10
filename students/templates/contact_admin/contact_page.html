@@ -12,7 +12,7 @@
         <div class="alert alert-danger" role="alert">{{ request.GET.status_message }}</div>
     {% else %}
         {% if request.GET.status_message %}
-            <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+            <div class="alert alert-success" role="alert">{{ request.GET.status_message }}</div>
         {% endif %}
     {% endif %}
 {% endblock %}

@@ -3,7 +3,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
@@ -93,13 +92,11 @@ class StudentUpdateView(UpdateView):
         return context
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Student updated successfully!') + ' (%s)' % self.object.__unicode__()))
-        return HttpResponseRedirect(reverse('home'))
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student updated successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Student update canceled!'))
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student update canceled!')))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
@@ -144,13 +141,11 @@ class StudentAddView(CreateView):
         return context
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Student added successfully!') + ' (%s)' % self.object.__unicode__()))
-        return HttpResponseRedirect(reverse('home'))
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student added successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Student addition canceled!'))
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
 
@@ -163,13 +158,11 @@ class StudentDeleteView(DeleteView):
         return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Student deleted successfully!') + ' (%s)' % self.object.__unicode__()))
-        return HttpResponseRedirect(reverse('home'))
+        return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Student deletion canceled!'))
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
         else:
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
 

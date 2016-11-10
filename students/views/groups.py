@@ -3,7 +3,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from django.forms import ModelForm, ValidationError
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
@@ -57,15 +56,11 @@ class GroupUpdateView(UpdateView):
         return context
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Group saved successfully!') + ' (%s)' % self.object.title))
-        # return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
-        return HttpResponseRedirect(reverse('groups'))
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Group update canceled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group update canceled!'))
-            return HttpResponseRedirect(reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group update canceled!'))
         else:
             return super(GroupUpdateView, self).post(request, *args, **kwargs)
 
@@ -102,15 +97,11 @@ class GroupAddView(CreateView):
         return context
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Group saved successfully!')) + ' (%s)' % self.object.title)
-        # return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
-        return HttpResponseRedirect(reverse('groups'))
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group saved successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Group add cancelled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group add cancelled!'))
-            return HttpResponseRedirect(reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group add cancelled!'))
         else:
             return super(GroupAddView, self).post(request, *args, **kwargs)
 
@@ -123,15 +114,11 @@ class GroupDeleteView(DeleteView):
         return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
     def get_success_url(self):
-        messages.success(self.request, (_(u'Group deleted successfully!') + ' (%s)' % self.object.title))
-        # return u'%s?status_message=%s' % (reverse('groups'), _(u'Group deleted successfully!'))
-        return HttpResponseRedirect(reverse('groups'))
+        return u'%s?status_message=%s' % (reverse('groups'), _(u'Group deleted successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.warning(self.request, _(u'Group delete canceled!'))
-            # return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group delete canceled!'))
-            return HttpResponseRedirect(reverse('groups'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('groups')), _(u'Group delete canceled!'))
         else:
             return super(GroupDeleteView, self).post(request, *args, **kwargs)
 

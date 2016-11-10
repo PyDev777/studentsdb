@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 import os
 from django.conf import global_settings
-from django.contrib.messages import constants as messages
 
 
 ####################################################################
@@ -105,8 +104,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Messages framework error tag for Bootstrap styling
-MESSAGE_TAGS = {messages.ERROR: 'danger'}
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -118,7 +115,7 @@ LOGIN_URL = 'users:auth_login'
 LOGOUT_URL = 'users:auth_logout'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
-# LOGIN_REDIRECT_URL = 'home'
+
 
 # Coverage report settings
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'coverage')

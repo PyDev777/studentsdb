@@ -164,10 +164,10 @@
                     <div id="block-message">
                         <!-- Start [BLOCK CONTENT MESSAGE] -->
                         {% block status_message %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-                                {% endfor %}
+                            {% if request.GET.status_message %}
+                                <div class="alert alert-{% if request.GET.message_error %}danger{% else %}success{% endif %}" role="alert">
+                                    {{ request.GET.status_message }}
+                                </div>
                             {% endif %}
                         {% endblock %}
                         <!-- End [BLOCK CONTENT MESSAGE] -->
