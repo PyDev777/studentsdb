@@ -54,7 +54,7 @@ class CustAuthForm(AuthenticationForm):
         self.helper.layout = Layout(
             Hidden('next', value=reverse('home')),
             Fieldset('', 'username', 'password',
-                     HTML(u"<strong><a href='%s' class='btn btn-link col-sm-offset-3 modal-link'>%s</a></strong>" % (reverse('password_reset'), _(u'Forgot your password?'))),
+                     HTML(u'<strong><a href="%s" class="btn btn-link col-sm-offset-3 modal-link">%s</a></strong>' % (reverse('password_reset'), _(u'Forgot your password?'))),
                      'captcha'),
             ButtonHolder(Submit('submit_button', _(u'Log in')),
                          Button('cancel_button', _(u'Cancel'), css_class='btn-default')))

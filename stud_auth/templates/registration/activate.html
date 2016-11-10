@@ -10,13 +10,17 @@
 {% endblock %}
 
 {% block content %}
+    <br>
     {% if user.is_authenticated %}
-        <p>Hello, {{ user }}!</p>
+        <h3 style="color: blue"><strong>{% trans "Hello, " %}{{ user }}!</strong></h3>
+        <br>
         <p>{% trans "Your account is now activated." %}</p>
     {% else %}
-        <p>Key {{ activation_key }} is bad?</p>
-        <p>{% trans "Account activation failed." %}</p>
+        <h3 style="color: red">{% trans "Invalid key: " %}{{ activation_key }}</h3>
+        <br>
+        {% trans "Account activation failed." %}
     {% endif %}
+    <br>
 {% endblock %}
 
 

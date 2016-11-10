@@ -50,10 +50,13 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
                 if (showReply) {
                     modalTitle.html(html.find('#block-title').text());
                     modalBody.html(html.find('#block-content').addClass('alert alert-info'));
-                    setTimeout(function() {modalCloseBtn.click()}, 1500);
+                    //setTimeout(function() {modalCloseBtn.click()}, 2500);
                 } else {
-                    if (msg.hasClass('alert')) {setTimeout(function() {modalCloseBtn.click()},
-                        msg.hasClass('alert-danger') ? 2500 : 500)}
+                    if (msg.hasClass('alert')) {
+                        if (msg.hasClass('alert-success')) {setTimeout(function() {modalCloseBtn.click()}, 500)}
+                    }
+                    //if (msg.hasClass('alert')) {setTimeout(function() {modalCloseBtn.click()},
+                    //    msg.hasClass('alert-danger') ? 2500 : 500)}
                     else {modalCloseBtn.click()}
                 }
             }
@@ -110,6 +113,12 @@ function updatePage(url, saveHistory, updLev) {
         }
     });
     return false;
+}
+
+// password reset confirm
+function CheckRedirectForm() {
+    var urlForm = $('#form_action').data('form-url');
+    if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
 }
 
 
@@ -199,12 +208,6 @@ function initHistory() {
         }
         return false;
     }
-}
-
-// forgot password reset confirm
-function CheckRedirectForm() {
-    var urlForm = $('#form_action').data('form-url');
-    if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
 }
 
 
