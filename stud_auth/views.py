@@ -123,10 +123,10 @@ class UserForm(ModelForm):
             ('date_joined', _(u'Date joined'), kwargs['instance'].date_joined))
 
         self.fakeFieldsHTML = [
-            u'<div class="form-group">' \
-            u'<label class="control-label %(label_class)s" for="%(field_name)s">%(label)s</label>' \
-            u'<div class="controls %(field_class)s">' \
-            u'<input class="form-control" id="%(field_name)s" value="%(field_value)s" type="text" disabled>' \
+            u'<div class="form-group">'
+            u'<label class="control-label %(label_class)s" for="%(field_name)s">%(label)s</label>'
+            u'<div class="controls %(field_class)s">'
+            u'<input class="form-control" id="%(field_name)s" value="%(field_value)s" type="text" disabled>'
             u'</div></div>' % {
                 'field_name':  self.fakeFields[i][0],
                 'label':       self.fakeFields[i][1],
@@ -172,8 +172,8 @@ class ProfileForm(ModelForm):
             Field(AppendedText('birthday', '<span class="glyphicon glyphicon-calendar"></span>')),
             Field('mobile_phone'),
             Field('address'),
-            HTML(u"<strong><a href='%s' class='btn btn-link col-sm-offset-4 modal-link'>\
-            %s</a></strong>" % (reverse('password_change'), _(u'You want to change the password?'))))
+            HTML(u"<strong><a href='%s' class='btn btn-link col-sm-offset-4 modal-link'>%s</a>"
+                 u"</strong>" % (reverse('password_change'), _(u'You want to change the password?'))))
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
