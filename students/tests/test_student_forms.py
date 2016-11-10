@@ -94,7 +94,7 @@ class TestStudentUpdateForm(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # check that we're on login form
-        self.assertIn('Login Form', response.content)
+        self.assertIn('form', response.content)
 
         # check redirect url
         self.assertEqual(response.redirect_chain[0], ('http://testserver/users/login/?next=/students/1/edit/', 302))
