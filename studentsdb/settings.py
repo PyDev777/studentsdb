@@ -12,29 +12,25 @@ import os
 from django.conf import global_settings
 
 
-####################################################################
-#                                                                  #
-#                  Development mode (default)                      #
-#                                                                  #
-#  1. Rename file dev_settings_template.py to dev_settings.py      #
-#     and enter your values to his settings fields                 #
-#  2. Comment string:   from prod_settings import *                #
-#  3. Uncomment string: from dev_settings import *                 #
-#                                                                  #
-#                      Production mode                             #
-#                                                                  #
-#  1. Rename file prod_settings_template.py to prod_settings.py    #
-#     and enter your values to his settings fields                 #
-#  2. Uncomment string: from prod_settings import *                #
-#  3. Comment string:   from dev_settings import *                 #
-#                                                                  #
+###############################################################################
+#                                                                             #
+# This setting determines which mode will be used - Development or Production #
+#                                                                             #
+###############################################################################
+#                                                                             #
+#                                                                             #
+PRODUCTION_MODE = True
+#                                                                             #
+#                                                                             #
+###############################################################################
+
 try:
-    # from prod_settings import *
-    from dev_settings import *
+    if PRODUCTION_MODE:
+        from prod_settings import *
+    else:
+        from dev_settings import *
 except ImportError:
     pass
-#                                                                  #
-####################################################################
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -63,7 +59,7 @@ INSTALLED_APPS = (
     'stud_auth',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES_TUPLE = (
     'studentsdb.middleware.RequestTimeMiddleware',
     'studentsdb.middleware.DBTimeMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,6 +71,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES_TUPLE[2:] if PRODUCTION_MODE else MIDDLEWARE_CLASSES_TUPLE
+
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",

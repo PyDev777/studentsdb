@@ -122,8 +122,7 @@ LOGGING = {
     'handlers': {
         'null': {
             'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-            'formatter': 'simple'
+            'class': 'logging.NullHandler'
         },
         'console': {
             'level': 'DEBUG',
@@ -153,6 +152,10 @@ LOGGING = {
             'propagate': False,
         },
         'students.signals': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'INFO'
+        },
+        'registration.signals': {
             'handlers': ['console', 'file', 'mail_admins'],
             'level': 'INFO'
         },
