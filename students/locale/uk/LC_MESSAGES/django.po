@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-10 02:00+0000\n"
+"POT-Creation-Date: 2016-11-11 08:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Подія"
 
 #: models/events_log.py:14
 msgid "Events"
-msgstr "Подія"
+msgstr "Події"
 
 #: models/events_log.py:18
 msgid "Create time"
@@ -116,7 +116,7 @@ msgid "Birthday"
 msgstr "Дата народження"
 
 #: models/students.py:39 templates/students/students_list.html:31
-#: views/students.py:32
+#: views/students.py:31
 msgid "Photo"
 msgstr "Фото"
 
@@ -168,7 +168,6 @@ msgid "App to manage students database"
 msgstr "Система обліку студентів Навчального Закладу"
 
 #: templates/students/base.html:13 templates/students/base.html.py:46
-#: templates/students/base.html:197
 msgid "Students Accounting Service"
 msgstr "Сервіс обліку студентів"
 
@@ -204,6 +203,30 @@ msgstr "Події"
 #: templates/students/base.html:134
 msgid "Contact"
 msgstr "Контакт"
+
+#: templates/students/base.html:199
+msgid ""
+"\n"
+"                        <a href=\"https://pydev777.github.io/\" target="
+"\"_blank\" title=\"My Promo Page\">Bilous Vitalii</a>\n"
+"                        in practical\n"
+"                        <a href=\"http://www.vitaliypodoba.com/books/django-"
+"for-beginners/\" target=\"_blank\" >course</a>\n"
+"                        from\n"
+"                        <a href=\"http://www.vitaliypodoba.com/\" target="
+"\"_blank\">Vitalii Podoba </a>\n"
+"                    "
+msgstr ""
+"\n"
+"                        <a href=\"https://pydev777.github.io/\" target="
+"\"_blank\" title=\"My Promo Page\">Білоус Віталій</a>\n"
+"                        практичний\n"
+"                        <a href=\"http://www.vitaliypodoba.com/books/django-"
+"for-beginners/\" target=\"_blank\" >курс</a>\n"
+"                        від\n"
+"                        <a href=\"http://www.vitaliypodoba.com/\" target="
+"\"_blank\">Віталія Подоби </a>\n"
+"                    "
 
 #: templates/students/events_log.html:9
 msgid "Log list"
@@ -330,123 +353,123 @@ msgstr "Додати студента"
 msgid "Ticket #"
 msgstr "№ білета"
 
-#: views/contact_admin.py:24
+#: views/contact_admin.py:23
 msgid "Your Email Address"
 msgstr "Email адреса"
 
-#: views/contact_admin.py:28
+#: views/contact_admin.py:27
 msgid "Letter Subject"
 msgstr "Тема повідомлення"
 
-#: views/contact_admin.py:33
+#: views/contact_admin.py:32
 msgid "Letter text"
 msgstr "Текст повідомлення"
 
-#: views/contact_admin.py:52
+#: views/contact_admin.py:51
 msgid "Send"
 msgstr "Надіслати"
 
-#: views/contact_admin.py:53 views/groups.py:28 views/groups.py:85
-#: views/students.py:53 views/students.py:127
+#: views/contact_admin.py:52 views/groups.py:27 views/groups.py:80
+#: views/students.py:52 views/students.py:124
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: views/contact_admin.py:66
+#: views/contact_admin.py:65
 msgid "Contact Administrator"
 msgstr "Зв'язок з Адміністратором"
 
-#: views/contact_admin.py:81
-msgid ": error sending letter!"
-msgstr ": помилка відправки повідомлення!"
-
-#: views/contact_admin.py:82
+#: views/contact_admin.py:77
 msgid "An error occurred during email transfer. Please, try again later."
 msgstr ""
 "Під час відправки повідомлення виникла помилка. Будь ласка, спробуйте "
 "пізніше."
 
-#: views/contact_admin.py:87
-msgid "Letter sent successfully!"
-msgstr "Повідомлення успішно надіслане!"
+#: views/contact_admin.py:80
+msgid ": error sending letter!"
+msgstr ": помилка відправки повідомлення!"
 
-#: views/contact_admin.py:94
+#: views/contact_admin.py:83
+msgid "Letter sent successfully!"
+msgstr "Повідомлення надіслане успішно!"
+
+#: views/contact_admin.py:89
 msgid "Letter sent cancelled!"
 msgstr "Відправку повідомлення скасовано!"
 
-#: views/groups.py:27 views/groups.py:84 views/students.py:52
-#: views/students.py:126
+#: views/groups.py:26 views/groups.py:79 views/students.py:51
+#: views/students.py:123
 msgid "Save"
 msgstr "Зберегти"
 
-#: views/groups.py:42
+#: views/groups.py:41
 msgid "Student not in this group"
 msgstr "Студент не належить цій групі"
 
-#: views/groups.py:56
+#: views/groups.py:55
 msgid "Group edit"
 msgstr "Редагувати групу"
 
-#: views/groups.py:60 views/groups.py:105
+#: views/groups.py:59 views/groups.py:100
 msgid "Group saved successfully!"
 msgstr "Групу збережено успішно!"
 
-#: views/groups.py:66
+#: views/groups.py:63
 msgid "Group update canceled!"
 msgstr "Редагування групи скасовано!"
 
-#: views/groups.py:101
+#: views/groups.py:96
 msgid "Group add"
 msgstr "Додати групу"
 
-#: views/groups.py:111
+#: views/groups.py:104
 msgid "Group add cancelled!"
 msgstr "Додавання групи скасовано!"
 
-#: views/groups.py:126
+#: views/groups.py:117
 msgid "Group deleted successfully!"
 msgstr "Групу видалено успішно!"
 
-#: views/groups.py:132
+#: views/groups.py:121
 msgid "Group delete canceled!"
 msgstr "Видалення групи скасовано!"
 
-#: views/students.py:58 views/students.py:132
+#: views/students.py:57 views/students.py:129
 msgid "Maximum size - 500Kb!"
 msgstr "Максимальний розмір зображення - 500Kb!"
 
-#: views/students.py:67
+#: views/students.py:66
 msgid "Student is the leader of another group!"
 msgstr "Студент є старостою іншої групи"
 
-#: views/students.py:92
+#: views/students.py:91
 msgid "Student edit"
 msgstr "Редагувати студента"
 
-#: views/students.py:96
+#: views/students.py:95
 msgid "Student updated successfully!"
 msgstr "Студента оновлено успішно!"
 
-#: views/students.py:101
+#: views/students.py:99
 msgid "Student update canceled!"
 msgstr "Оновлення студента скасовано!"
 
-#: views/students.py:143
+#: views/students.py:140
 msgid "Student add"
 msgstr "Додати студента"
 
-#: views/students.py:147
+#: views/students.py:144
 msgid "Student added successfully!"
 msgstr "Студента додано успішно!"
 
-#: views/students.py:152
+#: views/students.py:148
 msgid "Student addition canceled!"
 msgstr "Додавання студента скасовано!"
 
-#: views/students.py:166
+#: views/students.py:161
 msgid "Student deleted successfully!"
 msgstr "Студента видалено успішно!"
 
-#: views/students.py:171
+#: views/students.py:165
 msgid "Student deletion canceled!"
 msgstr "Видалення студента скасовано!"
 

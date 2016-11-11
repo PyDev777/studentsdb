@@ -91,8 +91,8 @@
             <!-- Start Language Selector -->
             <div class="col-sm-1" id="lang-selector">
                 <select title="">
-                    <option value="en-US"{% if "en-US" == LANGUAGE_CODE %} selected="selected"{% endif %}>Eng</option>
-                    <option value="uk"{% if "uk" == LANGUAGE_CODE %} selected="selected"{% endif %}>Укр</option>
+                    <option value="en-US"{% if "en-US" == LANGUAGE_CODE %} selected="selected"{% endif %}>EN</option>
+                    <option value="uk"{% if "uk" == LANGUAGE_CODE %} selected="selected"{% endif %}>UK</option>
                 </select>
             </div>
             <!-- End Language Selector -->
@@ -194,7 +194,16 @@
         <div class="row" id="footer">
             <div class="col-sm-12">
                 <!-- Start [BLOCK FOOTER] -->
-                {% block footer %}&copy; 2016, {% trans "Students Accounting Service" %}{% endblock footer %}
+                {% block footer %}
+                    &copy; 2016
+                    {% blocktrans %}
+                        <a href="https://pydev777.github.io/" target="_blank" title="My Promo Page">Bilous Vitalii</a>
+                        in practical
+                        <a href="http://www.vitaliypodoba.com/books/django-for-beginners/" target="_blank" >course</a>
+                        from
+                        <a href="http://www.vitaliypodoba.com/" target="_blank">Vitalii Podoba </a>
+                    {% endblocktrans %}
+                {% endblock footer %}
                 <!-- End [BLOCK FOOTER] -->
             </div>
         </div>
