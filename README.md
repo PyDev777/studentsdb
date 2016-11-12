@@ -3,8 +3,10 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-39%25-red.svg)](https://github.com/kmike/django-coverage)
 
-
+<br>
 #Quick links
+
+<hr>
 
 ---
 
@@ -20,12 +22,13 @@
 
 ---
 
+<br>
 #Overview
-###This service tracking the attendance of your students via web.
+This service tracking the attendance of your students via web.
 
 
 #Demo
-###Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
+Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)**
 
 
 #Functional
@@ -112,17 +115,24 @@ Additionally, wrapping by `*` for staff, by `**` for superuser*
 
 #Installation
 
+---
+
 ###Dependencies
+
 ```sh
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev libjpeg8-dev zlib1g-dev
 ```
+
 ###MySQL (if not installed)
+
 ```sh
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
 $ sudo mysql_install_db
 $ sudo /usr/bin/mysql_secure_installation
 ```
+
 ###Create DB and DB-User
+
 ```sql
 $ mysql -u root -p
 mysql> CREATE DATABASE students_db CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -131,40 +141,53 @@ mysql> GRANT ALL PRIVILEGES ON students_db.* TO "students_db_user"@"localhost";
 mysql> FLUSH PRIVILEGES;
 mysql> quit;
 ```
+
 ###PIP, Virtualenv and Git (if not installed)
+
 ```sh
 $ sudo apt-get install pip==1.5.4 virtualenv==1.11.4 git==1.9.1
 ```
+
 ###Requirements [[ list ](requirements.txt)]
+
 ```sh
 $ virtualenv studentsdb
 $ cd studentsdb
 $ source bin/activate
 (studentsdb)$ pip install -r requirements.txt
 ```
+
 ###Clone project from GitHub
+
 ```sh
 (studentsdb)$ mkdir src
 (studentsdb)$ cd src
 (studentsdb)$ git clone https://github.com/PyDev777/studentsdb.git
 ```
+
 ###Create settings files with your values from [dev](studentsdb/dev_settings_template.py)&[prod](studentsdb/prod_settings_template.py) templates
+
 ```sh
 (studentsdb)$ cd studentsdb/studentsdb
 (studentsdb)$ cp dev_settings_template.py dev_settings.py
 (studentsdb)$ cp prod_settings_template.py prod_settings.py
 ```
 ###Migrate and superuser create
+
 ```sh
 (studentsdb)$ cd ..
 (studentsdb)$ ./manage.py makemigrations
 (studentsdb)$ ./manage.py migrate
 (studentsdb)$ ./manage.py createsuperuser
 ```
+
 ###Run [[ check ](http://localhost:8000/)]
+
 ```sh
 (studentsdb)$ ./manage.py runserver
 ```
+
+---
 
 #Tests
 ```sh
