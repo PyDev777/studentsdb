@@ -6,8 +6,6 @@
 <br>
 #Quick links
 
----
-
 - [**Overview**](#overview)
 - [**Demo**](#demo)
 - [**Functional**](#functional)
@@ -18,36 +16,31 @@
 - [**Mentor**](#mentor)
 - [**Author**](#author)
 
----
 
-<br>
 #Overview
 
-This service tracking the attendance of your students via web.
+**This service tracking the attendance of your students via web.**
 
 
 #Demo
 
-Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)**
+**Do you want to see this project in action? [Visit it!](http://104.236.69.146/)**
 
 
 #Functional
 
-###Available functions depends by rights of visitor:
+**Available functions depends by rights of visitor:**
 
 ####Anonimous rights
 
-```
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
 - view all students in one list
 - bidirectional ordering of students on columns
-```
 
 ####User rights
 
-```
 - site language selection
 - standard/social login
 - CRUD students/groups
@@ -58,21 +51,17 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 - bidirectional ordering of students/groups on columns
 - edit his profile
 - reset/change his password
-```
 
 ####Spec User rights (permission is added by Administrator)
 
-```
 - all User rights
 - view actions log
 - send letter to Administrator
-```
 
 ####Administrator rights
 
-```
 - overlord has all rights
-```
+
 
 #Technical Stack
 
@@ -83,7 +72,8 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 
 #Features
 
-###Development and Production mode
+**Development and Production mode**
+
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -105,9 +95,10 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 - Custom tag [pagenav](students/templatetags/pagenav.py) display page navigation for only given list of objects
 - Custom filter [str2int](students/templatetags/str2int.py) convert input string into integer. If impossible return 0
 - Custom filter [nice_username](students/templatetags/nice_username.py) return user full name if exist, else username.  
-Additionally, wrapping by `*` for staff, by `**` for superuser*
+Additionally, wrapping by `*` for staff, by `**` for superuser
 
 ###Development mode only
+
 - Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
 - Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
 - Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
@@ -117,13 +108,13 @@ Additionally, wrapping by `*` for staff, by `**` for superuser*
 
 #Installation
 
-###Dependencies
+**Dependencies**
 
 ```sh
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev libjpeg8-dev zlib1g-dev
 ```
 
-###MySQL (if not installed)
+**MySQL (if not installed)**
 
 ```sh
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
