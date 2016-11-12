@@ -6,8 +6,6 @@
 <br>
 #Quick links
 
-<hr>
-
 ---
 
 - [**Overview**](#overview)
@@ -24,10 +22,12 @@
 
 <br>
 #Overview
+
 This service tracking the attendance of your students via web.
 
 
 #Demo
+
 Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)**
 
 
@@ -35,18 +35,19 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 
 ###Available functions depends by rights of visitor:
 
----
-
 ####Anonimous rights
 
+```
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
 - view all students in one list
 - bidirectional ordering of students on columns
+```
 
 ####User rights
 
+```
 - site language selection
 - standard/social login
 - CRUD students/groups
@@ -57,18 +58,21 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 - bidirectional ordering of students/groups on columns
 - edit his profile
 - reset/change his password
+```
 
 ####Spec User rights (permission is added by Administrator)
 
+```
 - all User rights
 - view actions log
 - send letter to Administrator
+```
 
 ####Administrator rights
 
+```
 - overlord has all rights
-
----
+```
 
 #Technical Stack
 
@@ -76,9 +80,8 @@ Do you want to see this project in action? **[Visit it!](http://104.236.69.146/)
 - Git 1.9.1, PIP 1.5.4, Virtualenv 1.11.4, 
 - Django 1.7.11, Twitter Bootstrap 3.3.6, jQuery 1.11.3
 
-#Features
 
----
+#Features
 
 ###Development and Production mode
 - Bootstrap Responsive Web Design allows working on any device
@@ -111,11 +114,8 @@ Additionally, wrapping by `*` for staff, by `**` for superuser*
 - Custom commands [filldb](students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
 - Custom commands [localize_static](students/management/commands/localize_static.py) set static to online/offline usage mode
 
----
 
 #Installation
-
----
 
 ###Dependencies
 
@@ -186,8 +186,6 @@ $ source bin/activate
 ```sh
 (studentsdb)$ ./manage.py runserver
 ```
-
----
 
 #Tests
 ```sh
