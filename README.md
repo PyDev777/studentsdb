@@ -171,9 +171,7 @@ $ source bin/activate
 
 ####My gratitude to mentor
 >*I am deeply grateful to my teacher for this wonderful course and practical*
-
 >*experience of web development, obtained and applied by me for create this project.*
-
 >*I wish him success and prosperity!*
 
 <br>
