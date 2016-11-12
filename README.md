@@ -32,7 +32,7 @@
 
 ###Available functions depends by rights of visitor:
 
-###***Anonimous rights
+**Anonimous rights**
 
 - site language selection
 - social login (automatically register as User after login)
@@ -40,7 +40,9 @@
 - view all students in one list
 - bidirectional ordering of students on columns
 
-###*User rights
+
+
+###*User rights*
 
 - site language selection
 - standard/social login
@@ -53,13 +55,13 @@
 - edit his profile
 - reset/change his password
 
-###***Spec User rights (permission is added by Administrator)
+###***Spec User rights (permission is added by Administrator)***
 
 - all User rights
 - view actions log
 - send letter to Administrator
 
-###**Administrator rights
+###**Administrator rights**
 
 - overlord has all rights
 
@@ -73,7 +75,7 @@
 <br>
 #Features
 
-###For Development and Production mode
+###Development and Production mode
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -97,7 +99,7 @@
 - Custom filter [nice_username](students/templatetags/nice_username.py) return user full name if exist, else username.  
 Additionally, wrapping by `*` for staff, by `**` for superuser
 
-###For Development mode only
+###Development mode only
 - Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
 - Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
 - Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
