@@ -4,7 +4,7 @@
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/PyDev777/studentsdb/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/badge/Coverage-37%25-red.svg)](https://img.shields.io/badge/Coverage-37%25-red.svg)
 
-
+<br>
 #**Quick links**
 - [**Overview**](#overview)
 - [**Demo**](#demo)
@@ -19,17 +19,17 @@
 
 #**Overview**
 
-####This service tracking the attendance of your students via web.
+###This service tracking the attendance of your students via web.
 
 
-#**Demo**
+#Demo
 
-####**Do you want to see this project in action?** [Visit it!](http://104.236.69.146/)
+####Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
 
-<br>
+
 #**Functional**
 
-#####Available functions depends by rights of visitor:
+##Available functions depends by rights of visitor:
 
 >#####Anonimous rights
 - site language selection
@@ -58,17 +58,14 @@
 >#####Administrator rights
 - overlord has all rights
 
-
-<br>
 #**Technical Stack**
 - Ubuntu 14.04, Python 2.7.6, MySQL 14.14 Distrib 5.5.47
 - Git 1.9.1, PIP 1.5.4, Virtualenv 1.11.4, 
 - Django 1.7.11, Twitter Bootstrap 3.3.6, jQuery 1.11.3
 
-<br>
 #**Features**
 
-**For Development and Production mode:**
+##For Development and Production mode:
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -92,17 +89,14 @@
 - Custom filter [nice_username](studentsdb/students/templatetags/nice_username.py) return user full name if exist, else username.  
 Additionally, wrapping by `*` for staff, by `**` for superuser
 
-<br>
-**For Development mode only:**
+##For Development mode only:
 - Custom middleware [DBTimeMiddleware](studentsdb/studentsdb/middleware.py) display DB queries count and time
 - Custom middleware [RequestTimeMiddleware](studentsdb/studentsdb/middleware.py) display request time
 - Custom commands [stcount](studentsdb/students/management/commands/stcount.py) prints number of specified objects in a DB
 - Custom commands [filldb](studentsdb/students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
 - Custom commands [localize_static](studentsdb/students/management/commands/localize_static.py) set static to online/offline usage mode
 
-
-<br>
-#**Installation**
+#Installation
 
 #####Dependencies
 ```bash
