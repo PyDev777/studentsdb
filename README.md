@@ -2,7 +2,7 @@
 
 <br>
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Coverage](https://img.shields.io/badge/coverage-39%25-red.svg)]()
+[![Coverage](https://img.shields.io/badge/coverage-39%25-red.svg)](https://github.com/kmike/django-coverage)
 
 <br>
 #Quick links
@@ -32,14 +32,16 @@
 
 ###Available functions depends by rights of visitor:
 
-###Anonimous rights
+###***Anonimous rights
+
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
 - view all students in one list
 - bidirectional ordering of students on columns
 
-###User rights
+###*User rights
+
 - site language selection
 - standard/social login
 - CRUD students/groups
@@ -51,12 +53,14 @@
 - edit his profile
 - reset/change his password
 
-###Spec User rights (permission is added by Administrator)
+###***Spec User rights (permission is added by Administrator)
+
 - all User rights
 - view actions log
 - send letter to Administrator
 
-###Administrator rights
+###**Administrator rights
+
 - overlord has all rights
 
 <br>
