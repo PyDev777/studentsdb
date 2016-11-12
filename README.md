@@ -1,8 +1,8 @@
 #Students Attendance Tracking Service
 
 <br>
-[![GitHub license](License-MIT-blue.svg)](License-MIT-blue.svg)
-[![Coverage](coverage_status.png)](coverage_status.png)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-39%25-red.svg)]()
 
 <br>
 #Quick links
@@ -167,7 +167,7 @@ $ source bin/activate
 <br>
 #Mentor
 
-###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
+###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical web development [course](http://www.vitaliypodoba.com/books/django-for-beginners/) with Python/Django
 
 ####My gratitude to mentor
 >*I am deeply grateful to my teacher for this wonderful course and practical  
