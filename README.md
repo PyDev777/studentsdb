@@ -1,9 +1,12 @@
 #Students Attendance Tracking Service
+
 <br>
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/PyDev777/studentsdb/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/badge/Coverage-37%25-red.svg)](https://img.shields.io/badge/Coverage-37%25-red.svg)
+
 <br>
 #Quick links
+
 - [**Overview**](#overview)
 - [**Demo**](#demo)
 - [**Functional**](#functional)
@@ -13,22 +16,29 @@
 - [**Tests**](#tests)
 - [**Mentor**](#mentor)
 - [**Author**](#author)
+
 <br>
 #Overview
+
 ###This service tracking the attendance of your students via web.
+
 <br>
 #Demo
 
 ###Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
+
 <br>
 #Functional
+
 ###Available functions depends by rights of visitor:
+
 >####Anonimous rights
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
 - view all students in one list
 - bidirectional ordering of students on columns
+
 >####User rights
 - site language selection
 - standard/social login
@@ -40,20 +50,26 @@
 - bidirectional ordering of students/groups on columns
 - edit his profile
 - reset/change his password
+
 >####Spec User rights (permission is added by Administrator)
 - all User rights
 - view actions log
 - send letter to Administrator
+
 >####Administrator rights
 - overlord has all rights
+
 <br>
 #Technical Stack
+
 - Ubuntu 14.04, Python 2.7.6, MySQL 14.14 Distrib 5.5.47
 - Git 1.9.1, PIP 1.5.4, Virtualenv 1.11.4, 
 - Django 1.7.11, Twitter Bootstrap 3.3.6, jQuery 1.11.3
+
 <br>
 #Features
-###For Development and Production mode:
+
+###For Development and Production mode
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -76,19 +92,26 @@
 - Custom filter [str2int](students/templatetags/str2int.py) convert input string into integer. If impossible return 0
 - Custom filter [nice_username](students/templatetags/nice_username.py) return user full name if exist, else username.  
 Additionally, wrapping by `*` for staff, by `**` for superuser
-###For Development mode only:
+
+###For Development mode only
+
 - Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
 - Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
 - Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
 - Custom commands [filldb](students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
 - Custom commands [localize_static](students/management/commands/localize_static.py) set static to online/offline usage mode
+
 <br>
 #Installation
+
 ####Dependencies
+
 ```bash
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev
 ```
+
 ####MySQL (if not installed)
+
 ```bash
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
 $ sudo mysql_install_db
@@ -137,20 +160,27 @@ $ source bin/activate
 ```bash
 (studentsdb)$ ./manage.py runserver
 ```
+
 <br>
 #Tests
+
 ```bash
 (studentsdb)$ ./manage.py test
 (studentsdb)$ ./manage.py test_coverage
 ```
+
 <br>
 #Mentor
+
 ### [Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
+
 ###My gratitude to mentor
+
 *I am deeply grateful to my teacher for this wonderful course  
 and practical experience of web development,  
 obtained and applied by me for create this project.  
 I wish him success and prosperity!*
+
 <br>
 #Author
 ### &copy; 2016, [Vitaliy Bilous](https://pydev777.github.io/)
