@@ -20,19 +20,19 @@
 <br>
 #Overview
 
-###This service tracking the attendance of your students via web.
+##This service tracking the attendance of your students via web.
 
 <br>
 #Demo
 
-###Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
+##Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
 
 <br>
 #Functional
 
-###Available functions depends by rights of visitor:
+##Available functions depends by rights of visitor:
 
-####Anonimous rights
+###Anonimous rights
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
@@ -51,12 +51,12 @@
 - edit his profile
 - reset/change his password
 
-####Spec User rights (permission is added by Administrator)
+###Spec User rights (permission is added by Administrator)
 - all User rights
 - view actions log
 - send letter to Administrator
 
-####Administrator rights
+###Administrator rights
 - overlord has all rights
 
 <br>
@@ -69,7 +69,7 @@
 <br>
 #Features
 
-####For Development and Production mode
+###For Development and Production mode
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -103,17 +103,17 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 <br>
 #Installation
 
-####Dependencies
+###Dependencies
 ```bash
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev
 ```
-####MySQL (if not installed)
+###MySQL (if not installed)
 ```bash
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
 $ sudo mysql_install_db
 $ sudo /usr/bin/mysql_secure_installation
 ```
-####Create DB and DB-User
+###Create DB and DB-User
 ```sql
 $ mysql -u root -p
 mysql> CREATE DATABASE students_db CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -122,37 +122,37 @@ mysql> GRANT ALL PRIVILEGES ON students_db.* TO "students_db_user"@"localhost";
 mysql> FLUSH PRIVILEGES;
 mysql> quit;
 ```
-####PIP, Virtualenv and Git (if not installed)
+###PIP, Virtualenv and Git (if not installed)
 ```bash
 $ sudo apt-get install pip==1.5.4 virtualenv==1.11.4 git==1.9.1
 ```
-####Requirements [[ list ](requirements.txt)]
+###Requirements [[ list ](requirements.txt)]
 ```bash
 $ virtualenv studentsdb
 $ cd studentsdb
 $ source bin/activate
 (studentsdb)$ pip install -r requirements.txt
 ```
-####Clone project from GitHub
+###Clone project from GitHub
 ```bash
 (studentsdb)$ mkdir src
 (studentsdb)$ cd src
 (studentsdb)$ git clone https://github.com/PyDev777/studentsdb.git
 ```
-####Create settings files with your values from [dev](studentsdb/dev_settings_template.py)&[prod](studentsdb/prod_settings_template.py) templates
+###Create settings files with your values from [dev](studentsdb/dev_settings_template.py)&[prod](studentsdb/prod_settings_template.py) templates
 ```bash
 (studentsdb)$ cd studentsdb/studentsdb
 (studentsdb)$ cp dev_settings_template.py dev_settings.py
 (studentsdb)$ cp prod_settings_template.py prod_settings.py
 ```
-####Migrate and superuser create
+###Migrate and superuser create
 ```bash
 (studentsdb)$ cd ..
 (studentsdb)$ ./manage.py makemigrations
 (studentsdb)$ ./manage.py migrate
 (studentsdb)$ ./manage.py createsuperuser
 ```
-####Run [[ check ](http://localhost:8000/)]
+###Run [[ check ](http://localhost:8000/)]
 ```bash
 (studentsdb)$ ./manage.py runserver
 ```
@@ -170,7 +170,7 @@ $ source bin/activate
 ### [Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
 
 ###My gratitude to mentor
-*I am deeply grateful to my teacher for this wonderful course and practical
+>*I am deeply grateful to my teacher for this wonderful course and practical
 experience of web development, obtained and applied by me for create this project.  
 I wish him success and prosperity!*
 
