@@ -32,14 +32,14 @@
 
 ###Available functions depends by rights of visitor:
 
->####Anonimous rights
+####Anonimous rights
 - site language selection
 - social login (automatically register as User after login)
 - register on site (becomes User after email confirmation)
 - view all students in one list
 - bidirectional ordering of students on columns
 
->####User rights
+###User rights
 - site language selection
 - standard/social login
 - CRUD students/groups
@@ -51,12 +51,12 @@
 - edit his profile
 - reset/change his password
 
->####Spec User rights (permission is added by Administrator)
+####Spec User rights (permission is added by Administrator)
 - all User rights
 - view actions log
 - send letter to Administrator
 
->####Administrator rights
+####Administrator rights
 - overlord has all rights
 
 <br>
@@ -69,7 +69,7 @@
 <br>
 #Features
 
-###For Development and Production mode
+####For Development and Production mode
 - Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
@@ -94,7 +94,6 @@
 Additionally, wrapping by `*` for staff, by `**` for superuser
 
 ###For Development mode only
-
 - Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
 - Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
 - Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
@@ -105,13 +104,10 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 #Installation
 
 ####Dependencies
-
 ```bash
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev
 ```
-
 ####MySQL (if not installed)
-
 ```bash
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
 $ sudo mysql_install_db
@@ -163,7 +159,6 @@ $ source bin/activate
 
 <br>
 #Tests
-
 ```bash
 (studentsdb)$ ./manage.py test
 (studentsdb)$ ./manage.py test_coverage
@@ -175,10 +170,8 @@ $ source bin/activate
 ### [Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
 
 ###My gratitude to mentor
-
-*I am deeply grateful to my teacher for this wonderful course  
-and practical experience of web development,  
-obtained and applied by me for create this project.  
+*I am deeply grateful to my teacher for this wonderful course and practical
+experience of web development, obtained and applied by me for create this project.  
 I wish him success and prosperity!*
 
 <br>
