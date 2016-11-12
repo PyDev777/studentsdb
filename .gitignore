@@ -73,3 +73,4 @@ target/
 /studentsdb/prod_settings.py
 
 .idea/
+/manage.py
