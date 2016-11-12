@@ -1,27 +1,27 @@
-#**Students Attendance Tracking Service**
+**Students Attendance Tracking Service**
 
 <br>
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/PyDev777/studentsdb/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/badge/Coverage-37%25-red.svg)](https://img.shields.io/badge/Coverage-37%25-red.svg)
 
-<br>
-#**Quick links**
-- [**Overview**](#Overview)
-- [**Demo**](#Demo)
-- [**Functional**](#Functional)
-- [**Technical Stack**](#Technical-Stack)
-- [**Features**](#Features)
-- [**Installation**](#installation)
-- [**Tests**](#Tests)
-- [**Mentor**](#Mentor)
-- [**Author**](#Author)
 
-<br>
+**Quick links**
+- [**Overview**](#overview)
+- [Demo](#demo)
+- [**Functional**](#functional)
+- [**Technical Stack**](#technical-stack)
+- [**Features**](#features)
+- [**Installation**](#installation)
+- [**Tests**](#tests)
+- [**Mentor**](#mentor)
+- [**Author**](#author)
+
+
 #**Overview**
 
-#####**This service tracking the attendance of your students via web.**
+This service tracking the attendance of your students via web.
 
-<br>
+
 #**Demo**
 
 #####**Do you want to see this project in action?** [Visit it!](http://104.236.69.146/)
