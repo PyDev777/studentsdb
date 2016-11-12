@@ -21,7 +21,7 @@ class DBTimeMiddleware(object):
             self.db_qcount = len(connection.queries)
             self.db_time += sum([float(q['time']) for q in connection.queries])
             if 'text/html' in response.get('Content-Type', ''):
-                soup = BeautifulSoup(response.content, 'lxml')
+                soup = BeautifulSoup(response.content)
                 if soup.body:
                     tag = soup.new_tag('code', style='position: fixed; top: 0; left: 0px')
                     tag.string = 'DB took: %s, DB queries count: %s' % (str(self.db_time), str(self.db_qcount))
@@ -49,7 +49,7 @@ class RequestTimeMiddleware(object):
 
     def process_response(self, request, response):
         if settings.DEBUG and hasattr(request, 'start_time') and ('text/html' in response.get('Content-Type', '')):
-            soup = BeautifulSoup(response.content, 'lxml')
+            soup = BeautifulSoup(response.content)
             if soup.body:
                 # time.sleep(2)
                 dtime = datetime.now() - request.start_time

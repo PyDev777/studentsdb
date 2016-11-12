@@ -105,7 +105,7 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 
 ###Dependencies
 ```bash
-$ sudo apt-get install python-dev libxml2-dev libxslt-dev
+$ sudo apt-get install python-dev libxml2-dev libxslt-dev libjpeg8-dev zlib1g-dev
 ```
 ###MySQL (if not installed)
 ```bash
