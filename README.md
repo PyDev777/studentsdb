@@ -1,8 +1,8 @@
 #Students Attendance Tracking Service
 
 <br>
-[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/PyDev777/studentsdb/blob/master/LICENSE)
-[![Coverage](https://img.shields.io/badge/Coverage-37%25-red.svg)](https://img.shields.io/badge/Coverage-37%25-red.svg)
+[![GitHub license](License-MIT-blue.svg)](License-MIT-blue.svg)
+[![Coverage](coverage_status.png)](coverage_status.png)
 
 <br>
 #Quick links
@@ -170,9 +170,9 @@ $ source bin/activate
 ###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
 
 ####My gratitude to mentor
->*I am deeply grateful to my teacher for this wonderful course and practical*
->*experience of web development, obtained and applied by me for create this project.*
->*I wish him success and prosperity!*
+>*I am deeply grateful to my teacher for this wonderful course and practical  
+>experience of web development, obtained and applied by me for create this project.  
+>I wish him success and prosperity!*
 
 <br>
 #Author
