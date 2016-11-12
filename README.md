@@ -20,17 +20,17 @@
 <br>
 #Overview
 
-##This service tracking the attendance of your students via web.
+###This service tracking the attendance of your students via web.
 
 <br>
 #Demo
 
-##Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
+###Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
 
 <br>
 #Functional
 
-##Available functions depends by rights of visitor:
+###Available functions depends by rights of visitor:
 
 ###Anonimous rights
 - site language selection
@@ -167,12 +167,12 @@ $ source bin/activate
 <br>
 #Mentor
 
-### [Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
+###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical [course](http://www.vitaliypodoba.com/books/django-for-beginners/) of web development on Python/Django
 
-###My gratitude to mentor
->*I am deeply grateful to my teacher for this wonderful course and practical
-experience of web development, obtained and applied by me for create this project.  
-I wish him success and prosperity!*
+####My gratitude to mentor
+>*I am deeply grateful to my teacher for this wonderful course and practical*
+>*experience of web development, obtained and applied by me for create this project.*  
+>*I wish him success and prosperity!*
 
 <br>
 #Author
