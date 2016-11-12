@@ -32,7 +32,7 @@
 
 ###Available functions depends by rights of visitor:
 
-**Anonimous rights**
+###Anonimous rights
 
 - site language selection
 - social login (automatically register as User after login)
@@ -40,11 +40,9 @@
 - view all students in one list
 - bidirectional ordering of students on columns
 
-
-
 ###*User rights*
 
-- site language selection
+>- site language selection
 - standard/social login
 - CRUD students/groups
 - enroll students into groups
@@ -76,7 +74,8 @@
 #Features
 
 ###Development and Production mode
-- Bootstrap Responsive Web Design allows working on any device
+
+*- Bootstrap Responsive Web Design allows working on any device
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
 - 2-step [customized](stud_auth/views.py) user registration on site with [Registration Redux](http://django-registration-redux.readthedocs.io/en/latest/)
@@ -97,13 +96,13 @@
 - Custom tag [pagenav](students/templatetags/pagenav.py) display page navigation for only given list of objects
 - Custom filter [str2int](students/templatetags/str2int.py) convert input string into integer. If impossible return 0
 - Custom filter [nice_username](students/templatetags/nice_username.py) return user full name if exist, else username.  
-Additionally, wrapping by `*` for staff, by `**` for superuser
+Additionally, wrapping by `*` for staff, by `**` for superuser*
 
 ###Development mode only
-- Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
-- Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
-- Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
-- Custom commands [filldb](students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
+######- Custom middleware [DBTimeMiddleware](studentsdb/middleware.py) display DB queries count and time
+#####- Custom middleware [RequestTimeMiddleware](studentsdb/middleware.py) display request time
+####- Custom commands [stcount](students/management/commands/stcount.py) prints number of specified objects in a DB
+######- Custom commands [filldb](students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
 - Custom commands [localize_static](students/management/commands/localize_static.py) set static to online/offline usage mode
 
 <br>
@@ -173,12 +172,12 @@ $ source bin/activate
 <br>
 #Mentor
 
-###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical web development [course](http://www.vitaliypodoba.com/books/django-for-beginners/) with Python/Django
+###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical web development [course](http://www.vitaliypodoba.com/books/django-for-beginners/) with Python/Django :+1:
 
 ####My gratitude to mentor
->*I am deeply grateful to my teacher for this wonderful course and practical  
->experience of web development, obtained and applied by me for create this project.  
->I wish him success and prosperity!*
+>*I am deeply grateful to my teacher for this wonderful course :+1: and practical  
+experience of web development, obtained and applied by me for create this project.  
+I wish him success and prosperity!*
 
 <br>
 #Author
