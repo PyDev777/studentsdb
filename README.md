@@ -19,19 +19,19 @@
 
 #Overview
 
-**This service tracking the attendance of your students via web.**
+###This service tracking the attendance of your students via web. :mag_right: :busts_in_silhouette: :eyes: 
 
 
 #Demo
 
-**Do you want to see this project in action? [Visit it!](http://104.236.69.146/)**
+###Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
 
 
 #Functional
 
-**Available functions depends by rights of visitor:**
+###Available functions depends by rights of visitor:
 
-####Anonimous rights
+####*Anonimous rights*
 
 - site language selection
 - social login (automatically register as User after login)
@@ -39,7 +39,7 @@
 - view all students in one list
 - bidirectional ordering of students on columns
 
-####User rights
+####*User rights*
 
 - site language selection
 - standard/social login
@@ -52,15 +52,17 @@
 - edit his profile
 - reset/change his password
 
-####Spec User rights (permission is added by Administrator)
+####*Spec User rights (permission is added by Administrator)*
 
 - all User rights
 - view actions log
 - send letter to Administrator
 
-####Administrator rights
+####*Administrator rights*
 
 - overlord has all rights
+
+[:arrow_up_small:](#functional)
 
 
 #Technical Stack
@@ -72,10 +74,10 @@
 
 #Features
 
-**Development and Production mode**
+###Development and Production mode
 
 - Bootstrap Responsive Web Design allows working on any device
-- English/Ukrainian language selection on site (I18N/L10N)
+- English/Ukrainian :uk: :ua: language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
 - 2-step [customized](stud_auth/views.py) user registration on site with [Registration Redux](http://django-registration-redux.readthedocs.io/en/latest/)
 - User profile use User model extended by [additional fields](stud_auth/models.py)
@@ -105,16 +107,18 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 - Custom commands [filldb](students/management/commands/fill_db.py) creates specified number (1..10) of objects in DB
 - Custom commands [localize_static](students/management/commands/localize_static.py) set static to online/offline usage mode
 
+[:arrow_up_small:](#features)
+
 
 #Installation
 
-**Dependencies**
+###Dependencies
 
 ```sh
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev libjpeg8-dev zlib1g-dev
 ```
 
-**MySQL (if not installed)**
+###MySQL (if not installed)
 
 ```sh
 $ sudo apt-get install mysql-server mysql-client libmysqlclient-dev
@@ -178,6 +182,8 @@ $ source bin/activate
 (studentsdb)$ ./manage.py runserver
 ```
 
+[:arrow_up_small:](#installation)
+
 #Tests
 ```sh
 (studentsdb)$ ./manage.py test
@@ -192,4 +198,8 @@ experience of web development, obtained and applied by me for create this projec
 I wish him success and prosperity!*
 
 #Author
-### &copy; 2016, [Vitaliy Bilous](https://pydev777.github.io/)
+### :copyright: &copy; 2016, [Vitaliy Bilous](https://pydev777.github.io/)
+
+<br>
+
+[:arrow_up:](#students-attendance-tracking-service)
