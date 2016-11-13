@@ -19,7 +19,7 @@
 
 #Overview
 
-###This service tracking the attendance of your students via web  :mag_right: :busts_in_silhouette: :eyes: 
+###This service tracking the attendance of your students via web  :busts_in_silhouette: :eyes: 
 
 
 #Demo
@@ -31,7 +31,7 @@
 
 ###Available functions depends by rights of visitor:
 
-###*Anonimous rights*
+####*Anonimous rights*
 
 - site language selection
 - social login (automatically register as User after login)
@@ -39,7 +39,7 @@
 - view all students in one list
 - bidirectional ordering of students on columns
 
-###*User rights*
+####*User rights*
 
 - site language selection
 - standard/social login
@@ -52,13 +52,13 @@
 - edit his profile
 - reset/change his password
 
-###*Spec User rights (permission is added by Administrator)*
+####*Spec User rights (permission is added by Administrator)*
 
 - all User rights
 - view actions log
 - send letter to Administrator
 
-###*Administrator rights*
+####*Administrator rights*
 
 - overlord has all rights
 
@@ -186,7 +186,7 @@ $ source bin/activate
 ```
 
 #Mentor
-###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical web development [course](http://www.vitaliypodoba.com/books/django-for-beginners/) :+1: with Python/Django
+###[Vitaliy Podoba](http://www.vitaliypodoba.com/) with practical web development [course](http://www.vitaliypodoba.com/books/django-for-beginners/) with Python/Django
 ####My gratitude to mentor
 >*I am deeply grateful to my teacher for this wonderful course and practical  
 experience of web development, obtained and applied by me for create this project.  
@@ -194,7 +194,4 @@ I wish him success and prosperity!*
 
 
 #Author
-### :copyright: &copy; 2016, [Vitaliy Bilous](https://pydev777.github.io/)
-
-<br>
-[:arrow_up:](#students-attendance-tracking-service)
+### :copyright: 2016, [Vitaliy Bilous](https://pydev777.github.io/)
