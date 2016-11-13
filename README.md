@@ -19,7 +19,7 @@
 
 # Overview
 
-### This service tracking the attendance of your students via web `[`:busts_in_silhouette: :eyes:`]` 
+### This service tracking the attendance of your students via web \[:busts_in_silhouette: :eyes:\] 
 
 
 # Demo
