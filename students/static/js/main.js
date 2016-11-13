@@ -43,7 +43,7 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
                 msg = html.find('#block-body .alert'),
                 newform = html.find('#block-content form');
             if (newform.length > 0) {
-                if (!newform.prop('action')) {newform.prop('action', url)}
+                if (!form.attr('action')) {form.attr('action', url)}
                 modalBody.html(msg).append(newform);
                 createForm(newform, url, urlPrev, saveHistory, updLev, showReply);
             } else {
@@ -74,7 +74,7 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 form = html.find('#block-content form');
             if (form.length > 0) {
                 modalTitle.html(html.find('#block-title').text());
-                if (!form.prop('action')) {form.prop('action', url)}
+                if (!form.attr('action')) {form.attr('action', url)}
                 modalBody.html(form);
                 createForm(form, url, urlPrev, saveHistory, updLev, showReply);
             } else {
@@ -131,6 +131,7 @@ function initEventHandlers() {
     // login form, registration form, profile form, group select, lang select
     mainHeader
         .on('click', 'a.user-link', function() {
+            console.log('event-onclick.this.href=', this.href);
             modalForm(this.href, location.href, false, 'header', false);
             return false;
         })
