@@ -1,4 +1,4 @@
-#Changelog
+# Changelog
 
-###[1.00] - (2016-11-12)
-- Initial
+### [1.00] - (2016-11-13)
+- Initial release
