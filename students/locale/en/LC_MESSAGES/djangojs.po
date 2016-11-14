@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-10 23:56+0000\n"
+"POT-Creation-Date: 2016-11-14 04:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/main.js:16
+#: static/js/main.js:17
 msgid "There was an error on the server. Please, try again a bit later."
 msgstr ""
 
-#: static/js/main.js:81
-msgid "Bad request"
+#: static/js/main.js:82
+msgid "Invalid request"
 msgstr ""
 
-#: static/js/main.js:82
-msgid "This object no longer exist."
+#: static/js/main.js:83
+msgid "This resource no longer exist"
 msgstr ""
