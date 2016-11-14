@@ -29,4 +29,4 @@ msgstr "Невірний запит"
 
 #: static/js/main.js:82
 msgid "This object no longer exist."
-msgstr "Цей об'єкт більше не існує."
+msgstr "Цей ресурс більше не існує."

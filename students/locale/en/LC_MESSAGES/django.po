@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 20:53+0000\n"
+"POT-Creation-Date: 2016-11-14 01:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,11 +54,11 @@ msgid "Event description"
 msgstr ""
 
 #: models/groups.py:13 models/students.py:53 signals.py:77 signals.py:90
-#: templates/students/base.html:56 templates/students/base.html.py:57
+#: templates/students/base.html:54 templates/students/base.html.py:55
 msgid "Group"
 msgstr ""
 
-#: models/groups.py:14 templates/students/base.html:124
+#: models/groups.py:14 templates/students/base.html:122
 #: templates/students/groups_list.html:7
 msgid "Groups"
 msgstr ""
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: models/students.py:14 templates/students/base.html:115
+#: models/students.py:14 templates/students/base.html:113
 #: templates/students/students_list.html:7
 msgid "Students"
 msgstr ""
@@ -165,55 +165,65 @@ msgstr ""
 msgid "App to manage students database"
 msgstr ""
 
-#: templates/students/base.html:13 templates/students/base.html.py:46
+#: templates/students/base.html:13 templates/students/base.html.py:44
 msgid "Students Accounting Service"
 msgstr ""
 
-#: templates/students/base.html:60
+#: templates/students/base.html:58
 msgid "All Students"
 msgstr ""
 
-#: templates/students/base.html:75
+#: templates/students/base.html:73
 msgid "Logout"
 msgstr ""
 
-#: templates/students/base.html:83
+#: templates/students/base.html:81
 msgid "via Facebook"
 msgstr ""
 
-#: templates/students/base.html:84
+#: templates/students/base.html:82
 msgid "Login"
 msgstr ""
 
-#: templates/students/base.html:85
+#: templates/students/base.html:83
 msgid "Registration"
 msgstr ""
 
-#: templates/students/base.html:121 templates/students/journal.html:7
+#: templates/students/base.html:119 templates/students/journal.html:7
 #: templates/students/students_list.html:104
 msgid "Journal"
 msgstr ""
 
-#: templates/students/base.html:131 templates/students/events_log.html:7
+#: templates/students/base.html:129 templates/students/events_log.html:7
 msgid "Log"
 msgstr ""
 
-#: templates/students/base.html:134
+#: templates/students/base.html:132
 msgid "Contact"
 msgstr ""
 
+#: templates/students/base.html:197
+msgid "Vitalii Bilous"
+msgstr ""
+
+#: templates/students/base.html:198
+msgid "practical"
+msgstr ""
+
 #: templates/students/base.html:199
-msgid ""
-"\n"
-"                        <a href=\"https://pydev777.github.io/\" target="
-"\"_blank\" title=\"My Promo Page\">Vitalii Bilous</a>\n"
-"                        , practical web development\n"
-"                        <a href=\"http://www.vitaliypodoba.com/books/django-"
-"for-beginners/\" target=\"_blank\" >course</a>\n"
-"                        with Python/Django from\n"
-"                        <a href=\"http://www.vitaliypodoba.com/\" target="
-"\"_blank\">Vitalii Podoba </a>\n"
-"                    "
+msgid "course"
+msgstr ""
+
+#: templates/students/base.html:200
+msgid "of web development with Python"
+msgstr ""
+
+#: templates/students/base.html:200
+msgid "Django from"
+msgstr ""
+
+#: templates/students/base.html:201
+msgid "Vitalii Podoba"
 msgstr ""
 
 #: templates/students/events_log.html:9

@@ -19,7 +19,7 @@
 
 # Overview
 
-### This service tracking the attendance of your students via web \[:busts_in_silhouette: :eyes:\] 
+### This service tracking the attendance of your students via web &nbsp;&nbsp; :busts_in_silhouette: :eyes: 
 
 
 # Demo
@@ -111,7 +111,7 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 ### Dependencies
 
 ```sh
-$ sudo apt-get install python-dev libxml2-dev libxslt-dev libjpeg8-dev zlib1g-dev
+$ sudo apt-get install python-dev libxml2-dev libxslt-dev libfreetype6-dev libjpeg8-dev zlib1g-dev
 ```
 
 ### MySQL (if not installed)

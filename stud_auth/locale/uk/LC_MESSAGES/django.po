@@ -61,8 +61,9 @@ msgid "Invalid key: "
 msgstr "Неприпустимий ключ: "
 
 #: templates/registration/activation_email.html:6
-#, fuzzy
-#| msgid "Registration"
+msgid "Registration"
+msgstr "Реєстрація"
+
 msgid "registration"
 msgstr "Реєстрація"
 
@@ -147,8 +148,6 @@ msgstr ""
 "%(site_name)s Адміністрація\n"
 
 #: templates/registration/activation_email_subject.txt:1
-#, fuzzy
-#| msgid "Account activation failed."
 msgid "Account activation on"
 msgstr "Активація облікового запису на"
 
@@ -281,8 +280,6 @@ msgid "Cancel"
 msgstr "Відмінити"
 
 #: templates/registration/registration_closed.html:4
-#, fuzzy
-#| msgid "Registration Form"
 msgid "Registration is closed"
 msgstr "Реєстрація закрита"
 
@@ -291,18 +288,12 @@ msgid "Sorry, but registration is closed at this moment. Come back later."
 msgstr "Вибачте, але реєстрація закрита на цей час. Приходьте пізніше."
 
 #: templates/registration/registration_complete.html:4
-#, fuzzy
-#| msgid "Account activation failed."
 msgid "Activation email sent"
-msgstr "Лист активаці по електронній пошті надіслано"
+msgstr "Лист активаці надіслано"
 
 #: templates/registration/registration_complete.html:7
 msgid "Please check your email to complete the registration process."
 msgstr "Будь ласка, перевірте свою електронну пошту для завершення процесу реєстрації."
-
-#: templates/registration/registration_form.html:6
-msgid "Registration"
-msgstr "Реєстрація"
 
 #: templates/registration/registration_form.html:8
 msgid "Registration Form"

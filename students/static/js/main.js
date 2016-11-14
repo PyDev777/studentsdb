@@ -2,6 +2,7 @@ const mainTitle = $('#title');
 const mainHeader = $('#header');
 const mainSubHeader = $('#sub-header');
 const mainContent = $('#content-column');
+const mainFooter = $('#footer');
 const mainSpinner = $('#spinner');
 
 const modal = $('#myModal');
@@ -78,8 +79,8 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
                 modalBody.html(form);
                 createForm(form, url, urlPrev, saveHistory, updLev, showReply);
             } else {
-                modalTitle.text(gettext("Bad request"));
-                modalBody.html($('<p/>').text(gettext("This object no longer exist.")).addClass('alert alert-danger'));
+                modalTitle.text(gettext("Invalid request"));
+                modalBody.html($('<p/>').text(gettext("This resource no longer exist")).addClass('alert alert-danger'));
                 modalCloseBtn.off('click').click(function() {
                     modal.modal('hide');
                     updatePage(urlPrev, saveHistory, updLev);
@@ -93,6 +94,11 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
     return false;
 }
 
+// updLev:
+// 1 - content
+// 2 - sub-header + content
+// 3 - header + sub-header + content
+// 4 - header + sub-header + content + footer
 function updatePage(url, saveHistory, updLev) {
     $.ajax(url, {
         'dataType': 'html',
@@ -103,9 +109,14 @@ function updatePage(url, saveHistory, updLev) {
         'success': function(data) {
             var html = $(data);
             mainTitle.text(html.find('#mainTitle').text());
-            if (updLev == 'header') {mainHeader.html(html.find('#header').html())}
-            if (updLev != 'content') {mainSubHeader.html(html.find('#sub-header').html())}
+            if (updLev > 2) {mainHeader.html(html.find('#header').html())}
+            if (updLev > 1) {mainSubHeader.html(html.find('#sub-header').html())}
             mainContent.html(html.find('#content-column').html());
+            if (updLev > 3) {
+                console.log('updLev > 3');
+                console.log('html.footer:', html.find('#footer').html());
+                mainFooter.html(html.find('#footer').html());
+            }
             if (saveHistory) {history.pushState({'urlPrev': false}, document.title, url)}
         }
     });
@@ -115,7 +126,7 @@ function updatePage(url, saveHistory, updLev) {
 // password reset confirm
 function checkRedirectForm() {
     var urlForm = $('#form_action').data('form-url');
-    if (urlForm) {modalForm(urlForm, location.origin, false, 'header', true)}
+    if (urlForm) {modalForm(urlForm, location.origin, false, 3, true)}
 }
 
 
@@ -132,40 +143,40 @@ function initEventHandlers() {
     mainHeader
         .on('click', 'a.user-link', function() {
             console.log('event-onclick.this.href=', this.href);
-            modalForm(this.href, location.href, false, 'header', false);
+            modalForm(this.href, location.href, false, 3, false); //'header'
             return false;
         })
         .on('click', 'a.reply-link', function() {
-            modalForm(this.href, location.href, false, 'header', true);
+            modalForm(this.href, location.href, false, 3, true);
             return false;
         })
         .on('change', '#group-selector select', function() {
             var group = $(this).val();
             if (group) {$.cookie('current_group', group, {'path': '/', 'expires': 365})}
             else {$.removeCookie('current_group', {'path': '/'})}
-            updatePage(location.href, false, 'content');
+            updatePage(location.href, false, 1); //'content'
             return false;
         })
         .on('change', '#lang-selector select', function() {
             var lang = $(this).val();
             $.cookie('django_language', lang, {'path': '/', 'expires': 365});
-            updatePage(location.href, false, 'header');
+            updatePage(location.href, false, 4);
             return false;
         });
     // tabs navigation links
     mainSubHeader
         .on('click', 'ul.nav-tabs a', function() {
-            updatePage(this.href, true, 'sub-header');
+            updatePage(this.href, true, 2); //'sub-header'
             return false;
         });
     // student/group add/edit forms, send letter form, ordering/reversing links, journal marking
     mainContent
         .on('click', 'a.form-link', function() {
-            modalForm(this.href, location.href, true, 'content', false);
+            modalForm(this.href, location.href, true, 1, false);
             return false;
         })
         .on('click', 'a.content-link', function() {
-            updatePage(this.href, true, 'content');
+            updatePage(this.href, true, 1);
             return false;
         })
         .on('click', '.day-box input[type="checkbox"]', function(e) {
@@ -190,7 +201,7 @@ function initEventHandlers() {
     // password reset&change form
     modal
         .on('click', 'a.modal-link', function() {
-            modalForm(this.href, location.href, false, 'header', true);
+            modalForm(this.href, location.href, false, 3, true);
             return false;
         });
 }
@@ -199,7 +210,7 @@ function initHistory() {
     window.onpopstate = function(e) {
         var url = e.target.document.URL,
             urlPrev = e.state.urlPrev;
-        if (urlPrev) {modalForm(url, urlPrev, false, 'sub-header', false)}
+        if (urlPrev) {modalForm(url, urlPrev, false, 3, false)}
         else {
             if (modal.is(':visible')) {modal.modal('hide')}
             updatePage(url, false, 'sub-header');
