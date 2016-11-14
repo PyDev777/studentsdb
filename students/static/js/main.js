@@ -112,11 +112,7 @@ function updatePage(url, saveHistory, updLev) {
             if (updLev > 2) {mainHeader.html(html.find('#header').html())}
             if (updLev > 1) {mainSubHeader.html(html.find('#sub-header').html())}
             mainContent.html(html.find('#content-column').html());
-            if (updLev > 3) {
-                console.log('updLev > 3');
-                console.log('html.footer:', html.find('#footer').html());
-                mainFooter.html(html.find('#footer').html());
-            }
+            if (updLev > 3) {mainFooter.html(html.find('#footer').html())}
             if (saveHistory) {history.pushState({'urlPrev': false}, document.title, url)}
         }
     });
@@ -142,8 +138,7 @@ function initEventHandlers() {
     // login form, registration form, profile form, group select, lang select
     mainHeader
         .on('click', 'a.user-link', function() {
-            console.log('event-onclick.this.href=', this.href);
-            modalForm(this.href, location.href, false, 3, false); //'header'
+            modalForm(this.href, location.href, false, 3, false);
             return false;
         })
         .on('click', 'a.reply-link', function() {
@@ -154,7 +149,7 @@ function initEventHandlers() {
             var group = $(this).val();
             if (group) {$.cookie('current_group', group, {'path': '/', 'expires': 365})}
             else {$.removeCookie('current_group', {'path': '/'})}
-            updatePage(location.href, false, 1); //'content'
+            updatePage(location.href, false, 1);
             return false;
         })
         .on('change', '#lang-selector select', function() {
@@ -166,7 +161,7 @@ function initEventHandlers() {
     // tabs navigation links
     mainSubHeader
         .on('click', 'ul.nav-tabs a', function() {
-            updatePage(this.href, true, 2); //'sub-header'
+            updatePage(this.href, true, 2);
             return false;
         });
     // student/group add/edit forms, send letter form, ordering/reversing links, journal marking
