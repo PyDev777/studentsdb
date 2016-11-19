@@ -19,6 +19,7 @@ from django.conf import global_settings
 ###############################################################################
 #                                                                             #
 #                                                                             #
+# PRODUCTION_MODE = True
 PRODUCTION_MODE = False
 #                                                                             #
 #                                                                             #

@@ -8,7 +8,7 @@
 {% block title %}{% trans "Delete Student" %}{% endblock title %}
 
 {% block content %}
-    <form action="{% url "students_delete" object.id %}" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         <p>{% blocktrans %}Do you really want to delete student: "{{ object }}"?{% endblocktrans %}</p>
         <input type="submit" value="{% trans "Yes" %}" name="delete_button" class="btn btn-danger">

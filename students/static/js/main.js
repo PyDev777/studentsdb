@@ -14,8 +14,6 @@ const modalSpinner = $('#modalSpinner');
 
 // WORK FUNCTIONS
 
-function alertAjaxError() {alert(gettext("There was an error on the server. Please, try again a bit later."))}
-
 function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
     initDateFields();
     modalCloseBtn.off('click').click(function() {
@@ -34,11 +32,11 @@ function createForm(form, url, urlPrev, saveHistory, updLev, showReply) {
             modalSpinner.show();
             modal.find(':input').prop("disabled", true);
         },
-        'complete': function () {
+        'complete': function() {
             modal.find(':input').prop("disabled", false);
             modalSpinner.hide();
         },
-        'error': function() {alertAjaxError()},
+        'error': function(jqXHR, textStatus, errorThrown) {alertAjaxError(textStatus, jqXHR.status,  errorThrown)},
         'success': function(data) {
             var html = $(data),
                 msg = html.find('#block-body .alert'),
@@ -69,43 +67,34 @@ function modalForm(url, urlPrev, saveHistory, updLev, showReply) {
         'type': 'GET',
         'beforeSend': function() {mainSpinner.show()},
         'complete': function() {mainSpinner.hide()},
-        'error': function() {alertAjaxError()},
+        'error': function(jqXHR, textStatus, errorThrown) {alertAjaxError(textStatus, jqXHR.status,  errorThrown)},
         'success': function(data) {
-            var html = $(data),
+            if (data.startsWith("Exception")) {alertAjaxError('error', data, 'No data')}
+            else {
+                var html = $(data),
                 form = html.find('#block-content form');
-            if (form.length > 0) {
-                modalTitle.html(html.find('#block-title').text());
-                if (!form.attr('action')) {form.attr('action', url)}
-                modalBody.html(form);
-                createForm(form, url, urlPrev, saveHistory, updLev, showReply);
-            } else {
-                modalTitle.text(gettext("Invalid request"));
-                modalBody.html($('<p/>').text(gettext("This resource no longer exist")).addClass('alert alert-danger'));
-                modalCloseBtn.off('click').click(function() {
-                    modal.modal('hide');
-                    updatePage(urlPrev, saveHistory, updLev);
-                    return false;
-                });
+                if (form.length > 0) {
+                    modalTitle.html(html.find('#block-title').text());
+                    if (!form.attr('action')) {form.attr('action', url)}
+                    modalBody.html(form);
+                    createForm(form, url, urlPrev, saveHistory, updLev, showReply);
+                    modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
+                    if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
+                }
             }
-            modal.modal({'keyboard': false, 'backdrop': false, 'show': true});
-            if (saveHistory) {history.pushState({'urlPrev': urlPrev}, document.title, url)}
         }
     });
     return false;
 }
 
-// updLev:
-// 1 - content
-// 2 - sub-header + content
-// 3 - header + sub-header + content
-// 4 - header + sub-header + content + footer
+// updLev: 1 - content, 2 - sub-header + content, 3 - header + sub-header + content, 4 - header + sub-header + content + footer
 function updatePage(url, saveHistory, updLev) {
     $.ajax(url, {
         'dataType': 'html',
         'type': 'GET',
         'beforeSend': function() {mainSpinner.show()},
         'complete': function() {mainSpinner.hide()},
-        'error': function() {alertAjaxError()},
+        'error': function(jqXHR, textStatus, errorThrown) {alertAjaxError(textStatus, jqXHR.status,  errorThrown)},
         'success': function(data) {
             var html = $(data);
             mainTitle.text(html.find('#mainTitle').text());
@@ -124,6 +113,10 @@ function checkRedirectForm() {
     var urlForm = $('#form_action').data('form-url');
     if (urlForm) {modalForm(urlForm, location.origin, false, 3, true)}
 }
+
+function alertAjaxError(err_type, err_code, err_text) {
+    alert(gettext("There was an error on the server. Please, try again a bit later.")
+        + '\n' + '\n' + err_type + ': ' + err_code + ' (' + err_text + ')')}
 
 
 // INIT FUNCTIONS

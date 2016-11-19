@@ -8,7 +8,7 @@
 {% block title %}{% trans "Delete Group" %}{% endblock title %}
 
 {% block content %}
-    <form action="{% url "groups_delete" object.id %}" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         <p>{% blocktrans %}Do you really want to delete group "{{ object }}"?{% endblocktrans %}</p>
         <input type="submit" value="{% trans "Yes" %}" name="delete_button" class="btn btn-danger">
