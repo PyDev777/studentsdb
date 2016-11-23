@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import AppendedText
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Button
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Button, HTML
 from django import forms
 from django.forms import ModelForm, ValidationError
 from django.utils.safestring import mark_safe
@@ -69,7 +69,7 @@ class StudentUpdateForm(ModelForm):
 
 class StudentUpdateView(UpdateView):
     model = Student
-    template_name = 'students/students_add_edit.html'
+    template_name = 'students/crud.html'
     form_class = StudentUpdateForm
 
     # def dispatch(self, *args, **kwargs):
@@ -132,7 +132,7 @@ class StudentAddForm(ModelForm):
 
 class StudentAddView(CreateView):
     model = Student
-    template_name = 'students/students_add_edit.html'
+    template_name = 'students/crud.html'
     form_class = StudentAddForm
 
     def get_context_data(self, **kwargs):
@@ -145,24 +145,47 @@ class StudentAddView(CreateView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student addition canceled!'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student addition canceled!')))
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
 
 
+class StudentDeleteForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super(StudentDeleteForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_action = reverse('students_delete', kwargs={'pk': kwargs['initial']['pk']})
+        self.helper.form_method = 'POST'
+        self.helper.help_text_inline = False
+        self.helper.label_class = 'col-sm-4'
+        self.helper.field_class = 'col-sm-7'
+        self.helper.layout = Layout(
+            HTML(u"<p>%s</p>" % _(u'Do you really want to delete student: "{{ object }}"?')),
+            ButtonHolder(Submit('submit_button', _(u'Delete'), css_class='btn-danger'),
+                         Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
+
+
 class StudentDeleteView(DeleteView):
     model = Student
-    template_name = 'students/students_confirm_delete.html'
+    template_name = 'students/crud.html'
 
     def get_object(self, queryset=None):
         return get_object_or_404(self.model, pk=self.kwargs.get('pk'))
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDeleteView, self).get_context_data(**kwargs)
+        context['title'] = _(u'Delete Student')
+        context['form'] = StudentDeleteForm(initial={'pk': self.kwargs['pk']})
+        return context
 
     def get_success_url(self):
         return u'%s?status_message=%s' % (reverse('home'), _(u'Student deleted successfully!'))
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home')), _(u'Student deletion canceled!'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'), _(u'Student deletion canceled!')))
         else:
             return super(StudentDeleteView, self).post(request, *args, **kwargs)
 

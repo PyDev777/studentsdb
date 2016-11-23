@@ -20,5 +20,5 @@ class STCountTest(TestCase):
 
         # check if we get proper number of objects in database
         self.assertIn('students in database: 4', result)
-        self.assertIn('groups in database: 2', result)
+        self.assertIn('groups in database: 3', result)
         self.assertIn('users in database: 1', result)
