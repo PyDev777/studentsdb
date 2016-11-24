@@ -20,7 +20,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for name in self.models:
             if options[name] and not(0 < options[name] < 11):
-                raise CommandError('Number of %s objects must be in range 1..10!' % name)
+                raise CommandError('ERROR! Number of %s objects must be in range 1..10!' % name)
 
         for name in self.models:
             if options[name]:
@@ -32,12 +32,22 @@ class Command(BaseCommand):
                             last_name='Surname-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3),
                             ticket=i+1,
                             birthday=timezone.now())
-                        student.save()
+                        try:
+                            student.save()
+                        except Exception as e:
+                            self.stdout.write('ERROR! Student %s not saved!\n%s' % (student, e.message))
+                        else:
+                            self.stdout.write('Student %s created successfully' % student)
                     if name == 'group':
                         group = Group(
                             title='MtM-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3),
                             notes='Note-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3))
-                        group.save()
+                        try:
+                            group.save()
+                        except Exception as e:
+                            self.stdout.write('ERROR! Group %s not saved!\n%s' % (group, e.message))
+                        else:
+                            self.stdout.write('Group %s created successfully' % group)
                     if name == 'user':
                         user = User(
                             username='Username-{r1:04}-{r2:04}-{r3:04}'.format(r1=r1, r2=r2, r3=r3),
@@ -46,7 +56,7 @@ class Command(BaseCommand):
                             email='email-{r1:04}-{r2:04}-{r3:04}@example.com'.format(r1=r1, r2=r2, r3=r3))
                         try:
                             user.save()
-                        except DatabaseError:
-                            self.stdout.write('Warning! User %s is not unique and do not write to DB.' % user.username)
+                        except Exception as e:
+                            self.stdout.write('ERROR! User %s not saved!\n%s' % (user, e.message))
                         else:
-                            self.stdout.write('User %s created successfully.' % user.username)
+                            self.stdout.write('User %s created successfully' % user.username)

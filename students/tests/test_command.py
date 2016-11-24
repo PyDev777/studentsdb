@@ -2,6 +2,41 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.six import StringIO
 import os
+from django.contrib.auth.models import User
+from students.models import Student, Group
+
+
+class FillDBTest(TestCase):
+    """Test fill_db command"""
+
+    fixtures = ['students_test_data.json']
+
+    def test_success(self):
+
+        students_count_before = len(Student.objects.all())
+        groups_count_before = len(Group.objects.all())
+        users_count_before = len(User.objects.all())
+
+        # prepare output file for command
+        out = StringIO()
+
+        # call our command
+        call_command('fill_db', student=5, group=4, user=3, stdout=out)
+
+        students_count_after = len(Student.objects.all())
+        groups_count_after = len(Group.objects.all())
+        users_count_after = len(User.objects.all())
+
+        # get command output
+        result = out.getvalue()
+
+        # check if we get proper number of objects in database
+        self.assertEqual(students_count_before + 5, students_count_after)
+        self.assertEqual(groups_count_before + 4, groups_count_after)
+        self.assertEqual(users_count_before + 3, users_count_after)
+
+        self.assertNotIn('ERROR!', result)
+        self.assertIn('created successfully', result)
 
 
 class STCountTest(TestCase):
