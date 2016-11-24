@@ -1,4 +1,3 @@
-# from datetime import datetime
 from django.test import TestCase, Client, override_settings
 from django.core.urlresolvers import reverse
 from students.models import Student, Group

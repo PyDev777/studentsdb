@@ -1,27 +1,7 @@
-# from datetime import datetime
 from django.test import TestCase, Client, override_settings
 from django.core.urlresolvers import reverse
 from students.models import Student, Group
 
-
-# {
-#     "fields": {
-#         "notes": "",
-#         "leader": 1,
-#         "title": "Group1"
-#     },
-#     "model": "students.group",
-#     "pk": 1
-# },
-# {
-#     "fields": {
-#         "notes": "",
-#         "leader": null,
-#         "title": "Group2"
-#     },
-#     "model": "students.group",
-#     "pk": 2
-# }
 
 @override_settings(LANGUAGE_CODE='en')
 class TestGroupUpdateForm(TestCase):
@@ -50,7 +30,7 @@ class TestGroupUpdateForm(TestCase):
         self.assertEqual(response.redirect_chain[0], ('http://testserver/users/login/?next=/groups/1/edit/', 302))
 
     def test_cancel(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # post form with Cancel button
@@ -75,7 +55,7 @@ class TestGroupUpdateForm(TestCase):
         self.assertIn('Please, correct the following errors', response.content)
 
     def test_form(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # get form and check few fields there
@@ -154,7 +134,7 @@ class TestGroupAddForm(TestCase):
         self.assertEqual(response.redirect_chain[0], ('http://testserver/users/login/?next=/groups/add/', 302))
 
     def test_cancel(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # post form with Cancel button
@@ -164,7 +144,7 @@ class TestGroupAddForm(TestCase):
         self.assertEqual(response.redirect_chain[0][0], 'http://testserver/groups/?status_message=' + 'Group%20addition%20canceled!')
 
     def test_form(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # get form and check few fields there
@@ -179,7 +159,7 @@ class TestGroupAddForm(TestCase):
         self.assertIn('action="%s"' % self.url, response.content)
 
     def test_success(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # post form with valid data
@@ -199,7 +179,7 @@ class TestGroupAddForm(TestCase):
         self.assertEqual(response.redirect_chain[0][0], 'http://testserver/groups/?status_message=' + 'Group%20added%20successfully!')
 
     def test_styles(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # get form and check few fields there
@@ -243,7 +223,7 @@ class TestGroupDeleteForm(TestCase):
         self.assertEqual(response.redirect_chain[0], ('http://testserver/users/login/?next=/groups/3/delete/', 302))
 
     def test_cancel(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # post form with Cancel button
@@ -253,7 +233,7 @@ class TestGroupDeleteForm(TestCase):
         self.assertEqual(response.redirect_chain[0][0], 'http://testserver/groups/?status_message=' + 'Group%20deletion%20canceled!')
 
     def test_form(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # get form and check few fields there
@@ -268,7 +248,7 @@ class TestGroupDeleteForm(TestCase):
         self.assertIn('action="%s"' % self.url, response.content)
 
     def test_styles(self):
-        # login as admin to access student edit form
+        # login as admin to access group edit form
         self.client.login(username='admin', password='admin')
 
         # get form and check few fields there
@@ -283,7 +263,7 @@ class TestGroupDeleteForm(TestCase):
         self.assertIn('btn-default', response.content)
 
     def test_success(self):
-        # login as admin to access student delete form
+        # login as admin to access group delete form
         self.client.login(username='admin', password='admin')
 
         # post form with valid data

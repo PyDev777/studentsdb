@@ -19,8 +19,8 @@ class Command(BaseCommand):
     app_static_path, html_file = app + settings.STATIC_URL, app + '/templates/' + html_template
 
     def handle(self, *args, **options):
-        if not settings.DEBUG:
-            self._err_exit('Command "Localize_static" for debug mode only!')
+        if settings.PRODUCTION_MODE:
+            self._err_exit('Command "Localize_static" for Developer mode only!')
         if options['ls'] is None:
             self.stdout.write('Localized static status: %s' % ('online' if self._get_CDN_tags() else 'offline'))
         else:
