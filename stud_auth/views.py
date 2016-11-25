@@ -84,23 +84,6 @@ class CustPswResetForm(PasswordResetForm):
         #                  Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
-class CustSetPswForm(SetPasswordForm):
-
-    def __init__(self, *args, **kwargs):
-        super(CustSetPswForm, self).__init__(*args, **kwargs)
-
-        self.helper = FormHelper(self)
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-3'
-        self.helper.field_class = 'col-md-9'
-        self.helper.error_text_inline = False
-        self.helper.layout = Layout(
-            HTML(u"<p>%s</p>" % _(u"Enter your new password below to reset your password:")),
-            Fieldset('', 'new_password1', 'new_password2'),
-            ButtonHolder(Submit('submit_button', _(u'Confirm')),
-                         Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
-
-
 class UserForm(ModelForm):
 
     class Meta:
@@ -180,6 +163,23 @@ class ProfileForm(ModelForm):
         if photo and (len(photo) > 500000):
             raise ValidationError(_(u'Maximum size - 500Kb!'), code='invalid')
         return photo
+
+
+class CustSetPswForm(SetPasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CustSetPswForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.error_text_inline = False
+        self.helper.layout = Layout(
+            HTML(u"<p>%s</p>" % _(u"Enter your new password below to reset your password:")),
+            Fieldset('', 'new_password1', 'new_password2'),
+            ButtonHolder(Submit('submit_button', _(u'Confirm')),
+                         Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
 def user_profile(request):
