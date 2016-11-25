@@ -48,7 +48,7 @@ class ContactLetterForm(forms.Form):
         self.helper.layout = Layout(
             Fieldset('', 'from_email', 'subject', 'message', 'captcha'),
             ButtonHolder(
-                Submit('save_button', _(u'Send')),
+                Submit('submit_button', _(u'Send')),
                 Submit('cancel_button', _(u'Cancel'), css_class='btn-default')))
 
 
@@ -86,7 +86,7 @@ class ContactLetterView(FormView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin')), _(u'Letter sent cancelled!'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin'), _(u'Letter sent canceled!')))
         else:
             return super(ContactLetterView, self).post(request, *args, **kwargs)
 
