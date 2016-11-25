@@ -1,7 +1,7 @@
 # Students Attendance Tracking Service
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Coverage](https://img.shields.io/badge/coverage-39%25-red.svg)](https://github.com/kmike/django-coverage)
+[![Coverage](https://img.shields.io/badge/coverage-52%25-yellow.svg)](https://github.com/kmike/django-coverage)
 
 <br>
 # Quick links
@@ -78,6 +78,7 @@
 - English/Ukrainian language selection on site (I18N/L10N)
 - Access to functionality, based on the visitors rights
 - 2-step [customized](stud_auth/views.py) user registration on site with [Registration Redux](http://django-registration-redux.readthedocs.io/en/latest/)
+- Standard and Social (Facebook) login, reset/change password support 
 - User profile use User model extended by [additional fields](stud_auth/models.py)
 - [AJAX mode](students/static/js/main.js) for all requests on site (page reload is absent)
 - Browser History for AJAX mode with navigation in AJAX mode
