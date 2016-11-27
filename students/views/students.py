@@ -63,7 +63,7 @@ class StudentUpdateForm(ModelForm):
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(_(u'Student is the leader of another group!'), code='invalid')
+            raise ValidationError(_(u'Student is the leader of other group!'), code='invalid')
         return self.cleaned_data['student_group']
 
 
@@ -162,7 +162,7 @@ class StudentDeleteForm(forms.Form):
         self.helper.label_class = 'col-sm-4'
         self.helper.field_class = 'col-sm-7'
         self.helper.layout = Layout(
-            HTML(u"<p>%s</p>" % _(u'Do you really want to delete student: "{{ object }}"?')),
+            HTML(u"<p>%s</p>" % _(u'Do you really want to delete student "{{ object }}"?')),
             ButtonHolder(Submit('submit_button', _(u'Delete'), css_class='btn-danger'),
                          Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 

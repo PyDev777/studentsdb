@@ -14,7 +14,7 @@ class StudentFormAdmin(ModelForm):
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(_(u'Student is a leader of other group'), code='invalid')
+            raise ValidationError(_(u'Student is the leader of other group!'), code='invalid')
         return self.cleaned_data['student_group']
 
 

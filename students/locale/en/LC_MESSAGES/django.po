@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-14 01:05+0000\n"
+"POT-Creation-Date: 2016-11-27 04:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:17
-msgid "Student is a leader of other group"
+#: admin.py:17 views/students.py:66
+msgid "Student is the leader of other group!"
 msgstr ""
 
 #: admin.py:42
@@ -147,8 +147,7 @@ msgid "deleted"
 msgstr ""
 
 #: templates/contact_admin/contact_form.html:13
-#: templates/students/groups_add_edit.html:13
-#: templates/students/students_add_edit.html:13
+#: templates/students/crud.html:13
 msgid "Please, correct the following errors"
 msgstr ""
 
@@ -238,26 +237,6 @@ msgstr ""
 msgid "No log yet"
 msgstr ""
 
-#: templates/students/groups_confirm_delete.html:6
-#: templates/students/groups_confirm_delete.html:8
-msgid "Delete Group"
-msgstr ""
-
-#: templates/students/groups_confirm_delete.html:13
-#, python-format
-msgid "Do you really want to delete group \"%(object)s\"?"
-msgstr ""
-
-#: templates/students/groups_confirm_delete.html:14
-#: templates/students/students_confirm_delete.html:14
-msgid "Yes"
-msgstr ""
-
-#: templates/students/groups_confirm_delete.html:15
-#: templates/students/students_confirm_delete.html:15
-msgid "No"
-msgstr ""
-
 #: templates/students/groups_list.html:9
 msgid "Groups List"
 msgstr ""
@@ -285,7 +264,8 @@ msgid "Action"
 msgstr ""
 
 #: templates/students/groups_list.html:64
-#: templates/students/students_list.html:106
+#: templates/students/students_list.html:106 views/groups.py:124
+#: views/students.py:166
 msgid "Delete"
 msgstr ""
 
@@ -322,16 +302,6 @@ msgstr ""
 msgid "Next Month"
 msgstr ""
 
-#: templates/students/students_confirm_delete.html:6
-#: templates/students/students_confirm_delete.html:8
-msgid "Delete Student"
-msgstr ""
-
-#: templates/students/students_confirm_delete.html:13
-#, python-format
-msgid "Do you really want to delete student: \"%(object)s\"?"
-msgstr ""
-
 #: templates/students/students_list.html:9
 msgid "Students List"
 msgstr ""
@@ -360,8 +330,9 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: views/contact_admin.py:52 views/groups.py:27 views/groups.py:80
-#: views/students.py:52 views/students.py:124
+#: views/contact_admin.py:52 views/groups.py:34 views/groups.py:88
+#: views/groups.py:125 views/students.py:52 views/students.py:124
+#: views/students.py:167
 msgid "Cancel"
 msgstr ""
 
@@ -382,52 +353,60 @@ msgid "Letter sent successfully!"
 msgstr ""
 
 #: views/contact_admin.py:89
-msgid "Letter sent cancelled!"
+msgid "Letter sent canceled!"
 msgstr ""
 
-#: views/groups.py:26 views/groups.py:79 views/students.py:51
+#: views/groups.py:33 views/groups.py:87 views/students.py:51
 #: views/students.py:123
 msgid "Save"
 msgstr ""
 
-#: views/groups.py:41
+#: views/groups.py:43
 msgid "Student not in this group"
 msgstr ""
 
-#: views/groups.py:55
+#: views/groups.py:57
 msgid "Group edit"
 msgstr ""
 
-#: views/groups.py:59 views/groups.py:100
-msgid "Group saved successfully!"
+#: views/groups.py:61
+msgid "Group updated successfully!"
 msgstr ""
 
-#: views/groups.py:63
+#: views/groups.py:65
 msgid "Group update canceled!"
 msgstr ""
 
-#: views/groups.py:96
+#: views/groups.py:98
 msgid "Group add"
 msgstr ""
 
-#: views/groups.py:104
-msgid "Group add cancelled!"
+#: views/groups.py:102
+msgid "Group added successfully!"
 msgstr ""
 
-#: views/groups.py:117
+#: views/groups.py:106
+msgid "Group addition canceled!"
+msgstr ""
+
+#: views/groups.py:123
+msgid "Do you really want to delete group \"{{ object }}\"?"
+msgstr ""
+
+#: views/groups.py:137
+msgid "Delete Group"
+msgstr ""
+
+#: views/groups.py:142
 msgid "Group deleted successfully!"
 msgstr ""
 
-#: views/groups.py:121
-msgid "Group delete canceled!"
+#: views/groups.py:146
+msgid "Group deletion canceled!"
 msgstr ""
 
 #: views/students.py:57 views/students.py:129
 msgid "Maximum size - 500Kb!"
-msgstr ""
-
-#: views/students.py:66
-msgid "Student is the leader of another group!"
 msgstr ""
 
 #: views/students.py:91
@@ -454,10 +433,18 @@ msgstr ""
 msgid "Student addition canceled!"
 msgstr ""
 
-#: views/students.py:161
+#: views/students.py:165
+msgid "Do you really want to delete student \"{{ object }}\"?"
+msgstr ""
+
+#: views/students.py:179
+msgid "Delete Student"
+msgstr ""
+
+#: views/students.py:184
 msgid "Student deleted successfully!"
 msgstr ""
 
-#: views/students.py:165
+#: views/students.py:188
 msgid "Student deletion canceled!"
 msgstr ""

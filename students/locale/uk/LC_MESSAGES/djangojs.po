@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-14 04:44+0200\n"
+"POT-Creation-Date: 2016-11-27 04:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: static/js/main.js:17
+#: static/js/main.js:118
 msgid "There was an error on the server. Please, try again a bit later."
 msgstr "Помилка на сервері. Спробуйте, будь-ласка, пізніше."
-
-#: static/js/main.js:82
-msgid "Invalid request"
-msgstr "Невірний запит"
-
-#: static/js/main.js:83
-msgid "This resource no longer exist"
-msgstr "Цей ресурс більше не існує."
