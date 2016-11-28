@@ -1,9 +1,19 @@
 from datetime import datetime
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.core.urlresolvers import reverse
 
 from students.models import Student, Group
+
+
+@override_settings(LANGUAGE_CODE='en')
+class TestJournal(TestCase):
+
+    def setUp(self):
+        # remember test browser
+        self.client = Client()
+        # remember url to edit form
+        self.url = reverse('journal', kwargs={'pk': 1})
 
 
 class TestStudentList(TestCase):
@@ -79,5 +89,3 @@ class TestStudentList(TestCase):
         self.assertEqual(response.context['is_paginated'], True)
         self.assertEqual(len(response.context['students']), 1)
         self.assertEqual(response.context['students'][0].last_name, 'Kidney')
-
-

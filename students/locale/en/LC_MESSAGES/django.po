@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 04:10+0200\n"
+"POT-Creation-Date: 2016-11-28 09:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -265,7 +265,7 @@ msgstr ""
 
 #: templates/students/groups_list.html:64
 #: templates/students/students_list.html:106 views/groups.py:124
-#: views/students.py:166
+#: views/students.py:167
 msgid "Delete"
 msgstr ""
 
@@ -332,7 +332,7 @@ msgstr ""
 
 #: views/contact_admin.py:52 views/groups.py:34 views/groups.py:88
 #: views/groups.py:125 views/students.py:52 views/students.py:124
-#: views/students.py:167
+#: views/students.py:168
 msgid "Cancel"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgid "Group addition canceled!"
 msgstr ""
 
 #: views/groups.py:123
-msgid "Do you really want to delete group \"{{ object }}\"?"
+msgid "Do you really want to delete group {{ object }}?"
 msgstr ""
 
 #: views/groups.py:137
@@ -433,18 +433,18 @@ msgstr ""
 msgid "Student addition canceled!"
 msgstr ""
 
-#: views/students.py:165
-msgid "Do you really want to delete student \"{{ object }}\"?"
+#: views/students.py:166
+msgid "Do you really want to delete student {{ object }}?"
 msgstr ""
 
-#: views/students.py:179
+#: views/students.py:180
 msgid "Delete Student"
 msgstr ""
 
-#: views/students.py:184
+#: views/students.py:185
 msgid "Student deleted successfully!"
 msgstr ""
 
-#: views/students.py:188
+#: views/students.py:189
 msgid "Student deletion canceled!"
 msgstr ""

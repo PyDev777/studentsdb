@@ -57,7 +57,7 @@ class TestStudentUpdateForm(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # check proper redirect after form post
-        self.assertIn('Student is the leader of another group!', response.content)
+        self.assertIn('Student is the leader of other group!', response.content)
 
     def test_form(self):
         # login as admin to access student edit form

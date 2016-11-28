@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 04:10+0200\n"
+"POT-Creation-Date: 2016-11-28 09:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,7 +267,7 @@ msgstr "Дія"
 
 #: templates/students/groups_list.html:64
 #: templates/students/students_list.html:106 views/groups.py:124
-#: views/students.py:166
+#: views/students.py:167
 msgid "Delete"
 msgstr "Видалити"
 
@@ -341,7 +341,7 @@ msgstr "Надіслати"
 
 #: views/contact_admin.py:52 views/groups.py:34 views/groups.py:88
 #: views/groups.py:125 views/students.py:52 views/students.py:124
-#: views/students.py:167
+#: views/students.py:168
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -351,9 +351,7 @@ msgstr "Зв'язок з Адміністратором"
 
 #: views/contact_admin.py:77
 msgid "An error occurred during email transfer. Please, try again later."
-msgstr ""
-"Під час відправки повідомлення виникла помилка. Будь ласка, спробуйте "
-"пізніше."
+msgstr "Під час відправки повідомлення виникла помилка. Будь ласка, спробуйте пізніше."
 
 #: views/contact_admin.py:80
 msgid ": error sending letter!"
@@ -401,8 +399,8 @@ msgid "Group addition canceled!"
 msgstr "Додавання групи скасовано!"
 
 #: views/groups.py:123
-msgid "Do you really want to delete group \"{{ object }}\"?"
-msgstr "Ви дійсно бажаєте видалити групу \"%(object)\"?"
+msgid "Do you really want to delete group {{ object }}?"
+msgstr "Ви дійсно бажаєте видалити групу {{ object }}?"
 
 #: views/groups.py:137
 msgid "Delete Group"
@@ -444,18 +442,18 @@ msgstr "Студента додано успішно!"
 msgid "Student addition canceled!"
 msgstr "Додавання студента скасовано!"
 
-#: views/students.py:165
-msgid "Do you really want to delete student \"{{ object }}\"?"
-msgstr "Ви дійсно бажаєте видалити студента \"%(object)\"?"
+#: views/students.py:166
+msgid "Do you really want to delete student {{ object }}?"
+msgstr "Ви дійсно бажаєте видалити студента {{ object }}?"
 
-#: views/students.py:179
+#: views/students.py:180
 msgid "Delete Student"
 msgstr "Видалити студента"
 
-#: views/students.py:184
+#: views/students.py:185
 msgid "Student deleted successfully!"
 msgstr "Студента видалено успішно!"
 
-#: views/students.py:188
+#: views/students.py:189
 msgid "Student deletion canceled!"
 msgstr "Видалення студента скасовано!"

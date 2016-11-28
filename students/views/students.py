@@ -162,7 +162,7 @@ class StudentDeleteForm(forms.Form):
         self.helper.label_class = 'col-sm-4'
         self.helper.field_class = 'col-sm-7'
         self.helper.layout = Layout(
-            HTML(u"<p>%s</p>" % _(u'Do you really want to delete student "{{ object }}"?')),
+            HTML(u"<p>%s</p>" % _(u'Do you really want to delete student {{ object }}?')),
             ButtonHolder(Submit('submit_button', _(u'Delete'), css_class='btn-danger'),
                          Button('cancel_button', _(u'Cancel'), css_class='btn-default')))
 

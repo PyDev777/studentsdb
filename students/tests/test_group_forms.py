@@ -52,7 +52,7 @@ class TestGroupUpdateForm(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # check proper redirect after form post
-        self.assertIn('Please, correct the following errors', response.content)
+        self.assertIn('Student not in this group', response.content)
 
     def test_form(self):
         # login as admin to access group edit form

@@ -4,6 +4,7 @@ from django.utils.six import StringIO
 import os
 from django.contrib.auth.models import User
 from students.models import Student, Group
+from django.test import override_settings
 
 
 class FillDBTest(TestCase):
@@ -60,6 +61,7 @@ class STCountTest(TestCase):
         self.assertIn('users in database: 3', result)
 
 
+@override_settings(PRODUCTION_MODE=False)
 class LocalizeStaticTest(TestCase):
     """Test localize_static command"""
 
