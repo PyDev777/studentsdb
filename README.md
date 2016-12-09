@@ -115,6 +115,12 @@ Additionally, wrapping by `*` for staff, by `**` for superuser
 $ sudo apt-get install python-dev libxml2-dev libxslt-dev libfreetype6-dev libjpeg8-dev zlib1g-dev
 ```
 
+### PIP, Virtualenv and Git (if not installed)
+
+```sh
+$ sudo apt-get install pip==1.5.4 virtualenv==1.11.4 git==1.9.1
+```
+
 ### MySQL (if not installed)
 
 ```sh
@@ -134,36 +140,33 @@ mysql> FLUSH PRIVILEGES;
 mysql> quit;
 ```
 
-### PIP, Virtualenv and Git (if not installed)
-
-```sh
-$ sudo apt-get install pip==1.5.4 virtualenv==1.11.4 git==1.9.1
-```
-
-### Requirements [[ list ](requirements.txt)]
+### Clone project from GitHub into virtual environment
 
 ```sh
 $ virtualenv studentsdb
 $ cd studentsdb
 $ source bin/activate
-(studentsdb)$ pip install -r requirements.txt
-```
-
-### Clone project from GitHub
-
-```sh
 (studentsdb)$ mkdir src
 (studentsdb)$ cd src
+(studentsdb)$ mkdir media
 (studentsdb)$ git clone https://github.com/PyDev777/studentsdb.git
+```
+
+### Requirements [[ list ](requirements.txt)]
+
+```sh
+(studentsdb)$ cd studentsdb
+(studentsdb)$ pip install -r requirements.txt
 ```
 
 ### Create settings files with your values from [dev](studentsdb/dev_settings_template.py)&[prod](studentsdb/prod_settings_template.py) templates
 
 ```sh
-(studentsdb)$ cd studentsdb/studentsdb
+(studentsdb)$ cd studentsdb
 (studentsdb)$ cp dev_settings_template.py dev_settings.py
 (studentsdb)$ cp prod_settings_template.py prod_settings.py
 ```
+
 ### Migrate and superuser create
 
 ```sh
