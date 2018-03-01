@@ -3,7 +3,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-52%25-yellow.svg)](https://github.com/kmike/django-coverage)
 
-<br>
 # Quick links
 
 - [**Overview**](#overview)
@@ -24,7 +23,7 @@
 
 # Demo
 
-### Do you want to see this project in action? [Visit it!](http://104.236.69.146/)
+### Do you want to see this project in action? [Visit it!](http://presentation.ml/)
 
 
 # Functional
